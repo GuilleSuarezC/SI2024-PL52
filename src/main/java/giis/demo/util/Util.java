@@ -137,4 +137,15 @@ public class Util {
 		return formatter.format(javaDate);
 	}
 	
+	public static boolean isValidISODate(String isoDateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false); // Esto hace que solo acepte fechas reales
+        try {
+            Date date = sdf.parse(isoDateString);
+            return true; // Si no lanza una excepción, la fecha es válida
+        } catch (ParseException e) {
+            return false; // Si lanza una excepción, la fecha es inválida
+        }
+    }
+	
 }

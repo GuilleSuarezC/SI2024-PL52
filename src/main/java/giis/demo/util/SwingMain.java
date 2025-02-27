@@ -94,7 +94,7 @@ public class SwingMain {
 		frame.getContentPane().add(btnCargarDatosIniciales);
 		
 		JLabel changeDateLabel = new JLabel("Change the current date (Use YYYY-MM-DD format):");
-		changeDateLabel.setBounds(10, 80, 280, 14);
+		changeDateLabel.setBounds(10, 80, 350, 14);
 		frame.getContentPane().add(changeDateLabel);
 		
 		tfChangeDate = new JTextField();

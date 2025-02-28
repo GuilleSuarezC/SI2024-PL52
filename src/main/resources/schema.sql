@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "AgreementType" (
-	"agreement_id"	int NOT NULL,
+	"agreement_id"	int NOT NULL AUTOINCREMENT,
 	"agreement_invoice"	int NOT NULL,
 	"agreement_subsidy"	varchar(50) NOT NULL,
 	"sponsorship_id"	INT NOT NULL,
@@ -8,24 +8,32 @@ CREATE TABLE IF NOT EXISTS "AgreementType" (
 	FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
 );
 CREATE TABLE IF NOT EXISTS "Company" (
-	"company_id"	int NOT NULL,
+	"company_id"	int NOT NULL AUTOINCREMENT,
 	"company_name"	varchar(50) NOT NULL,
 	"company_member"	varchar(50) NOT NULL,
 	"company_numSeats"	int NOT NULL,
 	PRIMARY KEY("company_id")
 );
 CREATE TABLE IF NOT EXISTS "Event" (
-	"event_id"	int NOT NULL,
+	"event_id"	int NOT NULL AUTOINCREMENT,
 	"event_name"	varchar(30) NOT NULL,
 	"event_date"	date NOT NULL,
-	"event_expenses"	int,
-	"event_income"	int,
 	"event_status"	TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')),
 	"sponsorship_level"	TEXT NOT NULL CHECK("sponsorship_level" IN ('Bronze', 'Silver', 'Gold', 'Platinum')),
 	PRIMARY KEY("event_id")
 );
+CREATE TABLE IF NOT EXISTS "Balance" (
+    "balance_id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "event_id" INTEGER NOT NULL,
+    "source" TEXT NOT NULL,
+    "estimated_income" INTEGER,
+    "paid_income" INTEGER,
+    "estimated_expenses" INTEGER,
+    "paid_expenses" INTEGER,
+    FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
+);
 CREATE TABLE IF NOT EXISTS "Invoice" (
-	"invoice_id"	int NOT NULL,
+	"invoice_id"	int NOT NULL AUTOINCREMENT,
 	"taxData_name"	varchar(30) NOT NULL,
 	"taxData_Fnumber"	varchar(30) NOT NULL,
 	"invoice_date"	date NOT NULL,
@@ -34,7 +42,7 @@ CREATE TABLE IF NOT EXISTS "Invoice" (
 	FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
 );
 CREATE TABLE IF NOT EXISTS "Payment" (
-	"payment_id"	int NOT NULL,
+	"payment_id"	int NOT NULL AUTOINCREMENT,
 	"payment_amount"	float NOT NULL,
 	"payment_date"	date NOT NULL,
 	"payment_status"	TEXT NOT NULL CHECK("payment_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),
@@ -43,7 +51,7 @@ CREATE TABLE IF NOT EXISTS "Payment" (
 	FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
 );
 CREATE TABLE IF NOT EXISTS "Sponsorship" (
-	"sponsorship_id"	int NOT NULL,
+	"sponsorship_id"	int NOT NULL AUTOINCREMENT,
 	"sponsorship_name"	varchar(50),
 	"sponsorship_agreementDate"	date NOT NULL,
 	"company_id"	int NOT NULL,

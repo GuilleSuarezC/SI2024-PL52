@@ -6,7 +6,7 @@ import giis.demo.util.Util;
 import giis.demo.util.ApplicationException;
 
 /**
- * Modelo para gestionar los acuerdos de patrocinio.
+ * Modelo para gestionar los acuerdos de patrocinio y el balance de eventos.
  */
 public class RegisterSponsorshipAgreeModel {
     private Database db = new Database();
@@ -36,9 +36,9 @@ public class RegisterSponsorshipAgreeModel {
     }
 
     /**
-     * Registra un nuevo acuerdo de patrocinio.
+     * Registra un nuevo acuerdo de patrocinio y devuelve el ID del evento.
      */
-    public void registerSponsorship(String company, String event, String date, String member) {
+    public int registerSponsorship(String company, String event, String date, String member) {
         validateNotNull(company, "La empresa no puede ser nula");
         validateNotNull(event, "El evento no puede ser nulo");
         validateNotNull(date, "La fecha del acuerdo no puede ser nula");
@@ -48,9 +48,23 @@ public class RegisterSponsorshipAgreeModel {
         int eventId = getEventIdByName(event);
         String formattedDate = Util.dateToIsoString(Util.isoStringToDate(date));
 
-        String sql = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) "
-                   + "VALUES (?, ?, ?, ?, 0, 0)";
-        db.executeUpdate(sql, company + " - " + event, formattedDate, companyId, eventId);
+        // Insertar en Sponsorship
+        String sqlSponsorship = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) "
+                              + "VALUES (?, ?, ?, ?, 0, 0)";
+        db.executeUpdate(sqlSponsorship, company + " - " + event, formattedDate, companyId, eventId);
+
+        return eventId; // Devuelve el ID del evento para registrar balance
+    }
+
+    /**
+     * Registra un ingreso o gasto en el balance de un evento.
+     */
+    public void registerBalance(int eventId, String source, int estimatedIncome, int paidIncome, int estimatedExpenses, int paidExpenses) {
+        validateNotNull(source, "La fuente no puede ser nula");
+
+        String sql = "INSERT INTO Balance (event_id, source, estimated_income, paid_income, estimated_expenses, paid_expenses) "
+                   + "VALUES (?, ?, ?, ?, ?, ?)";
+        db.executeUpdate(sql, eventId, source, estimatedIncome, paidIncome, estimatedExpenses, paidExpenses);
     }
 
     /**
@@ -98,6 +112,15 @@ public class RegisterSponsorshipAgreeModel {
     }
 
     /**
+     * Obtiene los balances de un evento específico.
+     */
+    public List<Object[]> getEventBalance(int eventId) {
+        String sql = "SELECT balance_id, source, estimated_income, paid_income, estimated_expenses, paid_expenses "
+                   + "FROM Balance WHERE event_id = ? ORDER BY balance_id";
+        return db.executeQueryArray(sql, eventId);
+    }
+
+    /**
      * Método auxiliar para validar que un valor no sea nulo o vacío.
      */
     private void validateNotNull(Object obj, String message) {
@@ -106,4 +129,3 @@ public class RegisterSponsorshipAgreeModel {
         }
     }
 }
-

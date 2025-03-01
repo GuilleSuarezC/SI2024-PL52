@@ -8,18 +8,24 @@ CREATE TABLE IF NOT EXISTS "AgreementType" (
 	FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
 );
 CREATE TABLE IF NOT EXISTS "Company" (
-	"company_id"	int NOT NULL AUTOINCREMENT,
-	"company_name"	varchar(50) NOT NULL,
-	"company_member"	varchar(50) NOT NULL,
-	"company_numSeats"	int NOT NULL,
-	PRIMARY KEY("company_id")
+	"company_id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"company_name"	TEXT NOT NULL,
+	"company_numSeats"	INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "Member" (
+	"member_id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"member_name"	TEXT NOT NULL,
+	"member_email"	TEXT,
+	"member_phone"	TEXT,
+	"company_id"	INTEGER NOT NULL,
+	FOREIGN KEY("company_id") REFERENCES "Company"("company_id")
 );
 CREATE TABLE IF NOT EXISTS "Event" (
 	"event_id"	int NOT NULL AUTOINCREMENT,
 	"event_name"	varchar(30) NOT NULL,
 	"event_date"	date NOT NULL,
 	"event_status"	TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')),
-	"sponsorship_level"	TEXT NOT NULL CHECK("sponsorship_level" IN ('Bronze', 'Silver', 'Gold', 'Platinum')),
+	"event_fee" int NOT NULL,
 	PRIMARY KEY("event_id")
 );
 CREATE TABLE IF NOT EXISTS "Balance" (
@@ -59,7 +65,12 @@ CREATE TABLE IF NOT EXISTS "Sponsorship" (
 	"payment_id"	int NOT NULL,
 	"invoice_id"	int NOT NULL,
 	PRIMARY KEY("sponsorship_id"),
-	FOREIGN KEY("company_id") REFERENCES "Company"("company_id"),
+	FOREIGN KEY("member_id") REFERENCES "Member"("member_id"),
 	FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
+);
+CREATE TABLE IF NOT EXISTS "COIIPA_GBMember" (
+	"gb_id" int NOT NULL AUTOINCREMENT,
+	"gb_name" varchar(50) NOT NULL,
+	"gb_rank" varchar(50) NOT NULL
 );
 COMMIT;

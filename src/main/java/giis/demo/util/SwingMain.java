@@ -1,18 +1,20 @@
 package giis.demo.util;
 
+import giis.demo.controller.*;
+import giis.demo.model.*;
+import giis.demo.tkrun.CarrerasController;
+import giis.demo.tkrun.CarrerasModel;
+import giis.demo.tkrun.CarrerasView;
+import giis.demo.view.*;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import giis.demo.tkrun.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.time.LocalDate;
 import java.util.Date;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -71,7 +73,6 @@ public class SwingMain {
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(btnEjecutarTkrun);
 		
-			
 		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
 		btnInicializarBaseDeDatos.setBounds(0, 23, 197, 23);
 		btnInicializarBaseDeDatos.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
@@ -115,6 +116,18 @@ public class SwingMain {
 				registrarFecha();
 			}
 		});
+		
+		
+		JButton btnRegisterIncomeExpenses = new JButton("Register Income/Expenses");
+		btnRegisterIncomeExpenses.setBounds(0, 142, 205, 23);
+		btnRegisterIncomeExpenses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterIncomeExpensesModel model = new RegisterIncomeExpensesModel();
+				RegIncomeExpensesView view = new RegIncomeExpensesView();
+				RegisterIncomeExpensesController controller = new RegisterIncomeExpensesController(model, view);
+			}
+		});
+		frame.getContentPane().add(btnRegisterIncomeExpenses);
 	}
 
 	/**
@@ -147,4 +160,3 @@ public class SwingMain {
 
 	public JFrame getFrame() { return this.frame; }
 }
-//Comentario

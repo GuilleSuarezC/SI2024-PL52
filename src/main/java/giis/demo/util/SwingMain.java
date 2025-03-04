@@ -6,7 +6,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import giis.demo.controller.RegisterSponsorshipAgreeController;
+import giis.demo.model.RegisterSponsorshipAgreeModel;
 import giis.demo.tkrun.*;
+import giis.demo.view.RegisterSponsorshipAgreeView;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.time.LocalDate;
@@ -71,6 +76,15 @@ public class SwingMain {
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(btnEjecutarTkrun);
 		
+		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
+		btnRegisterSponsorship.setBounds(10, 144, 139, 23);
+		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
+			public void actionPerformed(ActionEvent e) {
+				RegisterSponsorshipAgreeController controller=new RegisterSponsorshipAgreeController(new RegisterSponsorshipAgreeModel(), new RegisterSponsorshipAgreeView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		frame.getContentPane().add(btnRegisterSponsorship);
 			
 		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
 		btnInicializarBaseDeDatos.setBounds(0, 23, 197, 23);
@@ -147,4 +161,4 @@ public class SwingMain {
 
 	public JFrame getFrame() { return this.frame; }
 }
-//Comentario
+

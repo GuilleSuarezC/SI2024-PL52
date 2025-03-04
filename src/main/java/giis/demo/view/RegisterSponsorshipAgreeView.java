@@ -27,10 +27,9 @@ public class RegisterSponsorshipAgreeView {
     private JLabel lblFee;
     private JTextField txtAgreementDate;
     private JComboBox<Object> lstMiembrosGB;
-    private JList<Object> lstContacts;
     private JButton btnRegistrar;
     private JButton btnCancelar;
-    private JTable tabAcuerdos;
+    private JTable lstContacts;
 
     /**
      * Create the application.
@@ -39,6 +38,14 @@ public class RegisterSponsorshipAgreeView {
         initialize();
     }
 
+    public void setComboBoxIndexes(int index) {
+        lstCompany.setSelectedIndex(index);
+        lstEvent.setSelectedIndex(index);
+        lstMiembrosGB.setSelectedIndex(index);
+//        lstContacts.removeAll();
+//        lstContacts.revalidate();
+//        lstContacts.repaint();
+    }
     /**
      * Initialize the contents of the frame.
      */
@@ -46,8 +53,7 @@ public class RegisterSponsorshipAgreeView {
         frame = new JFrame();
         frame.setTitle("Registro de Acuerdos de Patrocinio");
         frame.setName("SponsorshipView");
-        frame.setBounds(0, 0, 600, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(0, 0, 600, 362);
         frame.getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][][][][grow][]"));
         
         JLabel lblCompany = new JLabel("Company:");
@@ -81,26 +87,17 @@ public class RegisterSponsorshipAgreeView {
         
         JLabel lblContacts = new JLabel("Contacts:");
         frame.getContentPane().add(lblContacts, "flowx,cell 0 5");
-        
-        lstContacts = new JList<>();
-        JScrollPane contactsPanel = new JScrollPane(lstContacts);
+        JScrollPane contactsPanel = new JScrollPane();
         frame.getContentPane().add(contactsPanel, "cell 0 5,grow");
+        
+        lstContacts = new JTable();
+        contactsPanel.setViewportView(lstContacts);
         
         btnRegistrar = new JButton("Register");
         frame.getContentPane().add(btnRegistrar, "flowx,cell 0 6");
         
         btnCancelar = new JButton("Cancel");
         frame.getContentPane().add(btnCancelar, "cell 0 6");
-        
-        JLabel lblAcuerdos = new JLabel("Registered Agreements:");
-        frame.getContentPane().add(lblAcuerdos, "cell 0 7");
-        
-        tabAcuerdos = new JTable();
-        tabAcuerdos.setName("tabAcuerdos");
-        tabAcuerdos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tabAcuerdos.setDefaultEditor(Object.class, null); // readonly
-        JScrollPane tablePanel = new JScrollPane(tabAcuerdos);
-        frame.getContentPane().add(tablePanel, "cell 0 8,grow");
     }
 
     // Getters para acceso desde el controlador
@@ -111,9 +108,8 @@ public class RegisterSponsorshipAgreeView {
     public String getAgreementDate() { return this.txtAgreementDate.getText(); }
     public void setAgreementDate(String fecha) { this.txtAgreementDate.setText(fecha); }
     public JComboBox<Object> getListaMiembrosGB() { return this.lstMiembrosGB; }
-    public JList<Object> getListaContacts() { return this.lstContacts; }
+    public JTable getListaContacts() { return this.lstContacts; }
     public JButton getBtnRegistrar() { return this.btnRegistrar; }
     public JButton getBtnCancelar() { return this.btnCancelar; }
-    public JTable getTablaAcuerdos() { return this.tabAcuerdos; }
 }
 

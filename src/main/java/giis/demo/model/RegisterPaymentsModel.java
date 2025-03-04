@@ -8,7 +8,7 @@ import giis.demo.util.ApplicationException;
 /**
  * Modelo para gestionar los acuerdos de patrocinio.
  */
-public class RegisterSponsorshipAgreeModel {
+public class RegisterPaymentsModel {
     private Database db = new Database();
 
     /**

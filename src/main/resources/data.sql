@@ -1,6 +1,10 @@
 BEGIN TRANSACTION;
 
 -- Borrar datos previos para evitar duplicados
+<<<<<<< HEAD
+=======
+
+>>>>>>> bf4cebdbc54c9c006c1d7398eb28d9db10e57e93
 DELETE FROM "Member";
 DELETE FROM "Balance";
 DELETE FROM "Invoice";
@@ -29,11 +33,13 @@ INSERT INTO "Event" (event_name, event_date, event_edition, event_duration, even
     ('Hackathon UNIOVI', '2025-03-05', 'IV', 2, 'Planned', 4000),
     ('Asturias AI Summit', '2025-04-12', 'III', 1, 'Planned', 5000);
 
+
 -- Poblar Balance con nueva estructura
 INSERT INTO "Balance" (event_id, concept, amount, description, dateOfPaid) VALUES
     (1, 'Sponsorship Tech Solutions S.L.', 3000, 'Tech Solutions S.L.', '2023-01-01'),
     (2, 'Sponsorship Innovate Asturias', 4000, 'Innovate Asturias', '2023-02-01'),
     (3, 'Expense', -1000, 'Rent a building for the event', '2023-03-01');
+
 
 -- Poblar Sponsorship
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) VALUES
@@ -41,12 +47,14 @@ INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_
     ('Asturias Digital', '2024-08-10', 2, 2, 2, 2),
     ('AI Research Fund', '2024-08-15', 3, 3, 3, 3);
 
+	
 -- Poblar Invoice
 INSERT INTO "Invoice" (taxData_name, taxData_Fnumber, invoice_date, sponsorship_id) VALUES
     ('Tech Solutions S.L.', 'B12345678', '2025-02-01', 1),
     ('Innovate Asturias', 'B87654321', '2025-02-20', 2),
     ('UNIOVI Research', 'G12349876', '2025-03-25', 3);
 
+	
 -- Poblar Payment
 INSERT INTO "Payment" (payment_amount, payment_date, payment_status, sponsorship_id) VALUES
     (3000, '2024-09-10', 'Paid', 1),

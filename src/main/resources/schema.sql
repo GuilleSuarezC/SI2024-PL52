@@ -46,6 +46,7 @@ CREATE TABLE "Event" (
 );
 
 
+
 CREATE TABLE "Balance" (
     "balance_id" INTEGER PRIMARY KEY,
     "concept" TEXT NOT NULL,         
@@ -94,3 +95,4 @@ CREATE TABLE "COIIPA_GBMember" (
 );
 
 COMMIT;
+

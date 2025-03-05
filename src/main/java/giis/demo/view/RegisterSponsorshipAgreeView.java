@@ -111,5 +111,6 @@ public class RegisterSponsorshipAgreeView {
     public JTable getListaContacts() { return this.lstContacts; }
     public JButton getBtnRegistrar() { return this.btnRegistrar; }
     public JButton getBtnCancelar() { return this.btnCancelar; }
+    public void setLlbFee(String fee) { this.lblFee.setText("Fee: "+fee);}
 }
 

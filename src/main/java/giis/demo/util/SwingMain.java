@@ -69,22 +69,12 @@ public class SwingMain {
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 575, 426);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		
-		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
-		btnEjecutarTkrun.setBounds(0, 0, 149, 23);
-		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
-			public void actionPerformed(ActionEvent e) {
-				CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
-				controller.initController();
-			}
-		});
 		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(btnEjecutarTkrun);
 		
 
 		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
 
-		btnRegisterSponsorship.setBounds(20, 175, 129, 23);
+		btnRegisterSponsorship.setBounds(20, 175, 195, 23);
 
 		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -114,22 +104,7 @@ public class SwingMain {
 				db.loadDatabase();
 			}
 		});
-		frame.getContentPane().add(btnCargarDatosIniciales);
-		
-		
-		JButton btnGenerateInvoice = new JButton("Generate and Send Invoice");
-        btnGenerateInvoice.setBounds(20, 208, 250, 23);
-        btnGenerateInvoice.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InvoiceSendModel model = new InvoiceSendModel();
-                InvoiceSendView view = new InvoiceSendView();
-                InvoiceSendController controller = new InvoiceSendController(model, view);
-            }
-        });
-        frame.getContentPane().add(btnGenerateInvoice);
-		
-		
-		
+		frame.getContentPane().add(btnCargarDatosIniciales);		
 		
 		JLabel changeDateLabel = new JLabel("Change the current date (Use YYYY-MM-DD format):");
 		changeDateLabel.setBounds(10, 80, 350, 14);

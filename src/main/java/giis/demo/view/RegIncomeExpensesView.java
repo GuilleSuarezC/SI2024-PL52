@@ -77,7 +77,7 @@ public class RegIncomeExpensesView {
         frame.setVisible(true);
     }
 
-    // Getters para los componentes
+    
     public String getSource() { return sourceField.getText(); } 
     public String getDescription() { return descriptionField.getText(); }
     public String getDateOfPaid() { return datePaidField.getText(); }
@@ -89,7 +89,7 @@ public class RegIncomeExpensesView {
         submitButton.addActionListener(actionListener);
     }
 
-    // Método para llenar el JComboBox con eventos
+    
     public void setEventOptions(Object[] events) {
         for (Object event : events) {
             eventComboBox.addItem(event);

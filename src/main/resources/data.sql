@@ -1,6 +1,8 @@
 BEGIN TRANSACTION;
 
 
+-- Borrar datos previos para evitar duplicados
+
 DELETE FROM "Member";
 DELETE FROM "Balance";
 DELETE FROM "Invoice";

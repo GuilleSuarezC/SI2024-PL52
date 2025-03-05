@@ -83,8 +83,8 @@ CREATE TABLE "Sponsorship" (
     "sponsorship_agreementDate" DATE NOT NULL,
     "company_id" INTEGER NOT NULL,
     "event_id" INTEGER NOT NULL,
-    "payment_id" INTEGER NOT NULL,
-    "invoice_id" INTEGER NOT NULL,
+    "payment_id" INTEGER ,
+    "invoice_id" INTEGER ,
     FOREIGN KEY("company_id") REFERENCES "Company"("company_id"),
     FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
 );

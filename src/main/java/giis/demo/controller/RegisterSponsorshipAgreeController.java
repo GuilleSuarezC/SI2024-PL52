@@ -39,6 +39,8 @@ public class RegisterSponsorshipAgreeController {
         view.getBtnRegistrar().addActionListener(e -> SwingUtil.exceptionWrapper(() -> registerSponsorship()));
         
         view.getListaCompany().addActionListener(e -> SwingUtil.exceptionWrapper(() -> loadCompanyMembers()));
+        view.getListaEvent().addActionListener(e -> SwingUtil.exceptionWrapper(() -> loadFee()));
+
 
         // Manejador para el botón "Cancelar"
         view.getBtnCancelar().addActionListener(e -> SwingUtil.exceptionWrapper(() -> clearForm()));
@@ -55,6 +57,11 @@ public class RegisterSponsorshipAgreeController {
         view.getFrame().setVisible(true);
     }
 
+    public void loadFee() {
+    	int selectedEvent = view.getListaEvent().getSelectedIndex();
+    	if(selectedEvent == -1) return;
+    	view.setLlbFee(""+listaEvent.get(selectedEvent).getEvent_fee()+"€");
+    }
     /**
      * Carga la lista de empresas en el comboBox.
      */
@@ -193,5 +200,6 @@ public class RegisterSponsorshipAgreeController {
         view.setAgreementDate(""); // Limpiar la fecha
         view.setComboBoxIndexes(-1);
         view.getListaContacts().setModel(new DefaultTableModel(new String[] {},0));
+        view.setLlbFee("");
     }
 }

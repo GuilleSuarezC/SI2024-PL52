@@ -1,10 +1,6 @@
 BEGIN TRANSACTION;
 
--- Borrar datos previos para evitar duplicados
-<<<<<<< HEAD
-=======
 
->>>>>>> bf4cebdbc54c9c006c1d7398eb28d9db10e57e93
 DELETE FROM "Member";
 DELETE FROM "Balance";
 DELETE FROM "Invoice";
@@ -35,7 +31,7 @@ INSERT INTO "Event" (event_name, event_date, event_edition, event_duration, even
 
 
 -- Poblar Balance con nueva estructura
-INSERT INTO "Balance" (event_id, concept, amount, description, dateOfPaid) VALUES
+INSERT INTO "Balance" (event_id, source, amount, description, dateOfPaid) VALUES
     (1, 'Sponsorship Tech Solutions S.L.', 3000, 'Tech Solutions S.L.', '2023-01-01'),
     (2, 'Sponsorship Innovate Asturias', 4000, 'Innovate Asturias', '2023-02-01'),
     (3, 'Expense', -1000, 'Rent a building for the event', '2023-03-01');

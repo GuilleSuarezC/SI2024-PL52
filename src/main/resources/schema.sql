@@ -49,7 +49,7 @@ CREATE TABLE "Event" (
 
 CREATE TABLE "Balance" (
     "balance_id" INTEGER PRIMARY KEY,
-    "concept" TEXT NOT NULL,         
+    "source" TEXT NOT NULL,         
     "event_id" INTEGER NOT NULL,     
     "amount" INTEGER NOT NULL,       
     "description" TEXT,              

@@ -83,7 +83,7 @@ public class SwingMain {
 		
 
 		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
-		btnRegisterSponsorship.setBounds(10, 144, 139, 23);
+		btnRegisterSponsorship.setBounds(10, 175, 139, 23);
 		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
 				RegisterSponsorshipAgreeController controller=new RegisterSponsorshipAgreeController(new RegisterSponsorshipAgreeModel(), new RegisterSponsorshipAgreeView());
@@ -139,7 +139,7 @@ public class SwingMain {
 		
 		
 		JButton btnRegisterIncomeExpenses = new JButton("Register Income/Expenses");
-		btnRegisterIncomeExpenses.setBounds(0, 142, 205, 23);
+		btnRegisterIncomeExpenses.setBounds(10, 143, 205, 23);
 		btnRegisterIncomeExpenses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterIncomeExpensesModel model = new RegisterIncomeExpensesModel();

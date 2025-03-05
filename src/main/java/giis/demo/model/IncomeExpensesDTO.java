@@ -5,11 +5,11 @@ import java.util.List;
 
 import giis.demo.util.Database;
 
-public class IncomeExpenses {
+public class IncomeExpensesDTO {
 	private int id;
-    private String concept;  
+    private String source;  
     private String description;
-    private Date dateOfPaid;
+    private String dateOfPaid;
     private int eventId;
     private double amount;  
     private double paid;    
@@ -18,11 +18,11 @@ public class IncomeExpenses {
     
     
     
-	public IncomeExpenses(int id, String concept, String description, Date dateOfPaid, int eventId, double amount,
+	public IncomeExpensesDTO(int id, String source, String description, String dateOfPaid, int eventId, double amount,
 			double paid, double estimated) {
 		super();
 		this.id = id;
-		this.concept = concept;
+		this.source = source;
 		this.description = description;
 		this.dateOfPaid = dateOfPaid;
 		this.eventId = eventId;
@@ -36,11 +36,11 @@ public class IncomeExpenses {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getConcept() {
-		return concept;
+	public String getSource() {
+		return source;
 	}
-	public void setConcept(String concept) {
-		this.concept = concept;
+	public void setSource(String source) {
+		this.source = source;
 	}
 	public String getDescription() {
 		return description;
@@ -48,10 +48,10 @@ public class IncomeExpenses {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getDateOfPaid() {
+	public String getDateOfPaid() {
 		return dateOfPaid;
 	}
-	public void setDateOfPaid(Date dateOfPaid) {
+	public void setDateOfPaid(String dateOfPaid) {
 		this.dateOfPaid = dateOfPaid;
 	}
 	public int getEventId() {

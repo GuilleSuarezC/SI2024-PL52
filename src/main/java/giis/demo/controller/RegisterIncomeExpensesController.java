@@ -13,12 +13,16 @@ import giis.demo.util.Database;
 import giis.demo.view.RegIncomeExpensesView;
 
 public class RegisterIncomeExpensesController {
-    private RegisterIncomeExpensesModel model;
+	private RegisterIncomeExpensesModel model;
     private RegIncomeExpensesView view;
 
     public RegisterIncomeExpensesController(RegisterIncomeExpensesModel model, RegIncomeExpensesView view) {
         this.model = model;
         this.view = view;
+
+        
+        Object[] events = model.getEventNames();
+        view.setEventOptions(events);
 
         this.view.getSubmitButton().addActionListener(new ActionListener() {
             @Override
@@ -29,26 +33,26 @@ public class RegisterIncomeExpensesController {
     }
 
     private void registerMovement() {
-        String concept = view.getConcept();   
-        int eventId = view.getEventId();
-        double amount = view.getAmount();
+        String source = view.getSource();
         String description = view.getDescription();
-        Date dateOfPaid = convertirFecha(view.getDateOfPaid());
-
-        model.save(concept, eventId, amount, description, dateOfPaid);
-
-        JOptionPane.showMessageDialog(null, "Movement Registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        double amount = view.getAmount();
+        String dateOfPaid = view.getDateOfPaid();
+        
+        String selectedEvent = (String) view.getSelectedEvent();
+        int eventId = model.getEventIdByName(selectedEvent);
+        
+        model.save(source, eventId, amount, description, dateOfPaid);
+        
+        JOptionPane.showMessageDialog(null, "Movement registered sucessfully", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
-	    
-	    
-	    private Date convertirFecha(String fecha) {
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        try {
-	            return sdf.parse(fecha);
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	            return null;
-	        }
-	    }
+    private Date convertirFecha(String fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	}

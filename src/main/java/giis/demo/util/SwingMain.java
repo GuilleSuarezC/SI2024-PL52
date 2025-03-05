@@ -84,7 +84,7 @@ public class SwingMain {
 
 		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
 
-		btnRegisterSponsorship.setBounds(10, 175, 139, 23);
+		btnRegisterSponsorship.setBounds(20, 175, 129, 23);
 
 		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -116,6 +116,21 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnCargarDatosIniciales);
 		
+		
+		JButton btnGenerateInvoice = new JButton("Generate and Send Invoice");
+        btnGenerateInvoice.setBounds(20, 208, 250, 23);
+        btnGenerateInvoice.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                InvoiceSendModel model = new InvoiceSendModel();
+                InvoiceSendView view = new InvoiceSendView();
+                InvoiceSendController controller = new InvoiceSendController(model, view);
+            }
+        });
+        frame.getContentPane().add(btnGenerateInvoice);
+		
+		
+		
+		
 		JLabel changeDateLabel = new JLabel("Change the current date (Use YYYY-MM-DD format):");
 		changeDateLabel.setBounds(10, 80, 350, 14);
 		frame.getContentPane().add(changeDateLabel);
@@ -141,7 +156,7 @@ public class SwingMain {
 		
 		
 		JButton btnRegisterIncomeExpenses = new JButton("Register Income/Expenses");
-		btnRegisterIncomeExpenses.setBounds(10, 143, 205, 23);
+		btnRegisterIncomeExpenses.setBounds(20, 143, 195, 23);
 		btnRegisterIncomeExpenses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterIncomeExpensesModel model = new RegisterIncomeExpensesModel();

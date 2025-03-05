@@ -12,9 +12,9 @@ public class RegisterIncomeExpensesModel {
 	private Database db = new Database();
 
     
-    public void save(String source, int eventId, double amount, String description, String dateOfPaid) {
-        String sql = "INSERT INTO Balance (source, event_id, amount, description, dateOfPaid) VALUES (?, ?, ?, ?, ?)";
-        db.executeUpdate(sql, source, eventId, amount, description, dateOfPaid);
+    public void save(String concept, int eventId, double amount, String description, String dateOfPaid) {
+        String sql = "INSERT INTO Balance (concept, event_id, amount, description, dateOfPaid) VALUES (?, ?, ?, ?, ?)";
+        db.executeUpdate(sql, concept, eventId, amount, description, dateOfPaid);
     }
 
  

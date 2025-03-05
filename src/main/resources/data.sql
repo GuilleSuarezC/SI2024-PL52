@@ -14,10 +14,10 @@ DELETE FROM "Company";
 DELETE FROM "Event";
 
 -- Poblar Company
-INSERT INTO "Company" (company_name, company_numSeats) VALUES
-    ('Tech Solutions S.L.', 10),
-    ('Innovate Asturias', 15),
-    ('UNIOVI Research', 20);
+INSERT INTO "Company" (company_name, company_numSeats, company_email) VALUES
+    ('Tech Solutions S.L.', 10, 'tech_solutions@gmail.com'),
+    ('Innovate Asturias', 15, 'innovate_asturias@gmail.com'),
+    ('UNIOVI Research', 20, 'uniovi_research@uniovi.es');
 
 -- Poblar Member
 INSERT INTO "Member" (member_name, member_email, member_phone, company_id) VALUES
@@ -33,7 +33,7 @@ INSERT INTO "Event" (event_name, event_date, event_edition, event_duration, even
 
 
 -- Poblar Balance con nueva estructura
-INSERT INTO "Balance" (event_id, source, amount, description, dateOfPaid) VALUES
+INSERT INTO "Balance" (event_id, concept, amount, description, dateOfPaid) VALUES
     (1, 'Sponsorship Tech Solutions S.L.', 3000, 'Tech Solutions S.L.', '2023-01-01'),
     (2, 'Sponsorship Innovate Asturias', 4000, 'Innovate Asturias', '2023-02-01'),
     (3, 'Expense', -1000, 'Rent a building for the event', '2023-03-01');

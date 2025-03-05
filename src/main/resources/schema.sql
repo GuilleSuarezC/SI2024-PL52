@@ -23,7 +23,8 @@ CREATE TABLE "AgreementType" (
 CREATE TABLE "Company" (
     "company_id" INTEGER PRIMARY KEY,
     "company_name" TEXT NOT NULL,
-    "company_numSeats" INTEGER NOT NULL
+    "company_numSeats" INTEGER NOT NULL,
+    "company_email" TEXT NOT NULL
 );
 
 CREATE TABLE "Member" (
@@ -49,7 +50,7 @@ CREATE TABLE "Event" (
 
 CREATE TABLE "Balance" (
     "balance_id" INTEGER PRIMARY KEY,
-    "source" TEXT NOT NULL,         
+    "concept" TEXT NOT NULL,         
     "event_id" INTEGER NOT NULL,     
     "amount" INTEGER NOT NULL,       
     "description" TEXT,              

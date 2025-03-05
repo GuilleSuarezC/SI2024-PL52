@@ -23,10 +23,10 @@ public class RegisterSponsorshipAgreeModel {
     private static final String SQL_GET_GOVERNING_BOARD_MEMBERS = "SELECT gb_id, gb_name FROM COIIPA_GBMember";
     private static final String SQL_GET_CONTACT_MEMBERS="SELECT member_id, member_name, member_email, member_phone, company_id FROM Member WHERE company_id=?";
     private static final String SQL_INSERT_SPONSORSHIP = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) VALUES (?, ?, ?, ?, 0, 0)";
-    private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, source, amount) VALUES (?, ?, ?)";
+    private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, concept, amount) VALUES (?, ?, ?)";
     private static final String SQL_GET_SPONSORSHIPS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship ORDER BY sponsorship_agreementDate DESC";
     private static final String SQL_GET_SPONSORSHIP_DETAILS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship WHERE sponsorship_id = ?";
-    private static final String SQL_GET_EVENT_BALANCE = "SELECT balance_id, source, amount FROM Balance WHERE event_id = ? ORDER BY balance_id";
+    private static final String SQL_GET_EVENT_BALANCE = "SELECT balance_id, concept, amount FROM Balance WHERE event_id = ? ORDER BY balance_id";
 
     /**
      * Obtiene la lista de empresas disponibles para patrocinio.
@@ -75,11 +75,11 @@ public class RegisterSponsorshipAgreeModel {
     /**
      * Registra un ingreso o gasto en el balance de un evento.
      */
-    public void registerBalance(int eventId, String source, int amount) {
-        validateNotNull(source, "La fuente no puede ser nula");
+    public void registerBalance(int eventId, String concept, int amount) {
+        validateNotNull(concept, "La fuente no puede ser nula");
         validateNotNull(amount, "La cantidad no puede ser nula");
 
-        db.executeUpdate(SQL_INSERT_BALANCE, eventId, source, amount);
+        db.executeUpdate(SQL_INSERT_BALANCE, eventId, concept, amount);
     }
 
     /**

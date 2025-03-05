@@ -83,7 +83,7 @@ public class SwingMain {
 		
 
 		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
-		btnRegisterSponsorship.setBounds(10, 144, 139, 23);
+		btnRegisterSponsorship.setBounds(215, 142, 139, 23);
 		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
 				RegisterSponsorshipAgreeController controller=new RegisterSponsorshipAgreeController(new RegisterSponsorshipAgreeModel(), new RegisterSponsorshipAgreeView());
@@ -124,7 +124,7 @@ public class SwingMain {
 		tfChangeDate.setColumns(10);
 		
 		JButton btnChangeDate = new JButton("Change Date");
-		btnChangeDate.setBounds(163, 95, 95, 23);
+		btnChangeDate.setBounds(163, 95, 132, 23);
 		frame.getContentPane().add(btnChangeDate);
 		
 		dateErrorLabel = new JLabel("");

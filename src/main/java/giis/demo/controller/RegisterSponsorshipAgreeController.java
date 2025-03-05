@@ -116,13 +116,14 @@ public class RegisterSponsorshipAgreeController {
         if (selectedEventIndex < 0) { SwingUtil.showMessage("You need to select an event first.", "Select an Event", JOptionPane.ERROR_MESSAGE); return;}
     	int selectedGBIndex = view.getListaMiembrosGB().getSelectedIndex();
         if (selectedGBIndex < 0) { SwingUtil.showMessage("You need to select a Governing Board member first.", "Select a GB", JOptionPane.ERROR_MESSAGE); return;}
-
+        
 
         CompanyDTO selectedCompany = this.listaGlobal.get(selectedCompanyIndex);
         EventDTO selectedEvent = this.listaEvent.get(selectedEventIndex);
         GBMemberDTO selectedMember = this.listaGB.get(selectedGBIndex);
         String agreementDate = view.getAgreementDate();
-
+        if(view.getListaContacts().getSelectedRow() < 0) { SwingUtil.showMessage("Missing company member selection, please select a contact member from the company.", "Select company contact", JOptionPane.ERROR_MESSAGE); return;}
+        
         if (!Util.isValidISODate(agreementDate)) { SwingUtil.showMessage("Incorrect date format, please use ISO format: YYYY-MM-DD.", "Use ISO for date", JOptionPane.ERROR_MESSAGE); return;}
         else {
         	// Validar que todos los campos estén completos

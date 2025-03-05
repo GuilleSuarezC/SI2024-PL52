@@ -1,10 +1,6 @@
 BEGIN TRANSACTION;
 
 -- Borrar datos previos para evitar duplicados
-<<<<<<< HEAD
-=======
-
->>>>>>> bf4cebdbc54c9c006c1d7398eb28d9db10e57e93
 DELETE FROM "Member";
 DELETE FROM "Balance";
 DELETE FROM "Invoice";

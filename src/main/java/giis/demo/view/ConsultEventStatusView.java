@@ -29,9 +29,9 @@ public class ConsultEventStatusView {
         frmConsultEventStatus = new JFrame();
         frmConsultEventStatus.setTitle("Consult Event Status");
         frmConsultEventStatus.setName("ConsultEventStatusView");
-        frmConsultEventStatus.setBounds(100, 100, 800, 484);
+        frmConsultEventStatus.setBounds(100, 100, 800, 514);
         frmConsultEventStatus.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frmConsultEventStatus.getContentPane().setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[14px][109px][14px][94px][141px][23px]"));
+        frmConsultEventStatus.getContentPane().setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[14px][109px][14px][94px][141px][23px][]"));
 
         // Activities Table
         JLabel label = new JLabel("Activities:");
@@ -55,7 +55,7 @@ public class ConsultEventStatusView {
         tblIncome = new JTable();
         JScrollPane spIncome = new JScrollPane(tblIncome);
         spIncome.setPreferredSize(new Dimension(300, 60));
-        frmConsultEventStatus.getContentPane().add(spIncome, "cell 0 3, growx");
+        frmConsultEventStatus.getContentPane().add(spIncome, "cell 0 3,grow");
 
         // Expenses Table
         JLabel label_3 = new JLabel("Expenses:");
@@ -63,7 +63,7 @@ public class ConsultEventStatusView {
         tblExpenses = new JTable();
         JScrollPane spExpenses = new JScrollPane(tblExpenses);
         spExpenses.setPreferredSize(new Dimension(300, 60));
-        frmConsultEventStatus.getContentPane().add(spExpenses, "cell 1 3 3 1, growx");
+        frmConsultEventStatus.getContentPane().add(spExpenses, "cell 1 3 3 1,grow");
 
         // Total Summary Panel
         JPanel pnlTotal = new JPanel(new MigLayout("", "[grow]", "[][]"));
@@ -93,11 +93,11 @@ public class ConsultEventStatusView {
 
         pnlTotal.add(pnlExpenses, "growy");
 
-        frmConsultEventStatus.getContentPane().add(pnlTotal, "cell 0 4 5 1, growx");
-
-        // Exit Button
-        btnExit = new JButton("Exit");
-        frmConsultEventStatus.getContentPane().add(btnExit, "cell 4 5, alignx left, aligny top");
+        frmConsultEventStatus.getContentPane().add(pnlTotal, "cell 0 4 5 1,growx,aligny bottom");
+        
+                // Exit Button
+                btnExit = new JButton("Exit");
+                frmConsultEventStatus.getContentPane().add(btnExit, "cell 4 6,alignx left,aligny top");
     }
 
     

@@ -53,6 +53,13 @@
 		  <artifactId>visual-assert</artifactId>
 		  <version>2.5.1</version>
 		</dependency>
+		
+		<dependency>
+	    <groupId>com.sun.mail</groupId>
+	    <artifactId>jakarta.mail</artifactId>
+	    <version>2.0.1</version>
+		</dependency>
+
 
 		<!-- drivers de base de datos -->
 		<dependency>

@@ -20,11 +20,11 @@ public class InvoiceSendController {
         this.model = model;
         this.view = view;
 
-        // Cargar eventos en la vista
+        
         List<String> eventNames = model.getEventNames();
         view.setEventOptions(eventNames.toArray(new String[0]));
 
-        // Listener para cargar patrocinadores cuando se seleccione un evento
+        
         view.addLoadSponsorsListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ public class InvoiceSendController {
             }
         });
 
-        // Listener para generar y enviar factura
+        
         view.addGenerateButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,19 +53,19 @@ public class InvoiceSendController {
 
         for (int i = 0; i < sponsors.size(); i++) {
             Object[] sponsor = sponsors.get(i);
-            String sponsorName = (String) sponsor[0]; // Nombre de la empresa
+            String sponsorName = (String) sponsor[0];  
             String email = (String) sponsor[1];
             String fiscalNumber = (String) sponsor[2];
-
+            Double amount = (Double) sponsor[3];
             
             String sponsorshipName = sponsorName;
 
             
 
-            sponsorData[i] = new Object[] { sponsorshipName, email, fiscalNumber} ;
+            sponsorData[i] = new Object[] { sponsorshipName, email, fiscalNumber,amount} ;
         }
 
-        view.setSponsorData(sponsorData); // Actualizar la tabla con sponsorship_name
+        view.setSponsorData(sponsorData);  
     }
 
     
@@ -80,24 +80,20 @@ public class InvoiceSendController {
         String fiscalNumber = view.getSelectedFiscalNumber();
         String email = view.getSelectedEmail();
         String event = view.getSelectedEvent();
-
-       
+        Double amount = view.getAmount();
         
-        
-
-    
 
         boolean success = model.generateInvoice(sponsorName, fiscalNumber, email, event);
         if (success) {
             JOptionPane.showMessageDialog(null, "Invoice sent successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("=====================================");
             System.out.println("Invoice Simulator");
-            System.out.println("=====================================");
             System.out.println(" Date: " + view.getInvoiceDate());
             System.out.println(" Sponsor: " + sponsorName);
             System.out.println(" CIF/NIF: " + fiscalNumber);
             System.out.println(" Event: " + event);
             System.out.println(" Sending to: " + email);
+            System.out.println(" Amount to pay: " + amount);
             System.out.println(" Invoice sent sucessfully ");
             System.out.println("=====================================");
         } else {

@@ -74,7 +74,9 @@ CREATE TABLE "Payment" (
     "payment_date" DATE NOT NULL,
     "payment_status" TEXT NOT NULL CHECK("payment_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),
     "sponsorship_id" INTEGER,
-    FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
+    "balance_id" INTEGER,
+    FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id"),
+    FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id")
 );
 
 CREATE TABLE "Sponsorship" (
@@ -83,8 +85,8 @@ CREATE TABLE "Sponsorship" (
     "sponsorship_agreementDate" DATE NOT NULL,
     "company_id" INTEGER NOT NULL,
     "event_id" INTEGER NOT NULL,
-    "payment_id" INTEGER ,
-    "invoice_id" INTEGER ,
+    "payment_id" INTEGER,
+    "invoice_id" INTEGER,
     FOREIGN KEY("company_id") REFERENCES "Company"("company_id"),
     FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
 );
@@ -96,4 +98,3 @@ CREATE TABLE "COIIPA_GBMember" (
 );
 
 COMMIT;
-

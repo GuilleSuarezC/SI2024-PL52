@@ -18,7 +18,6 @@ public class InvoiceDTO {
         
     }
 
-    // Getters y setters
 
     public String getSponsorName() {
         return sponsorName;

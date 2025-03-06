@@ -66,11 +66,17 @@ public class InvoiceSendView {
     }
 
     public void setSponsorData(Object[][] data) {
-    	tableModel.setRowCount(0); // Limpiar la tabla antes de agregar datos
+        tableModel.setRowCount(0); // Limpiar la tabla antes de agregar datos
         for (Object[] row : data) {
-            tableModel.addRow(row);
+            tableModel.addRow(new Object[] {
+                row[0],  // Sponsor name
+                row[1],  // Email
+                row[2],  // Fiscal number
+                row[3]   // Payment amount
+            });
         }
     }
+
 
     public String getSelectedEvent() {
         return (String) eventComboBox.getSelectedItem();
@@ -97,6 +103,11 @@ public class InvoiceSendView {
     public String getSelectedEmail() {
         int row = getSelectedRow();
         return row != -1 ? (String) table.getValueAt(row, 1) : null;
+    }
+    
+    public Double getAmount() {
+        int row = getSelectedRow();
+        return row != -1 ? (Double) table.getValueAt(row, 3) : null;
     }
 
     

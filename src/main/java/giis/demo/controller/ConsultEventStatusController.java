@@ -199,7 +199,17 @@ public class ConsultEventStatusController {
                 }
             }
         }
-
+        // Sumar los pagos de los sponsorships
+        for (SponsorshipInfoDTO sponsor : sponsorList) {
+            if (sponsor.getevent_fee() > 0) { // Solo montos positivos (ingresos)
+                totalIncome += sponsor.getevent_fee();
+                if ("Paid".equals(sponsor.getpayment_status())) {
+                    totalPaid += sponsor.getevent_fee();
+                } else if ("Estimated".equals(sponsor.getpayment_status())) {
+                    totalEstimated += sponsor.getevent_fee();
+                }
+            }
+        }
         // Actualizar las etiquetas de Income
         view.getLblIncomeSummary().setText(String.format("Income: %.2f €", totalIncome));
         view.getLblIncomePaid().setText(String.format("Paid: %.2f €", totalPaid));

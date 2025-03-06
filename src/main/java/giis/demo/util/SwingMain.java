@@ -140,6 +140,16 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);
+		
+		JButton btnConsultEvt = new JButton("Consult Event Status");
+		btnConsultEvt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultEventStatusController controller=new ConsultEventStatusController(new ConsultEventStatusModel(), new ConsultEventStatusView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		btnConsultEvt.setBounds(20, 209, 195, 23);
+		frame.getContentPane().add(btnConsultEvt);
 	}
 
 	/**
@@ -171,5 +181,4 @@ public class SwingMain {
 	}
 
 	public JFrame getFrame() { return this.frame; }
-
 }

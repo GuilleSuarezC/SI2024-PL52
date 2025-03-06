@@ -54,9 +54,9 @@ INSERT INTO "Invoice" (taxData_name, taxData_Fnumber, invoice_date, sponsorship_
 
 	
 -- Poblar Payment
-INSERT INTO "Payment" (payment_amount, payment_date, payment_status, sponsorship_id) VALUES
-    (3000, '2024-09-10', 'Paid', 1),
-    (4000, '2024-09-15', 'Paid', 2);
+INSERT INTO "Payment" (payment_amount, payment_date, payment_status, sponsorship_id, balance_id) VALUES
+    (3000, '2024-09-10', 'Paid', 1, 1),
+    (4000, '2024-09-15', 'Paid', 2, 2);
 
 -- Poblar AgreementType
 INSERT INTO "AgreementType" (agreement_invoice, agreement_subsidy, sponsorship_id) VALUES

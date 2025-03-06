@@ -23,7 +23,8 @@ CREATE TABLE "AgreementType" (
 CREATE TABLE "Company" (
     "company_id" INTEGER PRIMARY KEY,
     "company_name" TEXT NOT NULL,
-    "company_numSeats" INTEGER NOT NULL
+    "company_numSeats" INTEGER NOT NULL,
+    "company_email" TEXT NOT NULL
 );
 
 CREATE TABLE "Member" (
@@ -95,3 +96,4 @@ CREATE TABLE "COIIPA_GBMember" (
 );
 
 COMMIT;
+

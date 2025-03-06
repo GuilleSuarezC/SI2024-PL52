@@ -1,6 +1,8 @@
 BEGIN TRANSACTION;
 
+
 -- Borrar datos previos para evitar duplicados
+
 DELETE FROM "Member";
 DELETE FROM "Balance";
 DELETE FROM "Invoice";
@@ -12,10 +14,10 @@ DELETE FROM "Company";
 DELETE FROM "Event";
 
 -- Poblar Company
-INSERT INTO "Company" (company_name, company_numSeats) VALUES
-    ('Tech Solutions S.L.', 10),
-    ('Innovate Asturias', 15),
-    ('UNIOVI Research', 20);
+INSERT INTO "Company" (company_name, company_numSeats, company_email) VALUES
+    ('Tech Solutions S.L.', 10, 'tech_solutions@gmail.com'),
+    ('Innovate Asturias', 15, 'innovate_asturias@gmail.com'),
+    ('UNIOVI Research', 20, 'uniovi_research@uniovi.es');
 
 -- Poblar Member
 INSERT INTO "Member" (member_name, member_email, member_phone, company_id) VALUES

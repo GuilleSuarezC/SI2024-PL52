@@ -1,23 +1,28 @@
 package giis.demo.util;
 
+import giis.demo.controller.*;
+import giis.demo.model.*;
+import giis.demo.tkrun.CarrerasController;
+import giis.demo.tkrun.CarrerasModel;
+import giis.demo.tkrun.CarrerasView;
+import giis.demo.view.*;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import giis.demo.controller.RegisterPaymentsController;
-import giis.demo.model.RegisterPaymentsModel;
+
+import giis.demo.controller.RegisterSponsorshipAgreeController;
+import giis.demo.model.RegisterSponsorshipAgreeModel;
 import giis.demo.tkrun.*;
-import giis.demo.view.RegisterPaymentsView;
+import giis.demo.view.RegisterSponsorshipAgreeView;
+
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.time.LocalDate;
 import java.util.Date;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -64,19 +69,22 @@ public class SwingMain {
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 575, 426);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
-		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
-		btnEjecutarTkrun.setBounds(0, 0, 149, 23);
-		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
+
+		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
+
+		btnRegisterSponsorship.setBounds(20, 175, 195, 23);
+
+		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
-				CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
-				controller.initController();
+				RegisterSponsorshipAgreeController controller=new RegisterSponsorshipAgreeController(new RegisterSponsorshipAgreeModel(), new RegisterSponsorshipAgreeView());
+				controller.initController(SwingMain.this);
 			}
 		});
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(btnEjecutarTkrun);
-		
+		frame.getContentPane().add(btnRegisterSponsorship);
 			
+
 		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
 		btnInicializarBaseDeDatos.setBounds(0, 23, 197, 23);
 		btnInicializarBaseDeDatos.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
@@ -96,7 +104,7 @@ public class SwingMain {
 				db.loadDatabase();
 			}
 		});
-		frame.getContentPane().add(btnCargarDatosIniciales);
+		frame.getContentPane().add(btnCargarDatosIniciales);		
 		
 		JLabel changeDateLabel = new JLabel("Change the current date (Use YYYY-MM-DD format):");
 		changeDateLabel.setBounds(10, 80, 350, 14);
@@ -108,7 +116,7 @@ public class SwingMain {
 		tfChangeDate.setColumns(10);
 		
 		JButton btnChangeDate = new JButton("Change Date");
-		btnChangeDate.setBounds(163, 95, 95, 23);
+		btnChangeDate.setBounds(163, 95, 132, 23);
 		frame.getContentPane().add(btnChangeDate);
 		
 		dateErrorLabel = new JLabel("");
@@ -121,18 +129,17 @@ public class SwingMain {
 			}
 		});
 		
-		JButton btnRegisterPayments = new JButton("Register Payments");
-		btnRegisterPayments.setBounds(17, 138, 180, 23);
-		btnRegisterPayments.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        RegisterPaymentsView view = new RegisterPaymentsView();
-		        RegisterPaymentsModel model = new RegisterPaymentsModel();
-		        RegisterPaymentsController paymentsController = new RegisterPaymentsController(view, model);
-		        paymentsController.initController();
-		    }
+		
+		JButton btnRegisterIncomeExpenses = new JButton("Register Income/Expenses");
+		btnRegisterIncomeExpenses.setBounds(20, 143, 195, 23);
+		btnRegisterIncomeExpenses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterIncomeExpensesModel model = new RegisterIncomeExpensesModel();
+				RegIncomeExpensesView view = new RegIncomeExpensesView();
+				RegisterIncomeExpensesController controller = new RegisterIncomeExpensesController(model, view);
+			}
 		});
-		frame.getContentPane().add(btnRegisterPayments);
-
+		frame.getContentPane().add(btnRegisterIncomeExpenses);
 	}
 
 	/**
@@ -164,4 +171,5 @@ public class SwingMain {
 	}
 
 	public JFrame getFrame() { return this.frame; }
+
 }

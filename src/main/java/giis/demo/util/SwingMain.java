@@ -6,7 +6,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import giis.demo.controller.RegisterPaymentsController;
+import giis.demo.model.RegisterPaymentsModel;
 import giis.demo.tkrun.*;
+import giis.demo.view.RegisterPaymentsView;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.time.LocalDate;
@@ -115,6 +120,19 @@ public class SwingMain {
 				registrarFecha();
 			}
 		});
+		
+		JButton btnRegisterPayments = new JButton("Register Payments");
+		btnRegisterPayments.setBounds(17, 138, 180, 23);
+		btnRegisterPayments.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        RegisterPaymentsView view = new RegisterPaymentsView();
+		        RegisterPaymentsModel model = new RegisterPaymentsModel();
+		        RegisterPaymentsController paymentsController = new RegisterPaymentsController(view, model);
+		        paymentsController.initController();
+		    }
+		});
+		frame.getContentPane().add(btnRegisterPayments);
+
 	}
 
 	/**

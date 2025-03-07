@@ -29,7 +29,7 @@ public class InvoiceSendView {
         frame.setSize(600, 400);
         frame.setLayout(new BorderLayout());
 
-        // Panel superior con selección de evento
+     
         JPanel topPanel = new JPanel(new FlowLayout());
         JLabel eventLabel = new JLabel("Select Event:");
         eventComboBox = new JComboBox<>();
@@ -39,7 +39,7 @@ public class InvoiceSendView {
         topPanel.add(eventComboBox);
         topPanel.add(loadSponsorsButton);
 
-        // Crear la tabla con columna para el monto del pago
+        
         String[] columnNames = {"Sponsor", "Email", "Fiscal Number", "Amount"};
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
@@ -48,10 +48,10 @@ public class InvoiceSendView {
         topPanel.add(new JLabel("Invoice Date:"));
         topPanel.add(invoiceDateField);
 
-        // Botón para generar facturas
+       
         generateButton = new JButton("Generate and Send Invoice");
 
-        // Agregar elementos al frame
+        
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(generateButton, BorderLayout.SOUTH);
@@ -66,7 +66,7 @@ public class InvoiceSendView {
     }
 
     public void setSponsorData(Object[][] data) {
-        tableModel.setRowCount(0); // Limpiar la tabla antes de agregar datos
+        tableModel.setRowCount(0); 
         for (Object[] row : data) {
             tableModel.addRow(new Object[] {
                 row[0],  // Sponsor name

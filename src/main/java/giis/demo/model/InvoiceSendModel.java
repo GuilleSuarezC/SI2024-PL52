@@ -50,17 +50,17 @@ public class InvoiceSendModel {
     }
 
 
-
-
     public boolean generateInvoice(String sponsorName, String fiscalNumber, String email, String event) {
         try {
             String invoiceDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-            // Obtener sponsorship_id basado en el sponsorName y el evento
+          
             String sponsorshipQuery = "SELECT s.sponsorship_id FROM Sponsorship s " +
                                       "JOIN Company c ON s.company_id = c.company_id " +
                                       "JOIN Event e ON s.event_id = e.event_id " +
                                       "WHERE c.company_name = ? AND e.event_name = ?";
+            
+            
             List<Object[]> sponsorshipResult = db.executeQueryArray(sponsorshipQuery, sponsorName, event);
 
             if (sponsorshipResult.isEmpty()) {
@@ -68,11 +68,12 @@ public class InvoiceSendModel {
                 return false;
             }
 
-            int sponsorshipId = (int) sponsorshipResult.get(0)[0]; // Obtener el sponsorship_id
+            int sponsorshipId = (int) sponsorshipResult.get(0)[0]; 
 
-            // Insertar la factura con el sponsorship_id
+           
             String sql = "INSERT INTO Invoice (taxData_name, taxData_Fnumber, invoice_date, sponsorship_id) " +
                          "VALUES (?, ?, ?, ?)";
+            
             db.executeUpdate(sql, sponsorName, fiscalNumber, invoiceDate, sponsorshipId);
 
             System.out.println("Invoice sent to: " + email);
@@ -120,7 +121,7 @@ public class InvoiceSendModel {
                     + "----------------------------------\n\n"
                     + "Thank you for your support!\n\n"
                     + "Best regards,\n"
-                    + "Event Management Team";
+                    + "COIIPA";
 
             message.setText(emailBody);
 

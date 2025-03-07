@@ -61,6 +61,14 @@ public class SwingMain {
 		initialize();
 	}
 
+	public JTextField getTfChangeDate() {
+		return tfChangeDate;
+	}
+
+	public void setTfChangeDate(String tfChangeDate) {
+		this.tfChangeDate.setText(tfChangeDate);
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -150,6 +158,10 @@ public class SwingMain {
 		});
 		btnConsultEvt.setBounds(20, 209, 195, 23);
 		frame.getContentPane().add(btnConsultEvt);
+		String fechaInit = "2025-04-01";
+		this.fechaISO = Util.isoStringToDate(fechaInit);
+		this.setTfChangeDate(fechaInit);
+
 	}
 
 	/**

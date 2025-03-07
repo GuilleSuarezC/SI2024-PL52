@@ -140,6 +140,22 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);
+		
+		
+		
+		
+		JButton btnRegisterPayments = new JButton("Register Payments");
+		btnRegisterPayments.setBounds(20, 208, 195, 23);
+		frame.getContentPane().add(btnRegisterPayments);
+		btnRegisterPayments.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
+			public void actionPerformed(ActionEvent e) {
+				RegisterPaymentsController controller=new RegisterPaymentsController(new RegisterPaymentsView(), new RegisterPaymentsModel());
+				controller.initController();
+			}
+		});
+		frame.getContentPane().add(btnRegisterPayments);
+		
+		
 	}
 
 	/**

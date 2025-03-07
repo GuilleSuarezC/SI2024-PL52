@@ -2,27 +2,31 @@ package giis.demo.model;
 
 import java.util.Date;
 
+
 public class RegisterPaymentsDTO{
+	
+	public enum Status{PAID, OVERPAID, UNDERPAID, UNPAID};
+	
+	private int paymentId;
     private int sponsorshipId;
     private double amount;
-    private Date agreementDate;
-    private int invoiceId;
-    private Double amountPaid;
     private Date paymentDate;
+    private int invoiceId;
+    private Status status;
+    
+    public RegisterPaymentsDTO() {
+    	
+    }
+    
 
-    public RegisterPaymentsDTO(int sponsorshipId, double amount, Date agreementDate, int invoiceId) {
+    public RegisterPaymentsDTO(int paymentId, int sponsorshipId, double amount, Date paymentDate, int invoiceId) {
+    	this.setPaymentId(paymentId);
         this.sponsorshipId = sponsorshipId;
         this.amount = amount;
-        this.agreementDate = agreementDate;
+        this.paymentDate = paymentDate;
         this.invoiceId = invoiceId;
     }
 
-    public RegisterPaymentsDTO(int invoiceId, double amountPaid, Date paymentDate) {
-		// TODO Auto-generated constructor stub
-    	this.invoiceId = invoiceId;
-    	this.amountPaid = amountPaid;
-    	this.paymentDate = paymentDate;
-	}
 
 	public int getSponsorshipId() {
         return sponsorshipId;
@@ -40,14 +44,6 @@ public class RegisterPaymentsDTO{
         this.amount = amount;
     }
 
-    public Date getAgreementDate() {
-        return agreementDate;
-    }
-
-    public void setAgreementDate(Date agreementDate) {
-        this.agreementDate = agreementDate;
-    }
-
     public int getInvoiceId() {
         return invoiceId;
     }
@@ -56,13 +52,6 @@ public class RegisterPaymentsDTO{
         this.invoiceId = invoiceId;
     }
 
-    public Double getAmountPaid() {
-        return amountPaid;
-    }
-
-    public void setAmountPaid(Double amountPaid) {
-        this.amountPaid = amountPaid;
-    }
 
     public Date getPaymentDate() {
         return paymentDate;
@@ -71,16 +60,36 @@ public class RegisterPaymentsDTO{
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
     }
+    
+    public int getPaymentId() {
+		return paymentId;
+	}
+
+
+	public void setPaymentId(int paymentId) {
+		this.paymentId = paymentId;
+	}
+
+
+	public Status getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
     @Override
     public String toString() {
         return "Payment{" +
-                "sponsorshipId=" + sponsorshipId +
+                "PaymentId=" + paymentId +
                 ", amount=" + amount +
-                ", agreementDate=" + agreementDate +
-                ", invoiceId=" + invoiceId +
-                ", amountPaid=" + amountPaid +
                 ", paymentDate=" + paymentDate +
+                ", invoiceId=" + invoiceId +
+                ", sponsorshipId=" + sponsorshipId +
+                ", status=" + status +
                 '}';
     }
+
 }

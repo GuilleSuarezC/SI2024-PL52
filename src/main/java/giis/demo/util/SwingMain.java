@@ -141,9 +141,10 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);
 		
-		
+
+		//Fixed conflicts
 		JButton btnSendInvoices = new JButton("Send Invoices");
-		btnSendInvoices.setBounds(20, 208, 195, 23);
+		btnSendInvoices.setBounds(20, 242, 195, 23);
 		btnSendInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InvoiceSendModel model = new InvoiceSendModel();
@@ -153,6 +154,17 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnSendInvoices);
 		
+
+		JButton btnConsultEvt = new JButton("Consult Event Status");
+		btnConsultEvt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultEventStatusController controller=new ConsultEventStatusController(new ConsultEventStatusModel(), new ConsultEventStatusView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		btnConsultEvt.setBounds(20, 209, 195, 23);
+		frame.getContentPane().add(btnConsultEvt);
+
 	}
 
 	/**
@@ -184,5 +196,4 @@ public class SwingMain {
 	}
 
 	public JFrame getFrame() { return this.frame; }
-
 }

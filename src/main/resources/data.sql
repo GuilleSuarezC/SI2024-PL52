@@ -59,6 +59,7 @@ INSERT INTO "Payment" (payment_amount, payment_date, payment_status, sponsorship
     (4000, '2024-09-15', 'Paid', 2, 2),
     (5000, '2024-09-20', 'Paid', 3, 3);
 
+
 -- Poblar AgreementType
 INSERT INTO "AgreementType" (agreement_invoice, agreement_subsidy, sponsorship_id) VALUES
     (1, 'No', 1),

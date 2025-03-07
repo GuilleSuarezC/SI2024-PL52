@@ -149,6 +149,20 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);
 		
+
+		//Fixed conflicts
+		JButton btnSendInvoices = new JButton("Send Invoices");
+		btnSendInvoices.setBounds(20, 242, 195, 23);
+		btnSendInvoices.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InvoiceSendModel model = new InvoiceSendModel();
+				InvoiceSendView view = new InvoiceSendView();
+				InvoiceSendController controller = new InvoiceSendController(model, view);
+			}
+		});
+		frame.getContentPane().add(btnSendInvoices);
+		
+
 		JButton btnConsultEvt = new JButton("Consult Event Status");
 		btnConsultEvt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

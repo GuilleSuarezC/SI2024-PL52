@@ -98,4 +98,3 @@ CREATE TABLE "COIIPA_GBMember" (
 );
 
 COMMIT;
-

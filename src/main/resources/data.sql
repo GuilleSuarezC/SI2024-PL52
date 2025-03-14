@@ -27,9 +27,9 @@ INSERT INTO "Member" (member_name, member_email, member_phone, company_id) VALUE
 
 -- Poblar Event
 INSERT INTO "Event" (event_name, event_date, event_edition, event_duration, event_status, event_fee) VALUES
-    ('ImpulsoTIC Week', '2025-02-15', 'XII', 3, 'Planned', 3000),
-    ('Hackathon UNIOVI', '2025-03-05', 'IV', 2, 'Planned', 4000),
-    ('Asturias AI Summit', '2025-04-12', 'III', 1, 'Planned', 5000);
+    ('ImpulsoTIC Week', '2025-02-15', 'XII', '2025-02-18', 'Planned', 3000),
+    ('Hackathon UNIOVI', '2025-03-05', 'IV', '2025-03-07', 'Planned', 4000),
+    ('Asturias AI Summit', '2025-04-12', 'III', '2025-04-13', 'Planned', 5000);
 
 
 -- Poblar Balance con nueva estructura

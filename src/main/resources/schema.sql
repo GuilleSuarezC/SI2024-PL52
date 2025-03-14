@@ -41,7 +41,7 @@ CREATE TABLE "Event" (
     "event_name" VARCHAR(30) NOT NULL,
     "event_date" DATE NOT NULL,
     "event_edition" VARCHAR(10) NOT NULL, 
-    "event_duration" INTEGER NOT NULL,
+    "event_endDate" INTEGER NOT NULL,
     "event_status" TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')),
     "event_fee" INTEGER NOT NULL
 );

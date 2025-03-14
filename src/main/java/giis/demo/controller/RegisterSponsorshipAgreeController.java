@@ -110,6 +110,15 @@ public class RegisterSponsorshipAgreeController {
         // Set the model to the JTable
         view.getListaContacts().setModel(tableModel);
         SwingUtil.autoAdjustColumns(view.getListaContacts());
+        
+        // Ocultar las columnas ids
+        view.getListaContacts().getColumnModel().getColumn(0).setMinWidth(0);
+        view.getListaContacts().getColumnModel().getColumn(0).setMaxWidth(0);
+        view.getListaContacts().getColumnModel().getColumn(0).setWidth(0);
+        
+        view.getListaContacts().getColumnModel().getColumn(4).setMinWidth(0);
+        view.getListaContacts().getColumnModel().getColumn(4).setMaxWidth(0);
+        view.getListaContacts().getColumnModel().getColumn(4).setWidth(0);
     }
     
     /**
@@ -161,7 +170,7 @@ public class RegisterSponsorshipAgreeController {
                     model.registerBalance(eventId, "Sponsorship", selectedEvent.getEvent_fee());
 
                     // Mostrar mensaje de éxito
-                    SwingUtil.showMessage("Acuerdo de patrocinio registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    SwingUtil.showMessage("Sponsorship agreement successfully registered.", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                     // Limpiar el formulario después del registro
                     clearForm();

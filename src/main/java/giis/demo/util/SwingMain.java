@@ -61,6 +61,14 @@ public class SwingMain {
 		initialize();
 	}
 
+	public JTextField getTfChangeDate() {
+		return tfChangeDate;
+	}
+
+	public void setTfChangeDate(String tfChangeDate) {
+		this.tfChangeDate.setText(tfChangeDate);
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -69,22 +77,12 @@ public class SwingMain {
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 575, 426);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		
-		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
-		btnEjecutarTkrun.setBounds(0, 0, 149, 23);
-		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
-			public void actionPerformed(ActionEvent e) {
-				CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
-				controller.initController();
-			}
-		});
 		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(btnEjecutarTkrun);
 		
 
 		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
 
-		btnRegisterSponsorship.setBounds(20, 175, 129, 23);
+		btnRegisterSponsorship.setBounds(20, 175, 195, 23);
 
 		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -114,22 +112,7 @@ public class SwingMain {
 				db.loadDatabase();
 			}
 		});
-		frame.getContentPane().add(btnCargarDatosIniciales);
-		
-		
-		JButton btnGenerateInvoice = new JButton("Generate and Send Invoice");
-        btnGenerateInvoice.setBounds(20, 208, 250, 23);
-        btnGenerateInvoice.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InvoiceSendModel model = new InvoiceSendModel();
-                InvoiceSendView view = new InvoiceSendView();
-                InvoiceSendController controller = new InvoiceSendController(model, view);
-            }
-        });
-        frame.getContentPane().add(btnGenerateInvoice);
-		
-		
-		
+		frame.getContentPane().add(btnCargarDatosIniciales);		
 		
 		JLabel changeDateLabel = new JLabel("Change the current date (Use YYYY-MM-DD format):");
 		changeDateLabel.setBounds(10, 80, 350, 14);
@@ -165,6 +148,34 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);
+		
+
+		//Fixed conflicts
+		JButton btnSendInvoices = new JButton("Send Invoices");
+		btnSendInvoices.setBounds(20, 242, 195, 23);
+		btnSendInvoices.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InvoiceSendModel model = new InvoiceSendModel();
+				InvoiceSendView view = new InvoiceSendView();
+				InvoiceSendController controller = new InvoiceSendController(model, view);
+			}
+		});
+		frame.getContentPane().add(btnSendInvoices);
+		
+
+		JButton btnConsultEvt = new JButton("Consult Event Status");
+		btnConsultEvt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultEventStatusController controller=new ConsultEventStatusController(new ConsultEventStatusModel(), new ConsultEventStatusView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		btnConsultEvt.setBounds(20, 209, 195, 23);
+		frame.getContentPane().add(btnConsultEvt);
+		String fechaInit = "2025-04-01";
+		this.fechaISO = Util.isoStringToDate(fechaInit);
+		this.setTfChangeDate(fechaInit);
+
 	}
 
 	/**
@@ -196,5 +207,4 @@ public class SwingMain {
 	}
 
 	public JFrame getFrame() { return this.frame; }
-
 }

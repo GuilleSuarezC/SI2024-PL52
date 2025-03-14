@@ -193,7 +193,7 @@ public class RegisterSponsorshipAgreeController {
         DefaultComboBoxModel<Object> comboModel = new DefaultComboBoxModel<>();
         for (GBMemberDTO member : members) {
         	this.listaGB.add(member);
-            comboModel.addElement(member.getGb_name()); // Agregar GBMemberDTO como Object
+            comboModel.addElement(member.getGb_rank()); // Agregar GBMemberDTO como Object
         }
         view.getListaMiembrosGB().setModel(comboModel); // Asignar el modelo al JComboBox<Object>
     }

@@ -20,7 +20,7 @@ public class RegisterSponsorshipAgreeModel {
     // Consultas SQL
     private static final String SQL_GET_COMPANIES = "SELECT company_id, company_name FROM Company ORDER BY company_name";
     private static final String SQL_GET_EVENTS = "SELECT event_id, event_name, event_fee, event_date FROM Event ORDER BY event_name";
-    private static final String SQL_GET_GOVERNING_BOARD_MEMBERS = "SELECT gb_id, gb_name FROM COIIPA_GBMember";
+    private static final String SQL_GET_GOVERNING_BOARD_MEMBERS = "SELECT gb_id, gb_name, gb_rank FROM COIIPA_GBMember";
     private static final String SQL_GET_CONTACT_MEMBERS="SELECT member_id, member_name, member_email, member_phone, company_id FROM Member WHERE company_id=?";
     private static final String SQL_INSERT_SPONSORSHIP = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) VALUES (?, ?, ?, ?, 0, 0)";
     private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, concept, amount) VALUES (?, ?, ?)";

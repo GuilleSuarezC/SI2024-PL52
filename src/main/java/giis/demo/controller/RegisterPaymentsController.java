@@ -42,8 +42,8 @@ public class RegisterPaymentsController {
     public void initController(SwingMain s) {
     	this.main=s;
     	view.getBtnRegistrar().addActionListener(e -> SwingUtil.exceptionWrapper(() -> RegisterPayment()));
-    	view.getLstPayments().getSelectionModel().addListSelectionListener(e -> SwingUtil.exceptionWrapper(() -> loadPendingPayments()));
-    	/*view.getLstPayments().getSelectionModel().addListSelectionListener(e -> 
+    	//view.getLstPayments().getSelectionModel().addListSelectionListener(e -> SwingUtil.exceptionWrapper(() -> loadPendingPayments()));
+    	view.getLstPayments().getSelectionModel().addListSelectionListener(e -> 
 	        SwingUtil.exceptionWrapper(() -> {
 	            if (!e.getValueIsAdjusting()) {
 	                int selectedRow = view.getLstPayments().getSelectedRow();
@@ -52,7 +52,7 @@ public class RegisterPaymentsController {
 	                }
 	            }
 	        })
-	    );*/
+	    );
         view.getBtnCancelar().addActionListener(e -> SwingUtil.exceptionWrapper(() -> clearSelection()));
     }
     

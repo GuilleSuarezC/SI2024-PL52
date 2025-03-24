@@ -61,6 +61,14 @@ public class SwingMain {
 		initialize();
 	}
 
+	public JTextField getTfChangeDate() {
+		return tfChangeDate;
+	}
+
+	public void setTfChangeDate(String tfChangeDate) {
+		this.tfChangeDate.setText(tfChangeDate);
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -141,21 +149,33 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);
 		
-		
-		
-		
-		JButton btnRegisterPayments = new JButton("Register Payments");
-		btnRegisterPayments.setBounds(20, 208, 195, 23);
-		frame.getContentPane().add(btnRegisterPayments);
-		btnRegisterPayments.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
+
+		//Fixed conflicts
+		JButton btnSendInvoices = new JButton("Send Invoices");
+		btnSendInvoices.setBounds(20, 242, 195, 23);
+		btnSendInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegisterPaymentsController controller=new RegisterPaymentsController(new RegisterPaymentsView(), new RegisterPaymentsModel());
+				InvoiceSendModel model = new InvoiceSendModel();
+				InvoiceSendView view = new InvoiceSendView();
+				InvoiceSendController controller = new InvoiceSendController(model, view);
+			}
+		});
+		frame.getContentPane().add(btnSendInvoices);
+		
+
+		JButton btnConsultEvt = new JButton("Consult Event Status");
+		btnConsultEvt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultEventStatusController controller=new ConsultEventStatusController(new ConsultEventStatusModel(), new ConsultEventStatusView());
 				controller.initController(SwingMain.this);
 			}
 		});
-		frame.getContentPane().add(btnRegisterPayments);
-		
-		
+		btnConsultEvt.setBounds(20, 209, 195, 23);
+		frame.getContentPane().add(btnConsultEvt);
+		String fechaInit = "2025-04-01";
+		this.fechaISO = Util.isoStringToDate(fechaInit);
+		this.setTfChangeDate(fechaInit);
+
 	}
 
 	/**
@@ -187,5 +207,4 @@ public class SwingMain {
 	}
 
 	public JFrame getFrame() { return this.frame; }
-
 }

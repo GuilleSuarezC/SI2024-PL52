@@ -89,30 +89,32 @@ public class RegisterPaymentsController {
         JTable table = view.getLstPayments();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        /*try {
+        try {
             selectedPayment = new PendingPaymentDTO(
                 Integer.parseInt(table.getValueAt(rowIndex, 0).toString()),  // sponsorshipId
                 table.getValueAt(rowIndex, 1).toString(),                   // sponsorshipName
-                dateFormat.parse(table.getValueAt(rowIndex, 2).toString()), // agreementDate
+                table.getValueAt(rowIndex, 2).toString(), // agreementDate
                 Double.parseDouble(table.getValueAt(rowIndex, 3).toString()), // amount
                 table.getValueAt(rowIndex, 4).toString(),                   // eventName
-                dateFormat.parse(table.getValueAt(rowIndex, 5).toString()), // invoiceDate
+                table.getValueAt(rowIndex, 5).toString(), // invoiceDate
                 Integer.parseInt(table.getValueAt(rowIndex, 6).toString())  // invoiceId
             );
 
             view.setLblSponsorshipName(selectedPayment.getSponsorship_name());
-            view.setLblAgreementDate(dateFormat.format(selectedPayment.getSponsorship_agreementDate()));
+            view.setLblAgreementDate(selectedPayment.getSponsorship_agreementDate());
             view.setLblAmount((int) selectedPayment.getAmount());
+            view.setLblEventName(selectedPayment.getEvent_name());
+            view.setLblInvoiceDate(selectedPayment.getInvoice_date());
             view.setLblInvoiceId(String.valueOf(selectedPayment.getInvoice_id()));
         } catch (Exception e) {
             System.out.println("Error al seleccionar el pago: " + e.getMessage());
-        }*/
+        }
     }
 
 
     private void RegisterPayment() {
         if (selectedPayment == null) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Seleccione un pago antes de registrar.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "Select a pending payment before register the payment.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -129,7 +131,7 @@ public class RegisterPaymentsController {
             if (paymentDateStr.isEmpty()) {
                 JOptionPane.showMessageDialog(view.getFrame(), "Ingrese una fecha válida.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
+            }       
 
             Date paymentDate = java.sql.Date.valueOf(paymentDateStr);
 

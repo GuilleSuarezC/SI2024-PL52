@@ -41,6 +41,7 @@ public class RegisterPaymentsView {
     private JLabel lblInoviceId;
     private JLabel lblAmountPaid;
     private JLabel lblPaymentDate;
+    private JLabel lblInvoiceDate;
 
     /**
      * Create the application.
@@ -89,7 +90,7 @@ public class RegisterPaymentsView {
         lblAgreementDate.setBounds(10, 60, 232, 23);
         DetailsPanel.add(lblAgreementDate);
         
-        lblInoviceId = new JLabel("Inovice ID:  ");
+        lblInoviceId = new JLabel("Invoice ID:  ");
         lblInoviceId.setBounds(10, 110, 232, 23);
         DetailsPanel.add(lblInoviceId);
         
@@ -111,9 +112,9 @@ public class RegisterPaymentsView {
         PaymentDateField.setBounds(428, 98, 131, 19);
         DetailsPanel.add(PaymentDateField);
         
-        JLabel lblInoviceDate = new JLabel("Inovice Date:  ");
-        lblInoviceDate.setBounds(10, 135, 232, 23);
-        DetailsPanel.add(lblInoviceDate);
+        lblInvoiceDate = new JLabel("Invoice Date:  ");
+        lblInvoiceDate.setBounds(10, 135, 232, 23);
+        DetailsPanel.add(lblInvoiceDate);
         
         lblSelectedPayment = new JLabel("Selected Payment");
         lblSelectedPayment.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -141,11 +142,13 @@ public class RegisterPaymentsView {
     public JFrame getFrame() { return this.frmRegisterPaymentsView; }
     public JButton getBtnRegistrar() { return this.btnSave; }
     public JButton getBtnCancelar() { return this.btnCancel; }
-    public void setLblAmount(int amount) {this.lblAmount.setText("Amount to pay: " + amount);}
+    public void setLblAmount(int amount) {this.lblAmount.setText("Amount to pay: " + amount+"€");}
     public void setLblSponsorshipName(String sponsorshipName) {this.lblSponsorshipName.setText("Sponsorship Name: " + sponsorshipName);}
     public void setLblSponsorshipID(int sponsorshipId) {this.lblEventName.setText("Sponsorship Id: " + sponsorshipId);}
     public void setLblInvoiceId(String invoiceId) {this.lblInoviceId.setText("Invoice Id: " + invoiceId);}
     public void setLblAgreementDate(String date) {this.lblAgreementDate.setText("Agreement Date: " + date);}
+    public void setLblEventName(String eventName) {this.lblEventName.setText("Event name: " + eventName);}
+    public void setLblInvoiceDate(String invoiceDate) {this.lblInvoiceDate.setText("Invoice Date: " + invoiceDate);}
     public String getAmountPaidField() {return this.AmountPaidField.getText();}
     public String getPaymentDate() {return this.PaymentDateField.getText();}
 }

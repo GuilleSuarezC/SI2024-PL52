@@ -72,7 +72,7 @@ CREATE TABLE "Payment" (
     "payment_id" INTEGER PRIMARY KEY,
     "payment_amount" REAL,
     "payment_date" DATE,
-    "payment_status" TEXT NOT NULL CHECK("payment_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),
+    "payment_status" TEXT CHECK("payment_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),
     "sponsorship_id" INTEGER,
     FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
 );

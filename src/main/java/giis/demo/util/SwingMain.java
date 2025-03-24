@@ -150,7 +150,7 @@ public class SwingMain {
 		btnRegisterPayments.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
 				RegisterPaymentsController controller=new RegisterPaymentsController(new RegisterPaymentsView(), new RegisterPaymentsModel());
-				controller.initController();
+				controller.initController(SwingMain.this);
 			}
 		});
 		frame.getContentPane().add(btnRegisterPayments);

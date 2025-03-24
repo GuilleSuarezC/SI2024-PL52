@@ -70,8 +70,8 @@ CREATE TABLE "Invoice" (
 
 CREATE TABLE "Payment" (
     "payment_id" INTEGER PRIMARY KEY,
-    "payment_amount" REAL NOT NULL,
-    "payment_date" DATE NOT NULL,
+    "payment_amount" REAL,
+    "payment_date" DATE,
     "payment_status" TEXT NOT NULL CHECK("payment_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),
     "sponsorship_id" INTEGER,
     FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")

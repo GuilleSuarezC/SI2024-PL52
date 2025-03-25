@@ -17,6 +17,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 /**
@@ -145,7 +146,7 @@ public class RegisterPaymentsView {
     public void setLblAmount(int amount) {this.lblAmount.setText("Amount to pay: " + amount+"€");}
     public void setLblSponsorshipName(String sponsorshipName) {this.lblSponsorshipName.setText("Sponsorship Name: " + sponsorshipName);}
     public void setLblSponsorshipID(int sponsorshipId) {this.lblEventName.setText("Sponsorship Id: " + sponsorshipId);}
-    public void setLblInvoiceId(String invoiceId) {this.lblInoviceId.setText("Invoice Id: " + invoiceId);}
+    public void setLblInvoiceId(int invoiceId) {this.lblInoviceId.setText("Invoice Id: " + invoiceId);}
     public void setLblAgreementDate(String date) {this.lblAgreementDate.setText("Agreement Date: " + date);}
     public void setLblEventName(String eventName) {this.lblEventName.setText("Event name: " + eventName);}
     public void setLblInvoiceDate(String invoiceDate) {this.lblInvoiceDate.setText("Invoice Date: " + invoiceDate);}

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class PendingPaymentDTO{
 	
-	private int sponsorship_id;
+	private int balance_id;
 	private String sponsorship_name;
     private String sponsorship_agreementDate;
     private double amount;
@@ -14,8 +14,8 @@ public class PendingPaymentDTO{
     private int invoice_id;
 
     // Constructor
-    public PendingPaymentDTO(int sponsorship_id, String sponsorship_name, String sponsorship_agreementDate, double amount, String event_name, String invoice_date, int invoice_id) {
-    	this.sponsorship_id = sponsorship_id;
+    public PendingPaymentDTO(int balance_id, String sponsorship_name, String sponsorship_agreementDate, double amount, String event_name, String invoice_date, int invoice_id) {
+    	this.balance_id = balance_id;
         this.sponsorship_name = sponsorship_name;
         this.sponsorship_agreementDate = sponsorship_agreementDate;
         this.amount = amount;
@@ -70,17 +70,17 @@ public class PendingPaymentDTO{
     	this.invoice_id = invoice_id; 
     }
     
-    public int getSponsorship_id() { 
-    	return sponsorship_id; 
+    public int getBalance_id() { 
+    	return balance_id; 
     }
-    public void setSponsorship_id(int sponsorship_id) { 
-    	this.sponsorship_id = sponsorship_id; 
+    public void setBalance_id(int balance_id) { 
+    	this.balance_id = balance_id; 
     }
     
     @Override
     public String toString() {
         return "PendingPaymentDTO{" +
-                "sponsorshipId=" + sponsorship_id +
+                "balanceId=" + balance_id +
                 ", sponsorshipName='" + sponsorship_name + '\'' +
                 ", sponsorshipAgreementDate=" + sponsorship_agreementDate +
                 ", amount=" + amount +

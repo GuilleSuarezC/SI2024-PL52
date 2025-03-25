@@ -4,9 +4,10 @@ BEGIN TRANSACTION;
 DROP TABLE IF EXISTS "AgreementType";
 DROP TABLE IF EXISTS "Member";
 DROP TABLE IF EXISTS "Event";
+DROP TABLE IF EXISTS "Edition";
 DROP TABLE IF EXISTS "Balance";
 DROP TABLE IF EXISTS "Invoice";
-DROP TABLE IF EXISTS "Payment";
+DROP TABLE IF EXISTS "Movement";
 DROP TABLE IF EXISTS "Sponsorship";
 DROP TABLE IF EXISTS "COIIPA_GBMember";
 DROP TABLE IF EXISTS "Company";
@@ -36,12 +37,13 @@ CREATE TABLE "Member" (
     FOREIGN KEY("company_id") REFERENCES "Company"("company_id")
 );
 
+
 CREATE TABLE "Event" (
     "event_id" INTEGER PRIMARY KEY,
     "event_name" VARCHAR(30) NOT NULL,
+    "event_edition" VARCHAR(30) NOT NULL,
     "event_date" DATE NOT NULL,
-    "event_edition" VARCHAR(10) NOT NULL, 
-    "event_duration" INTEGER NOT NULL,
+    "event_endDate" INTEGER NOT NULL,
     "event_status" TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')),
     "event_fee" INTEGER NOT NULL
 );
@@ -52,7 +54,8 @@ CREATE TABLE "Balance" (
     "balance_id" INTEGER PRIMARY KEY,
     "concept" TEXT NOT NULL,         
     "event_id" INTEGER NOT NULL,     
-    "amount" INTEGER NOT NULL,       
+    "amount" INTEGER NOT NULL,
+    "balance_status" TEXT NOT NULL CHECK("balance_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),       
     "description" TEXT,              
     "dateOfPaid" DATE,               
     FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
@@ -64,18 +67,15 @@ CREATE TABLE "Invoice" (
     "taxData_name" VARCHAR(30) NOT NULL,
     "taxData_Fnumber" VARCHAR(30) NOT NULL,
     "invoice_date" DATE NOT NULL,
-    "sponsorship_id" INTEGER,
+    "sponsorship_id" INTEGER NOT NULL,
     FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
 );
 
-CREATE TABLE "Payment" (
-    "payment_id" INTEGER PRIMARY KEY,
-    "payment_amount" REAL,
-    "payment_date" DATE,
-    "payment_status" TEXT CHECK("payment_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),
-    "sponsorship_id" INTEGER,
+CREATE TABLE "Movement" (
+    "movement_id" INTEGER PRIMARY KEY,
+    "movement_amount" REAL NOT NULL,
+    "movement_date" DATE NOT NULL,
     "balance_id" INTEGER,
-    FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id"),
     FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id")
 );
 
@@ -83,12 +83,14 @@ CREATE TABLE "Sponsorship" (
     "sponsorship_id" INTEGER PRIMARY KEY,
     "sponsorship_name" VARCHAR(50),
     "sponsorship_agreementDate" DATE NOT NULL,
-    "company_id" INTEGER NOT NULL,
+    "member_id" INTEGER NOT NULL,
     "event_id" INTEGER NOT NULL,
-    "payment_id" INTEGER,
-    "invoice_id" INTEGER,
-    FOREIGN KEY("company_id") REFERENCES "Company"("company_id"),
-    FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
+    "gb_id" INTEGER NOT NULL,
+    "balance_id" INTEGER NOT NULL,
+    FOREIGN KEY("member_id") REFERENCES "Member"("member_id"),
+    FOREIGN KEY("event_id") REFERENCES "Event"("event_id"),
+    FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id"),
+    FOREIGN KEY("gb_id") REFERENCES "COIIPA_GBMember"("gb_id")
 );
 
 CREATE TABLE "COIIPA_GBMember" (

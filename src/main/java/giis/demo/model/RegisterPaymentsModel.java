@@ -16,13 +16,13 @@ public class RegisterPaymentsModel {
 	private Database db = new Database();
     
 	//Consultas SQL
-	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT s.sponsorship_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.invoice_id FROM Sponsorship s LEFT JOIN Event e ON s.event_id = e.event_id LEFT JOIN Invoice i ON s.invoice_id = i.invoice_id LEFT JOIN Balance b ON e.event_id = b.event_id LEFT JOIN Payment p ON s.sponsorship_id = p.sponsorship_id WHERE b.amount < 0";
+	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT b.balance_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.invoice_id FROM Sponsorship s LEFT JOIN Event e ON s.event_id = e.event_id LEFT JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id LEFT JOIN Balance b ON s.balance_id = b.balance_id LEFT JOIN Movement m ON s.balance_id = m.balance_id WHERE b.balance_status != 'Paid'";
 	
-	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Payment (payment_amount, payment_date, sponsorship_id) VALUES (?, ?, ?)";
+	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
 	
-	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET amount = (SELECT p.payment_amount FROM Payment p WHERE p.sponsorship_id = sponsorship_id) WHERE EXISTS (SELECT 1 FROM Payment p WHERE p.sponsorship_id = sponsorship_id);";
+	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid' WHERE balance_id = ?";
 
-	
+
 	public List<PendingPaymentDTO> getPendingPayments() {
     	return db.executeQueryPojo(PendingPaymentDTO.class, SQL_GET_PENDING_PAYMENTS);
     }
@@ -32,9 +32,30 @@ public class RegisterPaymentsModel {
 		validateNotNull(amount, "The amount cannot be null");
 		validateNotNull(paymentDate, "The date of payment cannot be null");
 		
-		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);
-		db.executeUpdate(SQL_UPDATE_PAYMENTS);
+		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);		
 	}
+	
+	public void UpdateBalance(int balanceId)
+	{
+		validateNotNull(balanceId, "The balance id cannot be null");
+		db.executeUpdate(SQL_UPDATE_PAYMENTS, balanceId);		
+	}
+	
+	
+	/*
+	public double getBalanceAmount(int sponsorshipId) {
+	    String query = "SELECT amount FROM Balance WHERE sponsorship_id = ?";
+
+	    try {
+	        List<Object[]> result = db.executeQueryArray(query, sponsorshipId);
+	        if (!result.isEmpty() && result.get(0)[0] != null) {
+	            return Double.parseDouble(result.get(0)[0].toString()); // Convertir el resultado a double
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Error al obtener el balance: " + e.getMessage());
+	    }
+	    return 0; // Retornar 0 si no se encuentra el balance
+	}*/
     
     
     private void validateNotNull(Object obj, String message) {

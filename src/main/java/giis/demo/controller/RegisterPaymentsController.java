@@ -67,6 +67,10 @@ public class RegisterPaymentsController {
             new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "invoice_id"});
         
         view.getLstPayments().setModel(tableModel);
+        view.getLstPayments().getColumnModel().getColumn(0).setMinWidth(0);
+        view.getLstPayments().getColumnModel().getColumn(0).setMaxWidth(0);
+        view.getLstPayments().getColumnModel().getColumn(0).setWidth(0);
+
         SwingUtil.autoAdjustColumns(view.getLstPayments());
     }
 

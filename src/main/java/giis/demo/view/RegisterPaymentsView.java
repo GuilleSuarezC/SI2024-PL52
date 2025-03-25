@@ -96,11 +96,11 @@ public class RegisterPaymentsView {
         DetailsPanel.add(lblInoviceId);
         
         lblAmountPaid = new JLabel("Amount Paid: ");
-        lblAmountPaid.setBounds(357, 63, 72, 23);
+        lblAmountPaid.setBounds(343, 63, 86, 23);
         DetailsPanel.add(lblAmountPaid);
         
         lblPaymentDate = new JLabel("Payment Date: ");
-        lblPaymentDate.setBounds(357, 96, 72, 23);
+        lblPaymentDate.setBounds(343, 96, 86, 23);
         DetailsPanel.add(lblPaymentDate);
         
         AmountPaidField = new JTextField();

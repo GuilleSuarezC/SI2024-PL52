@@ -16,7 +16,7 @@ public class RegisterPaymentsModel {
 	private Database db = new Database();
     
 	//Consultas SQL
-	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT b.balance_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.invoice_id FROM Sponsorship s LEFT JOIN Event e ON s.event_id = e.event_id LEFT JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id LEFT JOIN Balance b ON s.balance_id = b.balance_id LEFT JOIN Movement m ON s.balance_id = m.balance_id WHERE b.balance_status != 'Paid'";
+	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT b.balance_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.invoice_id FROM Sponsorship s LEFT JOIN Balance b ON s.balance_id = b.balance_id LEFT JOIN Event e ON s.event_id = e.event_id LEFT JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id WHERE b.balance_status != 'Paid'";
 	
 	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
 	

@@ -13,8 +13,6 @@ import javax.swing.JComboBox;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * Vista de la pantalla que muestra las carreras activas y permite interactuar con ellas.
@@ -69,10 +67,6 @@ public class CarrerasView {
 		txtFechaHoy.setColumns(10);
 		
 		btnTabCarreras = new JButton("Ver carreras en esta tabla");
-		btnTabCarreras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		lblFechaHoy.setLabelFor(btnTabCarreras);
 		frame.getContentPane().add(btnTabCarreras, "cell 0 3");
 		

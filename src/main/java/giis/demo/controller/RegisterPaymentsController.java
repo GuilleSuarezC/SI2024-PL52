@@ -210,6 +210,6 @@ public class RegisterPaymentsController {
         view.setLblSponsorshipName("");
         view.setLblAgreementDate(null);
         view.setLblAmount(0);
-        view.setLblInvoiceId(0);
-    }
+        view.setLblInvoiceId(0);;
+    } 
 }

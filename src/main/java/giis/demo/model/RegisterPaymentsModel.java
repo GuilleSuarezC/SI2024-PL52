@@ -56,11 +56,10 @@ public class RegisterPaymentsModel {
 	    }
 	    return 0; // Retornar 0 si no se encuentra el balance
 	}*/
-    
-    
+	
     private void validateNotNull(Object obj, String message) {
-        if (obj == null || obj.toString().trim().isEmpty()) {
-            throw new ApplicationException(message);
-        }
+    	if (obj== null || obj.toString().trim().isEmpty()) {
+    		throw new ApplicationException(message);
+    	}
     }
 }

@@ -2,16 +2,16 @@ package giis.demo.model;
 
 public class BalanceDTO {
     private int event_id;
-    private String source;
+    private String concept;
     private int amount;
 
     public BalanceDTO() {
     	
     }
     
-    public BalanceDTO(int event_id, String source, int amount) {
+    public BalanceDTO(int event_id, String concept, int amount) {
         this.event_id = event_id;
-        this.source = source;
+        this.concept = concept;
         this.amount = amount;
     }
 
@@ -23,12 +23,12 @@ public class BalanceDTO {
 		this.event_id = event_id;
 	}
 
-	public String getSource() {
-		return source;
+	public String getConcept() {
+		return concept;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setConcept(String concept) {
+		this.concept = concept;
 	}
 
 	public int getAmount() {
@@ -41,6 +41,6 @@ public class BalanceDTO {
 
 //    // Getters y Setters
 //    public int getEventId() { return event_id; }
-//    public String getSource() { return source; }
+//    public String getconcept() { return concept; }
 //    public int getAmount() { return amount;}
 }

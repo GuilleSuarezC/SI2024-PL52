@@ -153,4 +153,3 @@ public class RegisterPaymentsView {
     public String getAmountPaidField() {return this.AmountPaidField.getText();}
     public String getPaymentDate() {return this.PaymentDateField.getText();}
 }
-

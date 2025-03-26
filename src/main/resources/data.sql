@@ -61,4 +61,8 @@ INSERT INTO "Movement" (movement_amount, movement_date, balance_id) VALUES
     (3000, '2024-09-10', 1),
     (4000, '2024-09-15', 2);
 
+<<<<<<< HEAD
 COMMIT;
+=======
+COMMIT;
+>>>>>>> refs/heads/main

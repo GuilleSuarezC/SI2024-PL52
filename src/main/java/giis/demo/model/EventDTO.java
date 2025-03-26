@@ -5,15 +5,25 @@ public class EventDTO {
     private String event_name;
     private int event_fee;
     private String event_date;
+    private String event_edition;
 
     public EventDTO() {}
     
-    public EventDTO(int event_id, String event_name, int event_fee, String event_date) {
+    public EventDTO(int event_id, String event_name, int event_fee, String event_date, String event_edition) {
         this.event_id = event_id;
         this.event_name = event_name;
         this.event_fee = event_fee;
         this.event_date = event_date;
+        this.event_edition = event_edition;
     }
+
+	public String getEvent_edition() {
+		return event_edition;
+	}
+
+	public void setEvent_edition(String event_edition) {
+		this.event_edition = event_edition;
+	}
 
 	public String getEvent_date() {
 		return event_date;

@@ -35,14 +35,14 @@ public class InvoiceSendModel {
 
 
     public List<Object[]> getSponsorsByEvent(String eventName) {
-        String sql = "SELECT c.company_name, c.company_email, i.taxData_Fnumber, p.payment_amount "+
+    	String sql = "SELECT c.company_name, c.company_email, i.taxData_Fnumber, p.payment_amount "+
                 "FROM Sponsorship s "+
-                "JOIN Member m ON s.member_id = m.member_id "+
-                "JOIN Company c ON m.company_id = c.company_id "+
+                "JOIN Company c ON s.company_id = c.company_id "+  
                 "JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id "+
                 "JOIN Payment p ON s.sponsorship_id = p.sponsorship_id "+
                 "JOIN Event ev ON s.event_id = ev.event_id "+
                 "WHERE ev.event_name = ?";
+
         
         
 
@@ -58,12 +58,12 @@ public class InvoiceSendModel {
             String invoiceDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
             // Consulta corregida para obtener sponsorship_id
-            String sponsorshipQuery = "SELECT s.sponsorship_id " + // 👈 Agrega un espacio aquí
-            		"FROM Sponsorship s " +
-            		"JOIN Member m ON s.member_id = m.member_id " +
-            		"JOIN Company c ON m.company_id = c.company_id " +
-            		"JOIN Event ev ON s.event_id = ev.event_id " +
-            		"WHERE c.company_name = ? AND ev.event_name = ? ";
+            String sponsorshipQuery = "SELECT s.sponsorship_id " +
+                    "FROM Sponsorship s " +
+                    "JOIN Company c ON s.company_id = c.company_id " +
+                    "JOIN Event ev ON s.event_id = ev.event_id " +
+                    "WHERE c.company_name = ? AND ev.event_name = ?";
+
 
 
             

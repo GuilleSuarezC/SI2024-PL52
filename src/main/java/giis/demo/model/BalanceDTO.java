@@ -31,12 +31,17 @@ public class BalanceDTO {
     public double getAmount() { return amount; }
     public void setAmount(double amount) { this.amount = amount; }
 
+
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
     public String getDateOfPaid() { return dateOfPaid; }
     public void setDateOfPaid(String dateOfPaid) { this.dateOfPaid = dateOfPaid; }
 
+
     public String getBalanceStatus() { return balanceStatus; }
     public void setBalanceStatus(String balanceStatus) { this.balanceStatus = balanceStatus; }
+
+
+
 }

@@ -93,7 +93,7 @@ public class SwingMain {
 		frame.getContentPane().add(btnRegisterSponsorship);
 			
 
-		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
+		JButton btnInicializarBaseDeDatos = new JButton("Initialize DB");
 		btnInicializarBaseDeDatos.setBounds(0, 23, 197, 23);
 		btnInicializarBaseDeDatos.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +103,7 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnInicializarBaseDeDatos);
 			
-		JButton btnCargarDatosIniciales = new JButton("Cargar Datos Iniciales para Pruebas");
+		JButton btnCargarDatosIniciales = new JButton("Load DB Data");
 		btnCargarDatosIniciales.setBounds(0, 46, 205, 23);
 		btnCargarDatosIniciales.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -176,6 +176,18 @@ public class SwingMain {
 		String fechaInit = "2025-04-01";
 		this.fechaISO = Util.isoStringToDate(fechaInit);
 		this.setTfChangeDate(fechaInit);
+		
+		
+		JButton btnRegisterPayments = new JButton("Register Payments");
+		btnRegisterPayments.setBounds(20, 275, 195, 23);
+		frame.getContentPane().add(btnRegisterPayments);
+		btnRegisterPayments.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				RegisterPaymentsController controller=new RegisterPaymentsController(new RegisterPaymentsView(), new RegisterPaymentsModel());
+				controller.initController(SwingMain.this);
+			}
+		});
+		frame.getContentPane().add(btnRegisterPayments);
 
 	}
 

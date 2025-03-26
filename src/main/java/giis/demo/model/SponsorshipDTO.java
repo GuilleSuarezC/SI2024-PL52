@@ -3,14 +3,14 @@ package giis.demo.model;
 public class SponsorshipDTO {
     private int sponsorshipId;
     private String sponsorshipName;
-    private String agreementDate;
+    private String sponsorship_agreementDate;
 
     public SponsorshipDTO() {}
     
-    public SponsorshipDTO(int sponsorshipId, String sponsorshipName, String agreementDate) {
+    public SponsorshipDTO(int sponsorshipId, String sponsorshipName, String sponsorship_agreementDate) {
         this.sponsorshipId = sponsorshipId;
         this.sponsorshipName = sponsorshipName;
-        this.agreementDate = agreementDate;
+        this.sponsorship_agreementDate = sponsorship_agreementDate;
     }
 
 	public int getSponsorshipId() {
@@ -29,12 +29,12 @@ public class SponsorshipDTO {
 		this.sponsorshipName = sponsorshipName;
 	}
 
-	public String getAgreementDate() {
-		return agreementDate;
+	public String getSponsorship_agreementDate() {
+		return sponsorship_agreementDate;
 	}
 
-	public void setAgreementDate(String agreementDate) {
-		this.agreementDate = agreementDate;
+	public void setSponsorship_agreementDate(String sponsorship_agreementDate) {
+		this.sponsorship_agreementDate = sponsorship_agreementDate;
 	}
 
 //    // Getters y Setters

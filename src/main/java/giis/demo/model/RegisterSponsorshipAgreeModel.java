@@ -19,11 +19,11 @@ public class RegisterSponsorshipAgreeModel {
 
     // Consultas SQL
     private static final String SQL_GET_COMPANIES = "SELECT company_id, company_name FROM Company ORDER BY company_name";
-    private static final String SQL_GET_EVENTS = "SELECT event_id, event_name, event_fee, event_date FROM Event ORDER BY event_name";
+    private static final String SQL_GET_EVENTS = "SELECT event_id, event_name, event_fee, event_date, event_edition FROM Event ORDER BY event_name";
     private static final String SQL_GET_GOVERNING_BOARD_MEMBERS = "SELECT gb_id, gb_name, gb_rank FROM COIIPA_GBMember";
     private static final String SQL_GET_CONTACT_MEMBERS="SELECT member_id, member_name, member_email, member_phone, company_id FROM Member WHERE company_id=?";
-    private static final String SQL_INSERT_SPONSORSHIP = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) VALUES (?, ?, ?, ?, 0, 0)";
-    private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, concept, amount) VALUES (?, ?, ?)";
+    private static final String SQL_INSERT_SPONSORSHIP = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES (?, ?, ?, ?, ?, ?)";    
+    private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, concept, amount, balance_status) VALUES (?, ?, ?, 'Unpaid')";    
     private static final String SQL_GET_SPONSORSHIPS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship ORDER BY sponsorship_agreementDate DESC";
     private static final String SQL_GET_SPONSORSHIP_DETAILS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship WHERE sponsorship_id = ?";
     private static final String SQL_GET_EVENT_BALANCE = "SELECT balance_id, concept, amount FROM Balance WHERE event_id = ? ORDER BY balance_id";
@@ -56,30 +56,38 @@ public class RegisterSponsorshipAgreeModel {
     /**
      * Registra un nuevo acuerdo de patrocinio y devuelve el ID del evento.
      */
-    public int registerSponsorship(String companyName, String eventName, String agreementDate, String memberName) {
-        validateNotNull(companyName, "La empresa no puede ser nula");
-        validateNotNull(eventName, "El evento no puede ser nulo");
-        validateNotNull(agreementDate, "La fecha del acuerdo no puede ser nula");
-        validateNotNull(memberName, "El miembro del consejo no puede ser nulo");
+    public int registerSponsorship(String companyName, String eventName, String eventEdition, String agreementDate, String memberName, int gbId, int balanceId) {
+        validateNotNull(companyName, "Company can't be null");
+        validateNotNull(eventName, "Event can't be null");
+        validateNotNull(agreementDate, "Agreement date can't be null");
+        validateNotNull(memberName, "GBMember can't be null");
+        validateNotNull(eventEdition, "The edition can't be null");
 
         int companyId = getCompanyIdByName(companyName);
         int eventId = getEventIdByName(eventName);
         String formattedDate = Util.dateToIsoString(Util.isoStringToDate(agreementDate));
 
         // Insertar en Sponsorship
-        db.executeUpdate(SQL_INSERT_SPONSORSHIP, companyName + " - " + eventName, formattedDate, companyId, eventId);
+        db.executeUpdate(SQL_INSERT_SPONSORSHIP, companyName + " - " + eventName + " " + eventEdition , formattedDate, companyId, eventId, gbId, balanceId);
 
         return eventId; // Devuelve el ID del evento para registrar balance
     }
 
-    /**
-     * Registra un ingreso o gasto en el balance de un evento.
-     */
-    public void registerBalance(int eventId, String concept, int amount) {
-        validateNotNull(concept, "La fuente no puede ser nula");
+//    /**
+//     * Registra un ingreso o gasto en el balance de un evento.
+//     */
+//    public void registerBalance(int eventId, String concept, int amount) {
+//        validateNotNull(concept, "La fuente no puede ser nula");
+//        validateNotNull(amount, "La cantidad no puede ser nula");
+//
+//        db.executeUpdate(SQL_INSERT_BALANCE, eventId, concept, amount);
+//    }
+    
+    public int registerBalance(int eventId, String concept, int amount) {
+        validateNotNull(concept, "El concepto no puede ser nulo");
         validateNotNull(amount, "La cantidad no puede ser nula");
-
-        db.executeUpdate(SQL_INSERT_BALANCE, eventId, concept, amount);
+        String sql = SQL_INSERT_BALANCE + "; SELECT last_insert_rowid()"; // SQLite
+        return db.executeUpdateAndGetKey(sql, eventId, concept, amount);
     }
 
     /**
@@ -104,7 +112,7 @@ public class RegisterSponsorshipAgreeModel {
     private int getCompanyIdByName(String name) {
         String sql = "SELECT company_id FROM Company WHERE company_name = ?";
         List<Object[]> result = db.executeQueryArray(sql, name);
-        validateCondition(!result.isEmpty(), "No se encontró la empresa: " + name);
+        validateCondition(!result.isEmpty(), "Company not found: " + name);
         return (int) result.get(0)[0];
     }
 
@@ -112,9 +120,9 @@ public class RegisterSponsorshipAgreeModel {
      * Obtiene el ID de un evento a partir de su nombre.
      */
     private int getEventIdByName(String name) {
-        String sql = "SELECT event_id FROM Event WHERE event_name = ?";
+        String sql = "SELECT event_id, event_edition FROM Event WHERE event_name = ?";
         List<Object[]> result = db.executeQueryArray(sql, name);
-        validateCondition(!result.isEmpty(), "No se encontró el evento: " + name);
+        validateCondition(!result.isEmpty(), "Event not found: " + name);
         return (int) result.get(0)[0];
     }
 

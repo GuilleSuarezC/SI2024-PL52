@@ -157,17 +157,21 @@ public class RegisterSponsorshipAgreeController {
             if(systemDate1.compareTo(isoagreementDate) >= 0) {
             	// Agreement < CelebrationEventDate
                 if(isoagreementDate.compareTo(Util.isoStringToDate(selectedEvent.getEvent_date())) < 0) {
-                	// Registrar el acuerdo de patrocinio
                     
+                	String sponsorshipName = selectedCompany.getCompany_name() + " " + selectedEvent.getEvent_name() + " " + selectedEvent.getEvent_edition();
+                	// Registrar el balance asociado al evento
+                	int balanceId = model.registerBalance(selectedEvent.getEvent_id(), sponsorshipName, selectedEvent.getEvent_fee());
+                	
+                	// Registrar el acuerdo de patrocinio
                     int eventId = model.registerSponsorship(
-                        selectedCompany.getCompany_name(),
-                        selectedEvent.getEvent_name(),
-                        agreementDate,
-                        selectedMember.getGb_name()
-                    );
-
-                    // Registrar el balance asociado al evento
-                    model.registerBalance(eventId, "Sponsorship", selectedEvent.getEvent_fee());
+                    	    selectedCompany.getCompany_name(),
+                    	    selectedEvent.getEvent_name(),
+                    	    selectedEvent.getEvent_edition(),
+                    	    agreementDate,
+                    	    selectedMember.getGb_name(),
+                    	    selectedMember.getGb_id(),
+                    	    balanceId
+                    	);
 
                     // Mostrar mensaje de éxito
                     SwingUtil.showMessage("Sponsorship agreement successfully registered.", "Success", JOptionPane.INFORMATION_MESSAGE);

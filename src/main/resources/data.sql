@@ -35,8 +35,8 @@ INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event
 INSERT INTO "Balance" (concept, event_id, amount, balance_status, description, dateOfPaid) VALUES
     ('Sponsorship Tech Solutions S.L.', 1, 3000, 'Paid', 'Tech Solutions S.L.', '2023-01-01'),
     ('Sponsorship Innovate Asturias', 2, 4000, 'Paid', 'Innovate Asturias', '2023-02-01'),
-    ('Expense', 3, -1000, 'Unpaid', 'Rent a building for the event', '2023-03-01'),
-    ('Sponsorship Future Innovators', 3, 5000, 'Unpaid', 'Future Innovators sponsorship', '2023-04-01');
+    ('Expense', 3, -1000, 'Unpaid', 'Rent a building for the event', NULL),
+    ('Sponsorship Future Innovators', 3, 5000, 'Unpaid', 'Future Innovators sponsorship', NULL);
 
 -- Poblar COIIPA_GBMember
 INSERT INTO "COIIPA_GBMember" (gb_name, gb_rank) VALUES

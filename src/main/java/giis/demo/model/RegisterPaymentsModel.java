@@ -5,105 +5,61 @@ import giis.demo.util.Database;
 import giis.demo.util.Util;
 import giis.demo.util.ApplicationException;
 
-/**
- * Modelo para gestionar los acuerdos de patrocinio.
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+
 public class RegisterPaymentsModel {
-    private Database db = new Database();
+	private Database db = new Database();
+    
+	//Consultas SQL
+	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT b.balance_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.invoice_id FROM Sponsorship s LEFT JOIN Balance b ON s.balance_id = b.balance_id LEFT JOIN Event e ON s.event_id = e.event_id LEFT JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id WHERE b.balance_status != 'Paid'";
+	
+	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
+	
+	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid', dateOfPaid = ? WHERE balance_id = ?";
 
-    /**
-     * Obtiene la lista de empresas disponibles para patrocinio.
-     */
-    public List<Object[]> getCompanies() {
-        String sql = "SELECT company_id, company_name FROM Company ORDER BY company_name";
-        return db.executeQueryArray(sql);
+
+	public List<PendingPaymentDTO> getPendingPayments() {
+    	return db.executeQueryPojo(PendingPaymentDTO.class, SQL_GET_PENDING_PAYMENTS);
     }
+	
+	public void RegisterPayment(double amount, Date paymentDate, int sponsorshipID)
+	{
+		validateNotNull(amount, "The amount cannot be null");
+		validateNotNull(paymentDate, "The date of payment cannot be null");
+		
+		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);		
+	}
+	
+	public void UpdateBalance(Date dateOfPaid, int balanceId)
+	{
+		validateNotNull(balanceId, "The balance id cannot be null");
+		db.executeUpdate(SQL_UPDATE_PAYMENTS, dateOfPaid, balanceId);		
+	}
+	
+	
+	/*
+	public double getBalanceAmount(int sponsorshipId) {
+	    String query = "SELECT amount FROM Balance WHERE sponsorship_id = ?";
 
-    /**
-     * Obtiene la lista de eventos disponibles para patrocinio.
-     */
-    public List<Object[]> getEvents() {
-        String sql = "SELECT event_id, event_name FROM Event ORDER BY event_name";
-        return db.executeQueryArray(sql);
-    }
-
-    /**
-     * Obtiene la lista de miembros del consejo de administración.
-     */
-    public List<Object[]> getGoverningBoardMembers() {
-        String sql = "SELECT DISTINCT company_member FROM Company ORDER BY company_member";
-        return db.executeQueryArray(sql);
-    }
-
-    /**
-     * Registra un nuevo acuerdo de patrocinio.
-     */
-    public void registerSponsorship(String company, String event, String date, String member) {
-        validateNotNull(company, "La empresa no puede ser nula");
-        validateNotNull(event, "El evento no puede ser nulo");
-        validateNotNull(date, "La fecha del acuerdo no puede ser nula");
-        validateNotNull(member, "El miembro del consejo no puede ser nulo");
-
-        int companyId = getCompanyIdByName(company);
-        int eventId = getEventIdByName(event);
-        String formattedDate = Util.dateToIsoString(Util.isoStringToDate(date));
-
-        String sql = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, payment_id, invoice_id) "
-                   + "VALUES (?, ?, ?, ?, 0, 0)";
-        db.executeUpdate(sql, company + " - " + event, formattedDate, companyId, eventId);
-    }
-
-    /**
-     * Obtiene la lista de acuerdos de patrocinio registrados.
-     */
-    public List<Object[]> getSponsorships() {
-        String sql = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship ORDER BY sponsorship_agreementDate DESC";
-        return db.executeQueryArray(sql);
-    }
-
-    /**
-     * Obtiene los detalles de un acuerdo de patrocinio por su ID.
-     */
-    public String[] getSponsorshipDetails(int sponsorshipId) {
-        String sql = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship WHERE sponsorship_id = ?";
-        List<String[]> result = db.executeQueryPojo(String[].class, sql, sponsorshipId);
-        if (result.isEmpty()) {
-            throw new ApplicationException("No se encontró el acuerdo con ID: " + sponsorshipId);
-        }
-        return result.get(0);
-    }
-
-    /**
-     * Obtiene el ID de una empresa a partir de su nombre.
-     */
-    private int getCompanyIdByName(String name) {
-        String sql = "SELECT company_id FROM Company WHERE company_name = ?";
-        List<Object[]> result = db.executeQueryArray(sql, name);
-        if (result.isEmpty()) {
-            throw new ApplicationException("No se encontró la empresa: " + name);
-        }
-        return (int) result.get(0)[0];
-    }
-
-    /**
-     * Obtiene el ID de un evento a partir de su nombre.
-     */
-    private int getEventIdByName(String name) {
-        String sql = "SELECT event_id FROM Event WHERE event_name = ?";
-        List<Object[]> result = db.executeQueryArray(sql, name);
-        if (result.isEmpty()) {
-            throw new ApplicationException("No se encontró el evento: " + name);
-        }
-        return (int) result.get(0)[0];
-    }
-
-    /**
-     * Método auxiliar para validar que un valor no sea nulo o vacío.
-     */
+	    try {
+	        List<Object[]> result = db.executeQueryArray(query, sponsorshipId);
+	        if (!result.isEmpty() && result.get(0)[0] != null) {
+	            return Double.parseDouble(result.get(0)[0].toString()); // Convertir el resultado a double
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Error al obtener el balance: " + e.getMessage());
+	    }
+	    return 0; // Retornar 0 si no se encuentra el balance
+	}*/
+	
     private void validateNotNull(Object obj, String message) {
-        if (obj == null || obj.toString().trim().isEmpty()) {
-            throw new ApplicationException(message);
-        }
+    	if (obj== null || obj.toString().trim().isEmpty()) {
+    		throw new ApplicationException(message);
+    	}
     }
 }
-

@@ -175,6 +175,18 @@ public class SwingMain {
 		String fechaInit = "2025-04-01";
 		this.fechaISO = Util.isoStringToDate(fechaInit);
 		this.setTfChangeDate(fechaInit);
+		
+		
+		JButton btnRegisterPayments = new JButton("Register Payments");
+		btnRegisterPayments.setBounds(20, 275, 195, 23);
+		frame.getContentPane().add(btnRegisterPayments);
+		btnRegisterPayments.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				RegisterPaymentsController controller=new RegisterPaymentsController(new RegisterPaymentsView(), new RegisterPaymentsModel());
+				controller.initController(SwingMain.this);
+			}
+		});
+		frame.getContentPane().add(btnRegisterPayments);
 
 	}
 

@@ -1,25 +1,14 @@
 BEGIN TRANSACTION;
 
--- Eliminar tablas si existen
-DROP TABLE IF EXISTS "AgreementType";
-DROP TABLE IF EXISTS "Member";
-DROP TABLE IF EXISTS "Event";
-DROP TABLE IF EXISTS "Edition";
-DROP TABLE IF EXISTS "Balance";
 DROP TABLE IF EXISTS "Invoice";
 DROP TABLE IF EXISTS "Movement";
 DROP TABLE IF EXISTS "Sponsorship";
-DROP TABLE IF EXISTS "COIIPA_GBMember";
+DROP TABLE IF EXISTS "Balance";
+DROP TABLE IF EXISTS "Event";
+DROP TABLE IF EXISTS "Member";
 DROP TABLE IF EXISTS "Company";
-
+DROP TABLE IF EXISTS "COIIPA_GBMember";
 -- Crear las tablas desde cero
-CREATE TABLE "AgreementType" (
-    "agreement_id" INTEGER PRIMARY KEY,
-    "agreement_invoice" INTEGER NOT NULL,
-    "agreement_subsidy" VARCHAR(50) NOT NULL,
-    "sponsorship_id" INTEGER NOT NULL,
-    FOREIGN KEY("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
-);
 
 CREATE TABLE "Company" (
     "company_id" INTEGER PRIMARY KEY,
@@ -83,11 +72,11 @@ CREATE TABLE "Sponsorship" (
     "sponsorship_id" INTEGER PRIMARY KEY,
     "sponsorship_name" VARCHAR(50),
     "sponsorship_agreementDate" DATE NOT NULL,
-    "member_id" INTEGER NOT NULL,
+    "company_id" INTEGER NOT NULL,
     "event_id" INTEGER NOT NULL,
     "gb_id" INTEGER NOT NULL,
     "balance_id" INTEGER NOT NULL,
-    FOREIGN KEY("member_id") REFERENCES "Member"("member_id"),
+    FOREIGN KEY("company_id") REFERENCES "Company"("company_id"),
     FOREIGN KEY("event_id") REFERENCES "Event"("event_id"),
     FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id"),
     FOREIGN KEY("gb_id") REFERENCES "COIIPA_GBMember"("gb_id")

@@ -34,7 +34,9 @@ INSERT INTO "Balance" (concept, event_id, amount, balance_status, description, d
     ('Sponsorship Tech Solutions S.L.', 1, 3000, 'Paid', 'Tech Solutions S.L.', '2023-01-01'),
     ('Sponsorship Innovate Asturias', 2, 4000, 'Paid', 'Innovate Asturias', '2023-02-01'),
     ('Expense', 3, -1000, 'Unpaid', 'Rent a building for the event', NULL),
+    ('AI Research Fund', 3, 5000, 'Unpaid', 'AI Research Fund sponsorship', NULL),
     ('Sponsorship Future Innovators', 3, 5000, 'Unpaid', 'Future Innovators sponsorship', NULL);
+
 
 -- Poblar COIIPA_GBMember
 INSERT INTO "COIIPA_GBMember" (gb_name, gb_rank) VALUES
@@ -46,8 +48,8 @@ INSERT INTO "COIIPA_GBMember" (gb_name, gb_rank) VALUES
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES
     ('Tech Innovators', '2024-08-01', 1, 1, 1, 1),
     ('Asturias Digital', '2024-08-10', 2, 2, 2, 2),
-    ('AI Research Fund', '2024-08-15', 3, 3, 3, 3),
-    ('Future Innovators', '2024-10-01', 3, 3, 3, 4);
+    ('AI Research Fund', '2024-08-15', 3, 3, 3, 4),
+    ('Future Innovators', '2024-10-01', 3, 3, 3, 5);
 
 -- Poblar Invoice
 INSERT INTO "Invoice" (taxData_name, taxData_Fnumber, invoice_date, sponsorship_id) VALUES

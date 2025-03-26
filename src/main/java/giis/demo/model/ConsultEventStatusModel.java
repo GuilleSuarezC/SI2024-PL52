@@ -11,17 +11,27 @@ public class ConsultEventStatusModel {
 
     // Consulta SQL para obtener las actividades (eventos) con los campos requeridos
     private static final String SQL_GET_EVENTS = 
-        "SELECT event_id, event_name, event_edition, event_date, event_duration, event_status " +
+        "SELECT event_id, event_name, event_edition, event_date, event_endDate, event_status " +
         "FROM Event ORDER BY event_id DESC";
 
     // Consulta SQL para obtener los patrocinios asociados a un evento
+//    private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
+//        "SELECT s.sponsorship_name, s.sponsorship_agreementDate, p.balance_status, e.event_fee " +
+//        "FROM Sponsorship s " +
+//        "JOIN Company c ON s.company_id = c.company_id " +
+//        "LEFT JOIN Balance p ON s.balance_id = p.balance_id " +
+//        "JOIN Event e ON s.event_id = e.event_id " +
+//        "WHERE s.event_id = ?";
     private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
-        "SELECT s.sponsorship_name, s.sponsorship_agreementDate, p.payment_status, e.event_fee " +
-        "FROM Sponsorship s " +
-        "JOIN Company c ON s.company_id = c.company_id " +
-        "LEFT JOIN Payment p ON s.payment_id = p.payment_id " +
-        "JOIN Event e ON s.event_id = e.event_id " +
-        "WHERE s.event_id = ?";
+    	    "SELECT s.sponsorship_name, s.sponsorship_agreementDate, " +
+    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS payment_status, " +
+    	    "       e.event_fee " +
+    	    "FROM Sponsorship s " +
+    	    "JOIN Balance b ON s.balance_id = b.balance_id " + // Balance asociado al Sponsorship
+    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " + // Movimientos del Balance
+    	    "JOIN Event e ON s.event_id = e.event_id " +
+    	    "WHERE s.event_id = ? " +
+    	    "GROUP BY s.sponsorship_id, b.amount"; // Agrupar para sumar movimientos
     
     private static final String SQL_GET_PAYMENTS_BY_EVENT_ID = 
     	    "SELECT p.payment_id, p.payment_amount, p.payment_date, p.payment_status " +
@@ -30,15 +40,58 @@ public class ConsultEventStatusModel {
     	    "WHERE s.event_id = ?";
 
     private static final String SQL_GET_BALANCE = 
-    		"SELECT b.concept AS name, " +
-            "       b.amount AS amount, " +
-            "       CASE " +
-            "           WHEN p.payment_id IS NOT NULL THEN 'Paid' " +
-            "           ELSE 'Estimated' " +
-            "       END AS status " +
-            "FROM Balance b " +
-            "LEFT JOIN Payment p ON b.balance_id = p.balance_id " +
-            "WHERE b.event_id = ?";
+    	    "SELECT b.concept AS name, " +
+    	    "       b.amount AS amount, " +
+    	    "       CASE " +
+    	    "           WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' " +
+    	    "           ELSE 'Unpaid' " +
+    	    "       END AS status " +
+    	    "FROM Balance b " +
+    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+    	    "WHERE b.event_id = ? " +
+    	    "GROUP BY b.balance_id";
+    
+// // Consulta para Sponsorships
+//    private static final String SQL_GET_SPONSORSHIP_BALANCES = 
+//        "SELECT b.balance_id, b.concept, b.amount " +
+//        "FROM Balance b " +
+//        "INNER JOIN Sponsorship s ON b.balance_id = s.balance_id " +
+//        "WHERE b.event_id = ?";
+//
+//    // Consulta para Otras Fuentes
+//    private static final String SQL_GET_OTHER_BALANCES = 
+//        "SELECT balance_id, concept, amount " +
+//        "FROM Balance " +
+//        "WHERE event_id = ? " +
+//        "AND balance_id NOT IN (SELECT balance_id FROM Sponsorship)";
+    
+ // Consulta para Sponsorships (incluye cálculo de estado de pago)
+    private static final String SQL_GET_SPONSORSHIP_BALANCES = 
+        "SELECT b.balance_id, b.concept, b.amount, " +
+        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS paymentStatus " +
+        "FROM Balance b " +
+        "INNER JOIN Sponsorship s ON b.balance_id = s.balance_id " +
+        "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+        "WHERE b.event_id = ? " +
+        "GROUP BY b.balance_id";
+
+    // Consulta para Otras Fuentes (incluye cálculo de estado de pago)
+    private static final String SQL_GET_OTHER_BALANCES = 
+        "SELECT b.balance_id, b.concept, b.amount, " +
+        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS paymentStatus " +
+        "FROM Balance b " +
+        "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+        "WHERE b.event_id = ? " +
+        "  AND b.balance_id NOT IN (SELECT balance_id FROM Sponsorship) " +
+        "GROUP BY b.balance_id";
+
+    public List<SponsorshipBalanceDTO> getSponsorshipBalances(int eventId) {
+        return db.executeQueryPojo(SponsorshipBalanceDTO.class, SQL_GET_SPONSORSHIP_BALANCES, eventId);
+    }
+
+    public List<OtherBalanceDTO> getOtherBalances(int eventId) {
+        return db.executeQueryPojo(OtherBalanceDTO.class, SQL_GET_OTHER_BALANCES, eventId);
+    }
     
     public List<IncomeEntryDTO> getBalanceByEventId(int eventId) {
         return db.executeQueryPojo(IncomeEntryDTO.class, SQL_GET_BALANCE, eventId);

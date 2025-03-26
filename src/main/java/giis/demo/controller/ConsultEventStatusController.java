@@ -75,8 +75,7 @@ public class ConsultEventStatusController {
 	                    showIncomeEntries(eventId);
 	                    
 	                    // Calcular y actualizar los totales de Income y Expenses
-	                    calculateIncomeTotals(balanceList);
-	                    calculateExpensesTotals(balanceList);
+	                    calculateAndDisplayTotals(eventId);
 	                }
 	            }
 	        }
@@ -128,7 +127,7 @@ public class ConsultEventStatusController {
         }
         // Incluir event_id en el TableModel
         TableModel tableModel = SwingUtil.getTableModelFromPojos(eventList, 
-            new String[] {"event_id", "event_name", "event_edition", "event_date", "event_duration", "event_status"});
+            new String[] {"event_id", "event_name", "event_edition", "event_date", "event_endDate", "event_status"});
         view.getTblEvents().setModel(tableModel);
 
         // Ocultar la columna event_id
@@ -155,33 +154,86 @@ public class ConsultEventStatusController {
         SwingUtil.autoAdjustColumns(view.getTblSponsorships());
     }
     
-    public void showIncomeEntries(int eventId) {
-    	if(eventId < 0) return;
-        // Obtener la lista de entradas de ingresos desde el modelo
-        List<IncomeEntryDTO> incomeEntries = model.getBalanceByEventId(eventId);
-        for (IncomeEntryDTO i : incomeEntries) {
-        	this.balanceList.add(i);
+    private void calculateAndDisplayTotals(int eventId) {
+        // Obtener datos
+        List<SponsorshipInfoDTO> sponsors = model.getSponsorshipsByEventId(eventId);
+        List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
+        
+        // Inicializar totales
+        double incomePaid = 0.0, incomeEstimated = 0.0;
+        double expensePaid = 0.0, expenseEstimated = 0.0;
+
+        // Procesar Sponsorships (solo ingresos)
+        for (SponsorshipInfoDTO sponsor : sponsors) {
+            if ("Paid".equals(sponsor.getpayment_status())) {
+                incomePaid += sponsor.getevent_fee();
+            } else { // "Unpaid" se considera "Estimated"
+                incomeEstimated += sponsor.getevent_fee();
+            }
         }
-        for (IncomeEntryDTO i : incomeEntries) {
-        	if(i.getAmount() > 0) {
-          		 // Crear el TableModel y asignarlo a la tabla de ingresos
-                  TableModel tableModel = SwingUtil.getTableModelFromPojos(incomeEntries, 
-                      new String[] {"name", "amount", "status"});
-                  view.getTblIncome().setModel(tableModel);
 
-                  // Ajustar el ancho de las columnas
-                  SwingUtil.autoAdjustColumns(view.getTblIncome());
-          	}
-        	if(i.getAmount() < 0) {
-         		 // Crear el TableModel y asignarlo a la tabla de ingresos
-                 TableModel tableModel = SwingUtil.getTableModelFromPojos(incomeEntries, 
-                     new String[] {"name", "amount", "status"});
-                 view.getTblExpenses().setModel(tableModel);
+        // Procesar Other Balances (ingresos y gastos)
+        for (OtherBalanceDTO balance : otherBalances) {
+            if (balance.getAmount() > 0) { // Ingreso
+                if ("Paid".equals(balance.getPaymentStatus())) {
+                    incomePaid += balance.getAmount();
+                } else {
+                    incomeEstimated += balance.getAmount();
+                }
+            } else { // Gasto
+                if ("Paid".equals(balance.getPaymentStatus())) {
+                    expensePaid += balance.getAmount(); // Monto negativo
+                } else {
+                    expenseEstimated += balance.getAmount(); // Monto negativo
+                }
+            }
+        }
 
-                 // Ajustar el ancho de las columnas
-                 SwingUtil.autoAdjustColumns(view.getTblExpenses());
-         	}
-        }       
+        // Calcular totales
+        double totalIncome = incomePaid + incomeEstimated;
+        double totalExpenses = expensePaid + expenseEstimated;
+
+        // Actualizar la vista (usar Math.abs() para gastos)
+        view.getLblIncomeSummary().setText(String.format("Income: %.2f €", totalIncome));
+        view.getLblIncomePaid().setText(String.format("Paid: %.2f €", incomePaid));
+        view.getLblIncomeEstimated().setText(String.format("Estimated: %.2f €", incomeEstimated));
+        
+        view.getLblExpensesSummary().setText(String.format("Expenses: %.2f €", Math.abs(totalExpenses)));
+        view.getLblExpensesPaid().setText(String.format("Paid: %.2f €", Math.abs(expensePaid)));
+        view.getLblExpensesEstimated().setText(String.format("Estimated: %.2f €", Math.abs(expenseEstimated)));
+    }
+
+    public void showIncomeEntries(int eventId) {
+        if (eventId < 0) return;
+
+        // Obtener balances de Otras Fuentes (NO Sponsorships)
+        List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
+
+        // Separar en ingresos y gastos
+        List<IncomeEntryDTO> incomeList = new ArrayList<>();
+        List<IncomeEntryDTO> expenseList = new ArrayList<>();
+        
+        for (OtherBalanceDTO balance : otherBalances) {
+            IncomeEntryDTO entry = new IncomeEntryDTO();
+            entry.setName(balance.getConcept());
+            entry.setAmount(balance.getAmount());
+            entry.setStatus(balance.getPaymentStatus());
+            
+            if (balance.getAmount() > 0) {
+                incomeList.add(entry);
+            } else {
+                expenseList.add(entry);
+            }
+        }
+
+        // Asignar modelos a las tablas
+        view.getTblIncome().setModel(SwingUtil.getTableModelFromPojos(incomeList, 
+            new String[]{"name", "amount", "status"}));
+        view.getTblExpenses().setModel(SwingUtil.getTableModelFromPojos(expenseList, 
+            new String[]{"name", "amount", "status"}));
+
+        SwingUtil.autoAdjustColumns(view.getTblIncome());
+        SwingUtil.autoAdjustColumns(view.getTblExpenses());
     }
     
     private void calculateIncomeTotals(List<IncomeEntryDTO> incomeEntries) {

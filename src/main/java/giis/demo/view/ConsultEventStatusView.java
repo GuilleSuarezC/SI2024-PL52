@@ -33,40 +33,49 @@ public class ConsultEventStatusView {
         frmConsultEventStatus = new JFrame();
         frmConsultEventStatus.setTitle("Consult Event Status");
         frmConsultEventStatus.setName("ConsultEventStatusView");
-        frmConsultEventStatus.setBounds(100, 100, 1000, 532);
+        frmConsultEventStatus.setBounds(100, 100, 1025, 694);
         frmConsultEventStatus.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frmConsultEventStatus.getContentPane().setLayout(new MigLayout("", "[457px][53px][67px][274px][116px]", "[14px][141px][14px][141px][141px]"));
+        frmConsultEventStatus.getContentPane().setLayout(null);
 
         // Activities Table
         JLabel label = new JLabel("Activities:");
-        frmConsultEventStatus.getContentPane().add(label, "cell 0 0,growx,aligny top");
+        label.setBounds(7, 7, 457, 14);
+        frmConsultEventStatus.getContentPane().add(label);
         tblEvents = new JTable();
         JScrollPane spEvents = new JScrollPane(tblEvents);
-        frmConsultEventStatus.getContentPane().add(spEvents, "cell 0 1,grow");
+        spEvents.setBounds(7, 28, 457, 218);
+        frmConsultEventStatus.getContentPane().add(spEvents);
 
         // Sponsorships Table
         JLabel label_1 = new JLabel("Sponsorships:");
-        frmConsultEventStatus.getContentPane().add(label_1, "cell 2 0 3 1,growx,aligny top");
+        label_1.setBounds(531, 7, 439, 14);
+        frmConsultEventStatus.getContentPane().add(label_1);
         tblSponsorships = new JTable();
         JScrollPane spSponsorships = new JScrollPane(tblSponsorships);
-        frmConsultEventStatus.getContentPane().add(spSponsorships, "cell 2 1 3 1,grow");
+        spSponsorships.setBounds(531, 28, 471, 218);
+        frmConsultEventStatus.getContentPane().add(spSponsorships);
 
         // Expenses Table
         JLabel label_3 = new JLabel("Expenses:");
-        frmConsultEventStatus.getContentPane().add(label_3, "cell 2 2 3 1,growx,aligny top");
+        label_3.setBounds(531, 257, 471, 14);
+        frmConsultEventStatus.getContentPane().add(label_3);
         tblExpenses = new JTable();
         JScrollPane spExpenses = new JScrollPane(tblExpenses);
-        frmConsultEventStatus.getContentPane().add(spExpenses, "cell 2 3 3 1,grow");
+        spExpenses.setBounds(531, 278, 471, 218);
+        frmConsultEventStatus.getContentPane().add(spExpenses);
                         
                                 // Income Table
                                 JLabel label_2 = new JLabel("Income:");
-                                frmConsultEventStatus.getContentPane().add(label_2, "cell 0 2,growx,aligny top");
+                                label_2.setBounds(7, 257, 457, 14);
+                                frmConsultEventStatus.getContentPane().add(label_2);
                         tblIncome = new JTable();
                         JScrollPane spIncome = new JScrollPane(tblIncome);
-                        frmConsultEventStatus.getContentPane().add(spIncome, "cell 0 3,grow");
+                        spIncome.setBounds(7, 278, 457, 218);
+                        frmConsultEventStatus.getContentPane().add(spIncome);
                 
                         // Total Summary Panel
                         JPanel pnlTotal = new JPanel(new MigLayout("", "[grow]", "[][]"));
+                        pnlTotal.setBounds(7, 507, 276, 141);
                         pnlTotal.setBorder(BorderFactory.createTitledBorder("Total"));
                         
                                 // Agrupar Income
@@ -93,17 +102,17 @@ public class ConsultEventStatusView {
                                                                 
                                                                         pnlTotal.add(pnlExpenses, "growy");
                                                                         
-                                                                                frmConsultEventStatus.getContentPane().add(pnlTotal, "cell 0 4,alignx left,aligny top");
+                                                                                frmConsultEventStatus.getContentPane().add(pnlTotal);
                 
                         // Exit Button
                         btnExit = new JButton("Exit");
-                        frmConsultEventStatus.getContentPane().add(btnExit, "cell 4 4,growx,aligny bottom");
+                        btnExit.setBounds(880, 625, 116, 23);
+                        frmConsultEventStatus.getContentPane().add(btnExit);
     
                         pnlTotal.add(pnlIncome, "growy, wrap");
                         pnlTotal.add(pnlExpenses, "growy");
                         
-                        frmConsultEventStatus.setResizable(true); // Habilitar redimensionamiento
-                        frmConsultEventStatus.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximizar al iniciar
+                        frmConsultEventStatus.setResizable(false); // Habilitar redimensionamiento
 
 
     }

@@ -35,7 +35,7 @@ public class RegisterPaymentsModel {
 		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);		
 	}
 	
-	public void UpdateBalance(Date dateOfPaid, int balanceId)
+	public void UpdateBalance(String dateOfPaid, int balanceId)
 	{
 		validateNotNull(balanceId, "The balance id cannot be null");
 		db.executeUpdate(SQL_UPDATE_PAYMENTS, dateOfPaid, balanceId);		

@@ -37,6 +37,7 @@ public class ReportIncomeExpensesView {
     private JLabel lblEndDate;
     private JDateChooser startDateChooser, endDateChooser;
     private JComboBox activityStatusCB;
+    private JLabel lblEndDate_1;
 
     /**
      * Create the application.
@@ -53,8 +54,8 @@ public class ReportIncomeExpensesView {
         frmReportIncomeExpenses = new JFrame();
         frmReportIncomeExpenses.setTitle("Report Income and Expenses");
         frmReportIncomeExpenses.setName("SponsorshipView");
-        frmReportIncomeExpenses.setBounds(0, 0, 727, 537);
-        frmReportIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[707.00px]", "[21px][88.00px][15px][319.00px][15.00px]"));
+        frmReportIncomeExpenses.setBounds(0, 0, 827, 537);
+        frmReportIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[791.00px]", "[21px][88.00px][15px][319.00px][15.00px]"));
         
      // Crear los selectores de fecha
         
@@ -84,21 +85,25 @@ public class ReportIncomeExpensesView {
         
         endDateChooser = new JDateChooser();
         endDateChooser.setDateFormatString("yyyy-MM-dd");
-        endDateChooser.setBounds(260, 14, 131, 19);
+        endDateChooser.setBounds(326, 14, 131, 19);
         DetailsPanel.add(endDateChooser);
         
         activityStatusCB = new JComboBox();
         activityStatusCB.setToolTipText("Status");
-        activityStatusCB.setBounds(539, 12, 131, 21);
+        activityStatusCB.setBounds(646, 12, 131, 21);
         DetailsPanel.add(activityStatusCB);
         
         JButton btnApplyFilter = new JButton("Apply Filter");
-        btnApplyFilter.setBounds(10, 55, 85, 21);
+        btnApplyFilter.setBounds(10, 55, 117, 21);
         DetailsPanel.add(btnApplyFilter);
         
         JLabel lblStatus = new JLabel("Status of the Activities:");
-        lblStatus.setBounds(425, 15, 117, 13);
+        lblStatus.setBounds(508, 14, 182, 13);
         DetailsPanel.add(lblStatus);
+        
+        lblEndDate_1 = new JLabel("End Date: ");
+        lblEndDate_1.setBounds(274, 10, 86, 23);
+        DetailsPanel.add(lblEndDate_1);
         
         lblFilters = new JLabel("Filters");
         lblFilters.setFont(new Font("Tahoma", Font.PLAIN, 12));

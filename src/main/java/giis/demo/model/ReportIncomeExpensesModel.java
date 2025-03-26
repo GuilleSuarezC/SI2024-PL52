@@ -48,8 +48,8 @@ public class ReportIncomeExpensesModel {
 			+ "FROM BalanceSummary";
 	
 
-	public List<PendingPaymentDTO> getPendingPayments(Date startDate, Date endDate, String eventStatus) {
-    	return db.executeQueryPojo(PendingPaymentDTO.class, SQL_GET_ACTIVITIES, startDate, endDate, eventStatus, eventStatus);
+	public List<ReportDTO>  getActivities(String startDate, String endDate, String eventStatus) {
+    	return db.executeQueryPojo(ReportDTO.class, SQL_GET_ACTIVITIES, startDate, endDate, eventStatus, eventStatus);
     }
 	
     private void validateNotNull(Object obj, String message) {

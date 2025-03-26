@@ -14,11 +14,12 @@ public class ReportDTO{
 	private double paid_income;
 	private double total_expenses;
 	private double paid_expenses;
+	private double estimated_balance;
 	private double paid_balance;
 	
 
     // Constructor
-    public ReportDTO(int event_id,String event_name, String event_date, String event_endDate, String event_status, double total_income, double paid_income, double total_expenses, double paid_expenses, double paid_balance) {
+    public ReportDTO(int event_id,String event_name, String event_date, String event_endDate, String event_status, double total_income, double paid_income, double total_expenses, double paid_expenses, double estimated_balance, double paid_balance) {
     	this.event_id = event_id;
     	this.event_name = event_name;
     	this.event_date = event_date;
@@ -28,6 +29,7 @@ public class ReportDTO{
     	this.paid_income = paid_income;
     	this.total_expenses = total_expenses;
     	this.paid_expenses = paid_expenses;
+    	this.estimated_balance = estimated_balance;
     	this.paid_balance = paid_balance;
     }
     
@@ -106,6 +108,14 @@ public class ReportDTO{
 
 	public void setPaid_expenses(double paid_expenses) {
 		this.paid_expenses = paid_expenses;
+	}
+	
+	public double getEstimated_balance() {
+		return estimated_balance;
+	}
+	
+	public void setEstimated_balance(double estimated_balance) {
+		this.estimated_balance = estimated_balance;
 	}
 
 	public double getPaid_balance() {

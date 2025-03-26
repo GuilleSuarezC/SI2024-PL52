@@ -77,7 +77,7 @@ public class ReportIncomeExpensesController {
     private void loadActivities(String startDate, String endDate, String eventStatus) {
         List<ReportDTO> activities = model.getActivities(startDate, endDate, eventStatus);
         TableModel tableModel = SwingUtil.getTableModelFromPojos(activities,
-            new String[]{"event_id","event_name", "event_date", "event_endDate", "event_status", "total_income", "paid_income", "total_expenses", "paid_expenses", "paid_balance"});
+            new String[]{"event_id","event_name", "event_date", "event_endDate", "event_status", "total_income", "paid_income", "total_expenses", "paid_expenses","estimated_balance", "paid_balance"});
         
         view.getLstActivities().setModel(tableModel);
         view.getLstActivities().getColumnModel().getColumn(0).setMinWidth(0);
@@ -88,15 +88,17 @@ public class ReportIncomeExpensesController {
     }
     
     private void ApplyFilter() {
-       if (view.getStartDate() == null || view.getEndDate() == null) {
+       if ((view.getStartDate() == "") || (view.getEndDate() == "")) {
     	   
-           JOptionPane.showMessageDialog(view.getFrame(), "Selects start date and a end date.", "Error", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(view.getFrame(), "Select a start date and a end date.", "Error", JOptionPane.ERROR_MESSAGE);
            return;
        }
-       String startDate = view.getStartDate();
-       String endDate = view.getEndDate();
-       String status = (String) view.getStatus().getSelectedItem();
-       this.loadActivities(startDate, endDate, status);
+       else {
+	       String startDate = view.getStartDate();
+	       String endDate = view.getEndDate();
+	       String status = (String) view.getStatus().getSelectedItem();
+	       this.loadActivities(startDate, endDate, status);
+       }
     }
     
 }

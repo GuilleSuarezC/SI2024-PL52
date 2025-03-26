@@ -189,7 +189,7 @@ public class RegisterPaymentsController {
                         
             // Registrar el pago en la BD
             model.RegisterPayment(amountPaid, paymentDate, selectedPayment.getBalance_id());            
-            model.UpdateBalance(selectedPayment.getBalance_id());                                
+            model.UpdateBalance(paymentDate, selectedPayment.getBalance_id());                                
             JOptionPane.showMessageDialog(view.getFrame(), "Pago registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             // Refrescar la tabla y limpiar selección
@@ -210,6 +210,6 @@ public class RegisterPaymentsController {
         view.setLblSponsorshipName("");
         view.setLblAgreementDate(null);
         view.setLblAmount(0);
-        view.setLblInvoiceId(0);
-    }
+        view.setLblInvoiceId(0);;
+    } 
 }

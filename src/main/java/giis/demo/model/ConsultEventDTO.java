@@ -5,18 +5,18 @@ public class ConsultEventDTO {
     private String event_name;
     private int event_fee;
     private String event_date;
-    private String event_duration;
+    private String event_endDate;
     private String event_edition;
     private String event_status;
 
     public ConsultEventDTO() {}
     
-    public ConsultEventDTO(int event_id, String event_name, int event_fee, String event_date, String event_duration, String event_edition, String event_status) {
+    public ConsultEventDTO(int event_id, String event_name, int event_fee, String event_date, String event_endDate, String event_edition, String event_status) {
         this.event_id = event_id;
         this.event_name = event_name;
         this.event_fee = event_fee;
         this.event_date = event_date;
-        this.event_duration = event_duration;
+        this.event_endDate = event_endDate;
         this.event_edition = event_edition;
         this.event_status = event_status;
     }
@@ -29,12 +29,12 @@ public class ConsultEventDTO {
 		this.event_status = event_status;
 	}
 
-	public String getEvent_duration() {
-		return event_duration;
+	public String getevent_endDate() {
+		return event_endDate;
 	}
 
-	public void setEvent_duration(String event_duration) {
-		this.event_duration = event_duration;
+	public void setevent_endDate(String event_endDate) {
+		this.event_endDate = event_endDate;
 	}
 
 	public String getEvent_edition() {

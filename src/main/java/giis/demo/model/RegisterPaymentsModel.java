@@ -20,7 +20,7 @@ public class RegisterPaymentsModel {
 	
 	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
 	
-	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid' WHERE balance_id = ?";
+	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid', dateOfPaid = ? WHERE balance_id = ?";
 
 
 	public List<PendingPaymentDTO> getPendingPayments() {
@@ -35,10 +35,10 @@ public class RegisterPaymentsModel {
 		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);		
 	}
 	
-	public void UpdateBalance(int balanceId)
+	public void UpdateBalance(Date dateOfPaid, int balanceId)
 	{
 		validateNotNull(balanceId, "The balance id cannot be null");
-		db.executeUpdate(SQL_UPDATE_PAYMENTS, balanceId);		
+		db.executeUpdate(SQL_UPDATE_PAYMENTS, dateOfPaid, balanceId);		
 	}
 	
 	
@@ -56,11 +56,10 @@ public class RegisterPaymentsModel {
 	    }
 	    return 0; // Retornar 0 si no se encuentra el balance
 	}*/
-    
-    
+	
     private void validateNotNull(Object obj, String message) {
-        if (obj == null || obj.toString().trim().isEmpty()) {
-            throw new ApplicationException(message);
-        }
+    	if (obj== null || obj.toString().trim().isEmpty()) {
+    		throw new ApplicationException(message);
+    	}
     }
 }

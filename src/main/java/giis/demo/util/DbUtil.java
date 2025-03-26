@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -188,6 +190,24 @@ public abstract class DbUtil {
 		} catch (SQLException e) {
 			//no causa excepcion intencionaamente
 		}		
+	}
+	
+	public int executeUpdateAndGetKey(String sql, Object... params) {
+	    try (Connection conn = getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	        for (int i = 0; i < params.length; i++) {
+	            stmt.setObject(i + 1, params[i]);
+	        }
+	        stmt.executeUpdate();
+	        ResultSet rs = stmt.getGeneratedKeys();
+	        if (rs.next()) {
+	            return rs.getInt(1);
+	        } else {
+	            throw new ApplicationException("No se pudo obtener el ID generado.");
+	        }
+	    } catch (SQLException e) {
+	        throw new ApplicationException("Error ejecutando consulta: " + sql);
+	    }
 	}
 
 }

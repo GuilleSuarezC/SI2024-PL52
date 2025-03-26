@@ -58,8 +58,8 @@ public class RegisterPaymentsView {
         frmRegisterPaymentsView = new JFrame();
         frmRegisterPaymentsView.setTitle("Register Payments ");
         frmRegisterPaymentsView.setName("SponsorshipView");
-        frmRegisterPaymentsView.setBounds(0, 0, 600, 528);
-        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[586px]", "[15px][193px][21px][183px][56px]"));
+        frmRegisterPaymentsView.setBounds(0, 0, 631, 547);
+        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[601.00px]", "[15px][193px][21px][183px][56px]"));
         
         JLabel lblPendingPayments = new JLabel("Pending Payments");
         lblPendingPayments.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -153,4 +153,3 @@ public class RegisterPaymentsView {
     public String getAmountPaidField() {return this.AmountPaidField.getText();}
     public String getPaymentDate() {return this.PaymentDateField.getText();}
 }
-

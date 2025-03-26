@@ -51,7 +51,7 @@ public class RegisterSponsorshipAgreeView {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setTitle("Registro de Acuerdos de Patrocinio");
+        frame.setTitle("Register Sponsorship Agreements");
         frame.setName("SponsorshipView");
         frame.setBounds(0, 0, 600, 362);
         frame.getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][][][][grow][]"));

@@ -1,5 +1,17 @@
 BEGIN TRANSACTION;
 
+-- Borrar datos previos en orden inverso a las dependencias (hijos primero)
+DELETE FROM "AgreementType";
+DELETE FROM "Movement";
+DELETE FROM "Invoice";
+DELETE FROM "Sponsorship"; -- Depende de Member, Edition, COIIPA_GBMember, Balance
+DELETE FROM "Balance"; -- Depende de Edition
+DELETE FROM "Edition"; -- Depende de Event
+DELETE FROM "Event";
+DELETE FROM "COIIPA_GBMember";
+DELETE FROM "Member"; -- Depende de Company
+DELETE FROM "Company";
+
 -- Poblar Company
 INSERT INTO "Company" (company_name, company_numSeats, company_email) VALUES
     ('Tech Solutions S.L.', 10, 'tech_solutions@gmail.com'),
@@ -33,11 +45,11 @@ INSERT INTO "COIIPA_GBMember" (gb_name, gb_rank) VALUES
     ('Rosa', 'Secretary');
 
 -- Poblar Sponsorship
-INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES
+INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, member_id, event_id, gb_id, balance_id) VALUES
     ('Tech Innovators', '2024-08-01', 1, 1, 1, 1),
     ('Asturias Digital', '2024-08-10', 2, 2, 2, 2),
     ('AI Research Fund', '2024-08-15', 3, 3, 3, 3),
-    ('Future Innovators', '2024-10-01', 3, 3, 3, 4);
+    ('Future Innovators', '2024-10-01', 4, 3, 3, 4);
 
 -- Poblar Invoice
 INSERT INTO "Invoice" (taxData_name, taxData_Fnumber, invoice_date, sponsorship_id) VALUES
@@ -50,5 +62,12 @@ INSERT INTO "Invoice" (taxData_name, taxData_Fnumber, invoice_date, sponsorship_
   INSERT INTO "Movement" (movement_amount, movement_date, balance_id) VALUES
      (3000, '2024-09-10', 1),
      (4000, '2024-09-15', 2);
-     
+    
+
+-- Poblar AgreementType
+INSERT INTO "AgreementType" (agreement_invoice, agreement_subsidy, sponsorship_id) VALUES
+    (1, 'No', 1),
+    (2, 'No', 2),
+    (3, 'Yes', 3);
+
 COMMIT;

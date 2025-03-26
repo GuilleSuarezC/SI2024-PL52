@@ -145,6 +145,7 @@ public class SwingMain {
 				RegisterIncomeExpensesModel model = new RegisterIncomeExpensesModel();
 				RegIncomeExpensesView view = new RegIncomeExpensesView();
 				RegisterIncomeExpensesController controller = new RegisterIncomeExpensesController(model, view);
+				
 			}
 		});
 		frame.getContentPane().add(btnRegisterIncomeExpenses);

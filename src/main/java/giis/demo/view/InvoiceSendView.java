@@ -21,7 +21,7 @@ public class InvoiceSendView {
     private DefaultTableModel tableModel;
     private JComboBox<String> eventComboBox;
     private JButton loadSponsorsButton;
-    JTextField invoiceDateField = new JTextField(10);
+    //JTextField invoiceDateField = new JTextField(10);
 
     public InvoiceSendView() {
         frame = new JFrame("Generate Invoices");
@@ -45,8 +45,8 @@ public class InvoiceSendView {
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
-        topPanel.add(new JLabel("Invoice Date:"));
-        topPanel.add(invoiceDateField);
+        //topPanel.add(new JLabel("Invoice Date:"));
+        //topPanel.add(invoiceDateField);
 
        
         generateButton = new JButton("Generate and Send Invoice");
@@ -91,9 +91,9 @@ public class InvoiceSendView {
         return row != -1 ? (String) table.getValueAt(row, 0) : null;
     }
 
-    public String getInvoiceDate() {
-        return invoiceDateField.getText();
-    }
+  //  public String getInvoiceDate() {
+  //      return invoiceDateField.getText();
+  //  }
 
     public String getSelectedFiscalNumber() {
         int row = getSelectedRow();

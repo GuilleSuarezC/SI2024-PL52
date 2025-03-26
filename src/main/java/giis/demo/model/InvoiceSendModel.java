@@ -35,31 +35,37 @@ public class InvoiceSendModel {
 
 
     public List<Object[]> getSponsorsByEvent(String eventName) {
-        String sql = "SELECT c.company_name, c.company_email, i.taxData_Fnumber, p.payment_amount " +
-                     "FROM Sponsorship s " +
-                     "JOIN Company c ON s.company_id = c.company_id " +
-                     "JOIN Invoice i ON s.invoice_id = i.invoice_id " +
-                     "JOIN Event e ON s.event_id = e.event_id " +
-                     "JOIN Payment p ON s.sponsorship_id = p.sponsorship_id " + 
-                     "WHERE e.event_name = ?";
-        List<Object[]> results = db.executeQueryArray(sql, eventName);
+        String sql = "SELECT c.company_name, c.company_email, i.taxData_Fnumber, p.payment_amount "+
+                "FROM Sponsorship s "+
+                "JOIN Member m ON s.member_id = m.member_id "+
+                "JOIN Company c ON m.company_id = c.company_id "+
+                "JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id "+
+                "JOIN Payment p ON s.sponsorship_id = p.sponsorship_id "+
+                "JOIN Event ev ON s.event_id = ev.event_id "+
+                "WHERE ev.event_name = ?";
         
-       
+        
+
+
+        
+        List<Object[]> results = db.executeQueryArray(sql, eventName);
         
         return results;
     }
-
 
     public boolean generateInvoice(String sponsorName, String fiscalNumber, String email, String event) {
         try {
             String invoiceDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-          
-            String sponsorshipQuery = "SELECT s.sponsorship_id FROM Sponsorship s " +
-                                      "JOIN Company c ON s.company_id = c.company_id " +
-                                      "JOIN Event e ON s.event_id = e.event_id " +
-                                      "WHERE c.company_name = ? AND e.event_name = ?";
-            
+            // Consulta corregida para obtener sponsorship_id
+            String sponsorshipQuery = "SELECT s.sponsorship_id " + // 👈 Agrega un espacio aquí
+            		"FROM Sponsorship s " +
+            		"JOIN Member m ON s.member_id = m.member_id " +
+            		"JOIN Company c ON m.company_id = c.company_id " +
+            		"JOIN Event ev ON s.event_id = ev.event_id " +
+            		"WHERE c.company_name = ? AND ev.event_name = ? ";
+
+
             
             List<Object[]> sponsorshipResult = db.executeQueryArray(sponsorshipQuery, sponsorName, event);
 
@@ -70,7 +76,7 @@ public class InvoiceSendModel {
 
             int sponsorshipId = (int) sponsorshipResult.get(0)[0]; 
 
-           
+            // Inserción de la factura
             String sql = "INSERT INTO Invoice (taxData_name, taxData_Fnumber, invoice_date, sponsorship_id) " +
                          "VALUES (?, ?, ?, ?)";
             
@@ -89,49 +95,7 @@ public class InvoiceSendModel {
 
     
     
-    private void sendEmail(String recipientEmail, String sponsorName, String fiscalNumber, String event, String invoiceDate) {
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", SMTP_HOST);
-        properties.put("mail.smtp.port", SMTP_PORT);
-        properties.put("mail.smtp.ssl.trust", SMTP_HOST);
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL_SENDER, EMAIL_PASSWORD);
-            }
-        });
-
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(EMAIL_SENDER));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-            message.setSubject("Invoice for Event Sponsorship");
-
-            String emailBody = "Dear " + sponsorName + ",\n\n"
-                    + "We are pleased to send you the invoice for your sponsorship in the event: " + event + ".\n\n"
-                    + "Invoice Details:\n"
-                    + "----------------------------------\n"
-                    + "Invoice Date: " + invoiceDate + "\n"
-                    + "Sponsor: " + sponsorName + "\n"
-                    + "CIF/NIF: " + fiscalNumber + "\n"
-                    + "Event: " + event + "\n"
-                    + "----------------------------------\n\n"
-                    + "Thank you for your support!\n\n"
-                    + "Best regards,\n"
-                    + "COIIPA";
-
-            message.setText(emailBody);
-
-            Transport.send(message);
-            System.out.println("Email sent successfully to: " + recipientEmail);
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     
     

@@ -49,6 +49,8 @@ public class InvoiceSendController {
         }
 
         List<Object[]> sponsors = model.getSponsorsByEvent(selectedEvent);
+        System.out.println("Sponsors for event " + selectedEvent + ": " + sponsors); // Mensaje de depuración
+
         Object[][] sponsorData = new Object[sponsors.size()][4];  
 
         for (int i = 0; i < sponsors.size(); i++) {
@@ -58,11 +60,7 @@ public class InvoiceSendController {
             String fiscalNumber = (String) sponsor[2];
             Double amount = (Double) sponsor[3];
             
-            String sponsorshipName = sponsorName;
-
-            
-
-            sponsorData[i] = new Object[] { sponsorshipName, email, fiscalNumber,amount} ;
+            sponsorData[i] = new Object[] { sponsorName, email, fiscalNumber, amount };
         }
 
         view.setSponsorData(sponsorData);  
@@ -88,7 +86,7 @@ public class InvoiceSendController {
             JOptionPane.showMessageDialog(null, "Invoice sent successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("=====================================");
             System.out.println("Invoice Simulator");
-            System.out.println(" Date: " + view.getInvoiceDate());
+          //  System.out.println(" Date: " + view.getInvoiceDate());
             System.out.println(" Sponsor: " + sponsorName);
             System.out.println(" CIF/NIF: " + fiscalNumber);
             System.out.println(" Event: " + event);

@@ -25,9 +25,9 @@ INSERT INTO "Member" (member_name, member_email, member_phone, company_id) VALUE
 
 -- Poblar Event 
 INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event_status, event_fee) VALUES  
-    ('ImpulsoTIC Week', 'XII', '2025-02-15', 3, 'Planned', 3000),  
-    ('Hackathon UNIOVI', 'IV', '2025-03-05', 2, 'Planned', 4000),  
-    ('Asturias AI Summit', 'III', '2025-04-12', 1, 'Planned', 5000); 
+    ('ImpulsoTIC Week', 'XII', '2025-02-15', '2025-02-18', 'Planned', 3000),  
+    ('Hackathon UNIOVI', 'IV', '2025-03-05', '2025-03-07', 'Planned', 4000),  
+    ('Asturias AI Summit', 'III', '2025-04-12', '2025-04-13', 'Planned', 5000); 
 
 -- Poblar Balance
 INSERT INTO "Balance" (concept, event_id, amount, balance_status, description, dateOfPaid) VALUES
@@ -54,11 +54,11 @@ INSERT INTO "Invoice" (taxData_name, taxData_Fnumber, invoice_date, sponsorship_
     ('Tech Solutions S.L.', 'B12345678', '2025-02-01', 1),
     ('Innovate Asturias', 'B87654321', '2025-02-20', 2),
     ('UNIOVI Research', 'G12349876', '2025-03-25', 3),
-    ('Future Innovators Inc.', 'B98765432', '2025-07-01',4);
+    ('Future Innovators Inc.', 'B98765432', '2025-07-01', 4);
 
--- Poblar Payment
-  INSERT INTO "Movement" (movement_amount, movement_date, balance_id) VALUES
-     (3000, '2024-09-10', 1),
-     (4000, '2024-09-15', 2);
-     
+-- Poblar Movement
+INSERT INTO "Movement" (movement_amount, movement_date, balance_id) VALUES
+    (3000, '2024-09-10', 1),
+    (4000, '2024-09-15', 2);
+
 COMMIT;

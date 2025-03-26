@@ -194,7 +194,8 @@ public class SwingMain {
 		frame.getContentPane().add(btnReportIncExp);
 		btnReportIncExp.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				ReportIncomeExpensesController controller=new ReportIncomeExpensesController(new ReportIncomeExpensesView(), new ReportIncomeExpensesModel());
+				String fecha = tfChangeDate.getText();
+				ReportIncomeExpensesController controller=new ReportIncomeExpensesController(new ReportIncomeExpensesView(), new ReportIncomeExpensesModel(), fecha);
 				controller.initController(SwingMain.this);
 			}
 		});

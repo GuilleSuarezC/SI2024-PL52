@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -38,6 +39,7 @@ public class ReportIncomeExpensesView {
     private JDateChooser startDateChooser, endDateChooser;
     private JComboBox activityStatusCB;
     private JLabel lblEndDate_1;
+    private JButton btnApplyFilter;
 
     /**
      * Create the application.
@@ -88,12 +90,13 @@ public class ReportIncomeExpensesView {
         endDateChooser.setBounds(326, 14, 131, 19);
         DetailsPanel.add(endDateChooser);
         
-        activityStatusCB = new JComboBox();
+        String[] status = {"All", "Planned", "Ongoing", "Completed", "Closed"};
+        activityStatusCB = new JComboBox<>(status);
         activityStatusCB.setToolTipText("Status");
         activityStatusCB.setBounds(646, 12, 131, 21);
         DetailsPanel.add(activityStatusCB);
         
-        JButton btnApplyFilter = new JButton("Apply Filter");
+        btnApplyFilter = new JButton("Apply Filter");
         btnApplyFilter.setBounds(10, 55, 117, 21);
         DetailsPanel.add(btnApplyFilter);
         
@@ -111,11 +114,19 @@ public class ReportIncomeExpensesView {
     }
 
     // Getters para acceso desde el controlador
+    public JButton getBtnApplyFilter() { return this.btnApplyFilter; }
     public JTable getLstActivities() {return this.lstActivities;}
     public JFrame getFrame() { return this.frmReportIncomeExpenses; }
-    public String getStartDate() {return this.startDateChooser.getDateFormatString();}
-    public String getEndDate() {return this.endDateChooser.getDateFormatString();}
-    public JComboBox<Object> getListaMiembrosGB() { return this.activityStatusCB; }
+    public String getStartDate() {
+        Date date = this.startDateChooser.getDate();
+        return (date != null) ? new SimpleDateFormat("yyyy-MM-dd").format(date) : "";
+    }
+
+    public String getEndDate() {
+        Date date = this.endDateChooser.getDate();
+        return (date != null) ? new SimpleDateFormat("yyyy-MM-dd").format(date) : "";
+    }
+    public JComboBox<Object> getStatus() { return this.activityStatusCB; }
     
 }
 

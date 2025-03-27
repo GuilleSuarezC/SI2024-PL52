@@ -29,13 +29,14 @@ public class ConsultEventStatusController {
     private List<IncomeEntryDTO> balanceList;
     private SwingMain loquesea;
 
-    public ConsultEventStatusController(ConsultEventStatusModel model, ConsultEventStatusView view) {
-    	this.eventList = new ArrayList<ConsultEventDTO>();
-    	this.sponsorList = new ArrayList<SponsorshipInfoDTO>();
-    	this.paymentList = new ArrayList<PaymentDTO>();
-    	this.balanceList = new ArrayList<IncomeEntryDTO>();
+    public ConsultEventStatusController(ConsultEventStatusModel model, ConsultEventStatusView view, SwingMain swingMain) {
+        this.eventList = new ArrayList<ConsultEventDTO>();
+        this.sponsorList = new ArrayList<SponsorshipInfoDTO>();
+        this.paymentList = new ArrayList<PaymentDTO>();
+        this.balanceList = new ArrayList<IncomeEntryDTO>();
         this.model = model;
         this.view = view;
+        this.loquesea = swingMain;  // Set the SwingMain instance
         this.initView();
     }
 
@@ -43,8 +44,9 @@ public class ConsultEventStatusController {
      * Inicializa la vista y carga los eventos en el comboBox.
      */
     public void initView() {
-    	this.loadEvents();
-        view.getFrame().setVisible(true);
+        // Cargar eventos
+	    loadEvents();
+	    view.getFrame().setVisible(true);
     }
 
     /**
@@ -117,27 +119,70 @@ public class ConsultEventStatusController {
         SwingUtil.autoAdjustColumns(view.getTblExpenses());
     }
     
+//    /**
+//     * Carga la lista de eventos en la lista.
+//     */
+//    private void loadEvents() {
+//        List<ConsultEventDTO> events = model.getEvents();
+//        for(ConsultEventDTO event : events) {
+//        	this.eventList.add(event);
+//        }
+//        // Incluir event_id en el TableModel
+//        TableModel tableModel = SwingUtil.getTableModelFromPojos(eventList, 
+//            new String[] {"event_id", "event_name", "event_edition", "event_date", "event_endDate", "event_status"});
+//        view.getTblEvents().setModel(tableModel);
+//
+//        // Ocultar la columna event_id
+//        view.getTblEvents().getColumnModel().getColumn(0).setMinWidth(0);
+//        view.getTblEvents().getColumnModel().getColumn(0).setMaxWidth(0);
+//        view.getTblEvents().getColumnModel().getColumn(0).setWidth(0);
+//
+//        // Ajustar el ancho de las columnas
+//        SwingUtil.autoAdjustColumns(view.getTblEvents());
+//    }   
+    
     /**
-     * Carga la lista de eventos en la lista.
+     * Carga la lista de eventos y actualiza su estado según la fecha actual.
      */
     private void loadEvents() {
+        String currentDate = loquesea.getFechaISO(); // Obtener fecha actual del sistema
+
         List<ConsultEventDTO> events = model.getEvents();
-        for(ConsultEventDTO event : events) {
-        	this.eventList.add(event);
+        // Limpiar la lista de eventos previa si es necesario
+        this.eventList.clear(); 
+
+        for (ConsultEventDTO event : events) {
+            // Determinar el estado basado en la fecha actual y las fechas de inicio y fin
+            String status = determineEventStatus(currentDate, event.getEvent_date(), event.getevent_endDate());
+            event.setEvent_status(status); // Actualizar el estado en el DTO
+            this.eventList.add(event); // Agregar el evento con el nuevo estado a la lista
         }
-        // Incluir event_id en el TableModel
+
+        // Actualizar la tabla con los eventos
         TableModel tableModel = SwingUtil.getTableModelFromPojos(eventList, 
             new String[] {"event_id", "event_name", "event_edition", "event_date", "event_endDate", "event_status"});
         view.getTblEvents().setModel(tableModel);
 
-        // Ocultar la columna event_id
+        // Ocultar columna event_id y ajustar columnas
         view.getTblEvents().getColumnModel().getColumn(0).setMinWidth(0);
         view.getTblEvents().getColumnModel().getColumn(0).setMaxWidth(0);
         view.getTblEvents().getColumnModel().getColumn(0).setWidth(0);
-
-        // Ajustar el ancho de las columnas
         SwingUtil.autoAdjustColumns(view.getTblEvents());
-    }   
+    }
+
+    /**
+     * Determina el estado del evento comparando fechas.
+     */
+    private String determineEventStatus(String currentDate, String startDate, String endDate) {
+        if (currentDate.compareTo(startDate) < 0) {
+            return "Planned"; // Evento planeado
+        } else if (currentDate.compareTo(endDate) > 0) {
+            return "Completed"; // Evento completado
+        } else {
+            return "Ongoing"; // Evento en curso
+        }
+    }
+
     
     public void showSponsors(int eventId) {
     	if(eventId < 0) return;

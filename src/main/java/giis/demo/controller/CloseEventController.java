@@ -44,22 +44,58 @@ public class CloseEventController {
         SwingUtil.autoAdjustColumns(view.getTblEvents());
     }
 
+    /**
+     * Actualiza los estados de los eventos basándose en la fecha del sistema
+     */
+    private void updateEventStatuses() {
+        List<ConsultEventDTO> events = model.getEvents();
+        String currentDate = loquesea.getFechaISO();
+
+        for (ConsultEventDTO event : events) {
+            String newStatus = determineEventStatus(currentDate, 
+                event.getEvent_date(), 
+                event.getevent_endDate());
+            
+            if (!newStatus.equals(event.getEvent_status())) {
+                // Update event status in database
+                model.updateEventStatus(event.getEvent_id(), newStatus);
+            }
+        }
+    }
+    
+    
+    /**
+     * Determina el estado del evento basándose en las fechas
+     */
+    private String determineEventStatus(String currentDate, 
+                                        String eventStartDate, 
+                                        String eventEndDate) {
+        if (currentDate.compareTo(eventStartDate) < 0) {
+            return "Planned";
+        } else if (currentDate.compareTo(eventStartDate) >= 0 && 
+                   currentDate.compareTo(eventEndDate) <= 0) {
+            return "Ongoing";
+        } else {
+            return "Completed";
+        }
+    }
+    
     private void closeSelectedEvent() {
         int selectedRow = view.getTblEvents().getSelectedRow();
         if (selectedRow == -1) {
             SwingUtil.showMessage("Select an event from the table.", "No Selection", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
         // Obtener datos del evento
         int eventId = (Integer) view.getTblEvents().getModel().getValueAt(selectedRow, 0);
         String eventEndDate = (String) view.getTblEvents().getModel().getValueAt(selectedRow, 4);
         String currentDate = loquesea.getFechaISO();
-
+        
         // Verificar condiciones ideales
         boolean isEventEnded = currentDate.compareTo(eventEndDate) >= 0;
         boolean isEventPaid = model.isEventPaid(eventId);
-
+        
         // Si ya está en situación perfecta: Cerrar directamente
         if (isEventEnded && isEventPaid) {
             model.closeEvent(eventId);
@@ -67,7 +103,7 @@ public class CloseEventController {
             loadEvents();
             return;
         }
-
+        
         // Si no está en situación perfecta: Mostrar advertencia y opción
         StringBuilder warningMessage = new StringBuilder("The event does not meet all closure conditions:\n");
         if (!isEventEnded) 
@@ -75,7 +111,7 @@ public class CloseEventController {
         if (!isEventPaid) 
             warningMessage.append("- There are unpaid balances.\n\n");
         warningMessage.append("Do you want to close it anyway?");
-
+        
         int option = JOptionPane.showConfirmDialog(
             view.getFrmCloseEvent(),
             warningMessage.toString(),
@@ -83,13 +119,60 @@ public class CloseEventController {
             JOptionPane.YES_NO_OPTION,
             JOptionPane.WARNING_MESSAGE
         );
-
+        
         if (option == JOptionPane.YES_OPTION) {
             model.closeEvent(eventId);
             SwingUtil.showMessage("Event closed manually.", "Success", JOptionPane.INFORMATION_MESSAGE);
             loadEvents();
         }
     }
+    
+//    private void closeSelectedEvent() {
+//        int selectedRow = view.getTblEvents().getSelectedRow();
+//        if (selectedRow == -1) {
+//            SwingUtil.showMessage("Select an event from the table.", "No Selection", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//
+//        // Obtener datos del evento
+//        int eventId = (Integer) view.getTblEvents().getModel().getValueAt(selectedRow, 0);
+//        String eventEndDate = (String) view.getTblEvents().getModel().getValueAt(selectedRow, 4);
+//        String currentDate = loquesea.getFechaISO();
+//
+//        // Verificar condiciones ideales
+//        boolean isEventEnded = currentDate.compareTo(eventEndDate) >= 0;
+//        boolean isEventPaid = model.isEventPaid(eventId);
+//
+//        // Si ya está en situación perfecta: Cerrar directamente
+//        if (isEventEnded && isEventPaid) {
+//            model.closeEvent(eventId);
+//            SwingUtil.showMessage("Event closed successfully (perfect conditions).", "Success", JOptionPane.INFORMATION_MESSAGE);
+//            loadEvents();
+//            return;
+//        }
+//
+//        // Si no está en situación perfecta: Mostrar advertencia y opción
+//        StringBuilder warningMessage = new StringBuilder("The event does not meet all closure conditions:\n");
+//        if (!isEventEnded) 
+//            warningMessage.append("- The event has not ended yet (current date < end date).\n");
+//        if (!isEventPaid) 
+//            warningMessage.append("- There are unpaid balances.\n\n");
+//        warningMessage.append("Do you want to close it anyway?");
+//
+//        int option = JOptionPane.showConfirmDialog(
+//            view.getFrmCloseEvent(),
+//            warningMessage.toString(),
+//            "Confirm Closure",
+//            JOptionPane.YES_NO_OPTION,
+//            JOptionPane.WARNING_MESSAGE
+//        );
+//
+//        if (option == JOptionPane.YES_OPTION) {
+//            model.closeEvent(eventId);
+//            SwingUtil.showMessage("Event closed manually.", "Success", JOptionPane.INFORMATION_MESSAGE);
+//            loadEvents();
+//        }
+//    }
 
     private boolean checkEventEndDate(String eventEndDate) {
         String currentDate = loquesea.getFechaISO(); // Fecha actual del sistema desde SwingMain

@@ -29,6 +29,11 @@ public class CloseEventModel {
     	    "       (b.amount > 0 AND COALESCE(m.total_paid, 0) < b.amount) OR " +
     	    "       (b.amount < 0 AND COALESCE(m.total_paid, 0) > b.amount)" +
     	    ")) THEN 1 ELSE 0 END AS all_paid";
+    
+ // New query to update event status
+    private static final String SQL_UPDATE_EVENT_STATUS = 
+        "UPDATE Event SET event_status = ? WHERE event_id = ?";
+    
     /**
      * Obtiene todos los eventos no cerrados.
      */
@@ -54,5 +59,10 @@ public class CloseEventModel {
             eventId
         );
         return !result.isEmpty() && result.get(0).isAllPaid();
+    }
+    
+ // New method to update event status
+    public void updateEventStatus(int eventId, String newStatus) {
+        db.executeUpdate(SQL_UPDATE_EVENT_STATUS, newStatus, eventId);
     }
 }

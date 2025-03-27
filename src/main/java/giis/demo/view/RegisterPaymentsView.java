@@ -58,7 +58,7 @@ public class RegisterPaymentsView {
         frmRegisterPaymentsView = new JFrame();
         frmRegisterPaymentsView.setTitle("Register Payments ");
         frmRegisterPaymentsView.setName("SponsorshipView");
-        frmRegisterPaymentsView.setBounds(0, 0, 631, 547);
+        frmRegisterPaymentsView.setBounds(0, 0, 626, 547);
         frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[601.00px]", "[15px][193px][21px][183px][56px]"));
         
         JLabel lblPendingPayments = new JLabel("Pending Payments");

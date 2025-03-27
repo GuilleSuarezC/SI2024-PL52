@@ -216,34 +216,29 @@ public class RegisterSponsorshipAgreeController {
      * Limpia el formulario.
      */
     private void clearForm() {
-        view.getListaCompany().setSelectedIndex(-1); // Deseleccionar empresa
-        view.getListaEvent().setSelectedIndex(-1);   // Deseleccionar evento
-        view.getListaMiembrosGB().setSelectedIndex(-1); // Deseleccionar miembro del consejo
-        view.setAgreementDate(""); // Limpiar la fecha
+        view.getListaCompany().setSelectedIndex(-1); 
+        view.getListaEvent().setSelectedIndex(-1);  
+        view.getListaMiembrosGB().setSelectedIndex(-1); 
+        view.setAgreementDate(""); 
         view.setComboBoxIndexes(-1);
         view.getListaContacts().setModel(new DefaultTableModel(new String[] {},0));
         view.setLlbFee("");
     }
     
- // Método para cargar los niveles de patrocinio de un patrocinio
     private void loadSponsorshipLevels(int sponsorshipId) {
         List<SponsorshipLevelDTO> levels = model.getSponsorshipLevels(sponsorshipId);
         DefaultTableModel tableModel = new DefaultTableModel();
         
-        // Definir las columnas de la tabla
         tableModel.addColumn("Level Name");
         tableModel.addColumn("Price");
 
-        // Llenar la tabla con los niveles de patrocinio
         for (SponsorshipLevelDTO level : levels) {
             tableModel.addRow(new Object[]{level.getLevel_name(), level.getLevel_price()});
         }
 
-        // Establecer el modelo de la tabla en la vista
         view.getListSponsorshipLevels().setModel(tableModel);
     }
 
-    // Método para agregar un nivel de patrocinio
     private void addSponsorshipLevel() {
         int selectedSponsorship = view.getListaEvent().getSelectedIndex();
         if (selectedSponsorship < 0) {
@@ -274,7 +269,6 @@ public class RegisterSponsorshipAgreeController {
         int sponsorshipId = listaEvent.get(selectedSponsorship).getEvent_id();
         model.addSponsorshipLevel(sponsorshipId, levelName, price);
 
-        // Recargar los niveles después de agregar uno nuevo
         loadSponsorshipLevels(sponsorshipId);
     }
 

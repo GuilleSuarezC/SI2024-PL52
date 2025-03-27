@@ -147,13 +147,11 @@ public class RegisterSponsorshipAgreeModel {
         }
     }
     
- // Agregar un método para obtener los niveles de patrocinio de un patrocinio específico
     public List<SponsorshipLevelDTO> getSponsorshipLevels(int sponsorshipId) {
         String sql = "SELECT * FROM SponsorshipLevel WHERE sponsorship_id = ?";
         return db.executeQueryPojo(SponsorshipLevelDTO.class, sql, sponsorshipId);
     }
 
-    // Agregar un método para agregar un nuevo nivel de patrocinio a un patrocinio
     public void addSponsorshipLevel(int sponsorshipId, String levelName, double price) {
         String sql = "INSERT INTO SponsorshipLevel (sponsorship_id, level_name, level_price) VALUES (?, ?, ?)";
         db.executeUpdate(sql, sponsorshipId, levelName, price);

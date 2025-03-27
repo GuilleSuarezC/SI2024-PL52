@@ -198,6 +198,18 @@ public class SwingMain {
 				controller.initController(SwingMain.this);
 			}
 		});
+		
+		JButton btnReportIncExp = new JButton("Report Income & Expenses");
+		btnReportIncExp.setBounds(20, 308, 195, 23);
+		frame.getContentPane().add(btnReportIncExp);
+		btnReportIncExp.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				String fecha = tfChangeDate.getText();
+				ReportIncomeExpensesController controller=new ReportIncomeExpensesController(new ReportIncomeExpensesView(), new ReportIncomeExpensesModel(), fecha);
+				controller.initController(SwingMain.this);
+			}
+		});
+		frame.getContentPane().add(btnReportIncExp);
 
 	}
 

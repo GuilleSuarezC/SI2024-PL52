@@ -8,7 +8,18 @@ DROP TABLE IF EXISTS "Event";
 DROP TABLE IF EXISTS "Member";
 DROP TABLE IF EXISTS "Company";
 DROP TABLE IF EXISTS "COIIPA_GBMember";
+DROP TABLE IF EXISTS "SponsorshipLevel";
 -- Crear las tablas desde cero
+
+
+CREATE TABLE "SponsorshipLevel" (
+    "level_id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "sponsorship_id" INTEGER NOT NULL,
+    "level_name" VARCHAR(255) NOT NULL,
+    "level_price" DOUBLE NOT NULL,
+    FOREIGN KEY ("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
+);
+
 
 CREATE TABLE "Company" (
     "company_id" INTEGER PRIMARY KEY,
@@ -68,6 +79,14 @@ CREATE TABLE "Movement" (
     FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id")
 );
 
+
+
+CREATE TABLE "COIIPA_GBMember" (
+    "gb_id" INTEGER PRIMARY KEY,
+    "gb_name" VARCHAR(50) NOT NULL,
+    "gb_rank" VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE "Sponsorship" (
     "sponsorship_id" INTEGER PRIMARY KEY,
     "sponsorship_name" VARCHAR(50),
@@ -82,10 +101,10 @@ CREATE TABLE "Sponsorship" (
     FOREIGN KEY("gb_id") REFERENCES "COIIPA_GBMember"("gb_id")
 );
 
-CREATE TABLE "COIIPA_GBMember" (
-    "gb_id" INTEGER PRIMARY KEY,
-    "gb_name" VARCHAR(50) NOT NULL,
-    "gb_rank" VARCHAR(50) NOT NULL
-);
+
+
+
+
+
 
 COMMIT;

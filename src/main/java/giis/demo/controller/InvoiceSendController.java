@@ -49,7 +49,7 @@ public class InvoiceSendController {
         }
 
         List<Object[]> sponsors = model.getSponsorsByEvent(selectedEvent);
-        System.out.println("Sponsors for event " + selectedEvent + ": " + sponsors); // Mensaje de depuración
+        System.out.println("Sponsors for event " + selectedEvent + ": " + sponsors); 
 
         Object[][] sponsorData = new Object[sponsors.size()][4];  
 

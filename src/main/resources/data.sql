@@ -9,6 +9,8 @@ DELETE FROM "Event";
 DELETE FROM "COIIPA_GBMember";
 DELETE FROM "Member"; -- Depende de Company
 DELETE FROM "Company";
+DELETE FROM "SponsorshipLevel";
+
 
 -- Poblar Company
 INSERT INTO "Company" (company_name, company_numSeats, company_email) VALUES

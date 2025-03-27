@@ -30,6 +30,8 @@ public class RegisterSponsorshipAgreeView {
     private JButton btnRegistrar;
     private JButton btnCancelar;
     private JTable lstContacts;
+    private JTable lstSponsorshipLevels;
+    private JButton btnAddLevel;
 
     /**
      * Create the application.
@@ -98,6 +100,18 @@ public class RegisterSponsorshipAgreeView {
         
         btnCancelar = new JButton("Cancel");
         frame.getContentPane().add(btnCancelar, "cell 0 6");
+        
+        JLabel lblSponsorshipLevels = new JLabel("Sponsorship Levels:");
+        frame.getContentPane().add(lblSponsorshipLevels, "flowx,cell 0 6");
+
+        JScrollPane levelsPanel = new JScrollPane();
+        frame.getContentPane().add(levelsPanel, "cell 0 6,grow");
+
+        lstSponsorshipLevels = new JTable();
+        levelsPanel.setViewportView(lstSponsorshipLevels);
+
+        btnAddLevel = new JButton("Add Level");
+        frame.getContentPane().add(btnAddLevel, "cell 0 7");
     }
 
     // Getters para acceso desde el controlador
@@ -112,5 +126,20 @@ public class RegisterSponsorshipAgreeView {
     public JButton getBtnRegistrar() { return this.btnRegistrar; }
     public JButton getBtnCancelar() { return this.btnCancelar; }
     public void setLlbFee(String fee) { this.lblFee.setText("Fee: "+fee);}
+
+    public JTable getListaSponsorshipLevels() { 
+        return this.lstSponsorshipLevels; 
+    }
+    public JButton getBtnAddLevel() { 
+        return this.btnAddLevel; 
+    }
+
+    public JTable getListSponsorshipLevels() { 
+        return this.lstSponsorshipLevels; 
+    }
+
+
+
+	
 }
 

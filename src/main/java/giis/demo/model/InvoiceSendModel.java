@@ -56,8 +56,6 @@ public class InvoiceSendModel {
     public boolean generateInvoice(String sponsorName, String fiscalNumber, String email, String event) {
         try {
             String invoiceDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date());
-
-            // Consulta corregida para obtener sponsorship_id
             String sponsorshipQuery = "SELECT s.sponsorship_id " +
                     "FROM Sponsorship s " +
                     "JOIN Company c ON s.company_id = c.company_id " +

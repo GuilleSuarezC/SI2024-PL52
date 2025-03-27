@@ -27,6 +27,7 @@ public class RegisterSponsorshipAgreeModel {
     private static final String SQL_GET_SPONSORSHIPS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship ORDER BY sponsorship_agreementDate DESC";
     private static final String SQL_GET_SPONSORSHIP_DETAILS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship WHERE sponsorship_id = ?";
     private static final String SQL_GET_EVENT_BALANCE = "SELECT balance_id, concept, amount FROM Balance WHERE event_id = ? ORDER BY balance_id";
+    private static final String SQL_GET_SPONSORSHIP_LEVELS = "SELECT * FROM SponsorshipLevel WHERE sponsorship_id = ?";
 
     /**
      * Obtiene la lista de empresas disponibles para patrocinio.
@@ -145,4 +146,19 @@ public class RegisterSponsorshipAgreeModel {
             throw new ApplicationException(message);
         }
     }
+    
+ // Agregar un método para obtener los niveles de patrocinio de un patrocinio específico
+    public List<SponsorshipLevelDTO> getSponsorshipLevels(int sponsorshipId) {
+        String sql = "SELECT * FROM SponsorshipLevel WHERE sponsorship_id = ?";
+        return db.executeQueryPojo(SponsorshipLevelDTO.class, sql, sponsorshipId);
+    }
+
+    // Agregar un método para agregar un nuevo nivel de patrocinio a un patrocinio
+    public void addSponsorshipLevel(int sponsorshipId, String levelName, double price) {
+        String sql = "INSERT INTO SponsorshipLevel (sponsorship_id, level_name, level_price) VALUES (?, ?, ?)";
+        db.executeUpdate(sql, sponsorshipId, levelName, price);
+    }
+
+
+    
 }

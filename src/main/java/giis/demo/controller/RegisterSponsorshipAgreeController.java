@@ -20,6 +20,8 @@ public class RegisterSponsorshipAgreeController {
     public List<EventDTO> listaEvent;
     public List<GBMemberDTO> listaGB;
     private SwingMain loquesea;
+    private DefaultTableModel tableModel = new DefaultTableModel();
+
 
     public RegisterSponsorshipAgreeController(RegisterSponsorshipAgreeModel m, RegisterSponsorshipAgreeView v) {
     	this.listaGlobal =  new ArrayList<CompanyDTO>();
@@ -44,6 +46,11 @@ public class RegisterSponsorshipAgreeController {
 
         // Manejador para el botón "Cancelar"
         view.getBtnCancelar().addActionListener(e -> SwingUtil.exceptionWrapper(() -> clearForm()));
+        
+        view.getBtnAddLevel().addActionListener(e -> SwingUtil.exceptionWrapper(() -> addSponsorshipLevel()));
+        view.getListSponsorshipLevels().setModel(tableModel);
+
+
     }
 
     /**
@@ -92,6 +99,8 @@ public class RegisterSponsorshipAgreeController {
         }
         view.getListaEvent().setModel(comboModel); // Asignar el modelo al JComboBox<Object>
     }
+    
+   
     
     
     private void loadCompanyMembers() {
@@ -215,4 +224,60 @@ public class RegisterSponsorshipAgreeController {
         view.getListaContacts().setModel(new DefaultTableModel(new String[] {},0));
         view.setLlbFee("");
     }
+    
+ // Método para cargar los niveles de patrocinio de un patrocinio
+    private void loadSponsorshipLevels(int sponsorshipId) {
+        List<SponsorshipLevelDTO> levels = model.getSponsorshipLevels(sponsorshipId);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        
+        // Definir las columnas de la tabla
+        tableModel.addColumn("Level Name");
+        tableModel.addColumn("Price");
+
+        // Llenar la tabla con los niveles de patrocinio
+        for (SponsorshipLevelDTO level : levels) {
+            tableModel.addRow(new Object[]{level.getLevel_name(), level.getLevel_price()});
+        }
+
+        // Establecer el modelo de la tabla en la vista
+        view.getListSponsorshipLevels().setModel(tableModel);
+    }
+
+    // Método para agregar un nivel de patrocinio
+    private void addSponsorshipLevel() {
+        int selectedSponsorship = view.getListaEvent().getSelectedIndex();
+        if (selectedSponsorship < 0) {
+            SwingUtil.showMessage("Please select a sponsorship first.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String levelName = JOptionPane.showInputDialog("Enter level name:");
+        if (levelName == null || levelName.trim().isEmpty()) {
+            SwingUtil.showMessage("Level name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String priceStr = JOptionPane.showInputDialog("Enter level price:");
+        if (priceStr == null || priceStr.trim().isEmpty()) {
+            SwingUtil.showMessage("Price cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        double price;
+        try {
+            price = Double.parseDouble(priceStr);
+        } catch (NumberFormatException e) {
+            SwingUtil.showMessage("Invalid price format.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int sponsorshipId = listaEvent.get(selectedSponsorship).getEvent_id();
+        model.addSponsorshipLevel(sponsorshipId, levelName, price);
+
+        // Recargar los niveles después de agregar uno nuevo
+        loadSponsorshipLevels(sponsorshipId);
+    }
+
+
+   
 }

@@ -19,20 +19,19 @@ public class InvoiceSendModel {
 
     public List<Object[]> getSponsorsByEvent(String eventName) {
 
-    	String sql =  "SELECT c.company_name, c.company_email, i.taxData_Fnumber, m.movement_amount " +
-    	"FROM Sponsorship s "+
-    	"JOIN Company c ON s.company_id = c.company_id "+
-    	"JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id "+
-    	"JOIN Balance b ON s.balance_id = b.balance_id "+
-    	"JOIN Movement m ON b.balance_id = m.balance_id " + 
-    	"JOIN Event ev ON s.event_id = ev.event_id " +
-    	"WHERE ev.event_name = ?";
-
-        
+    	String sql = "SELECT c.company_name, c.company_email, i.taxData_Fnumber, CAST(b.amount AS REAL) " +
+                "FROM Sponsorship s " +
+                "JOIN Company c ON s.company_id = c.company_id " +
+                "JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id " +
+                "JOIN Balance b ON s.balance_id = b.balance_id " +
+                "JOIN Event ev ON s.event_id = ev.event_id " +
+                "WHERE ev.event_name = ?";
 
         List<Object[]> results = db.executeQueryArray(sql, eventName);
         return results;
     }
+    
+
 
     public boolean generateInvoice(String sponsorName, String fiscalNumber, String email, String event) {
         try {

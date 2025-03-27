@@ -210,7 +210,16 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnReportIncExp);
-
+		
+		JButton btnCloseEvents = new JButton("Close Events");
+		btnCloseEvents.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CloseEventController controller=new CloseEventController(new CloseEventModel(), new CloseEventView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		btnCloseEvents.setBounds(250, 175, 175, 23);
+		frame.getContentPane().add(btnCloseEvents);
 	}
 
 	/**

@@ -67,7 +67,7 @@ public class RegisterSponsorshipAgreeController {
     public void loadFee() {
     	int selectedEvent = view.getListaEvent().getSelectedIndex();
     	if(selectedEvent == -1) return;
-    	view.setLlbFee(""+listaEvent.get(selectedEvent).getEvent_fee()+"€");
+    	view.settFeventFee(""+listaEvent.get(selectedEvent).getEvent_fee());
     }
     /**
      * Carga la lista de empresas en el comboBox.
@@ -141,6 +141,30 @@ public class RegisterSponsorshipAgreeController {
         if (selectedEventIndex < 0) { SwingUtil.showMessage("You need to select an event first.", "Select an Event", JOptionPane.ERROR_MESSAGE); return;}
     	int selectedGBIndex = view.getListaMiembrosGB().getSelectedIndex();
         if (selectedGBIndex < 0) { SwingUtil.showMessage("You need to select a Governing Board member first.", "Select a GB", JOptionPane.ERROR_MESSAGE); return;}
+        int selectedEventt = view.getListaEvent().getSelectedIndex();
+        
+        // Obtener el texto del JTextField y validar
+        String feeText = view.gettFeventFee().trim();
+        if (feeText.isEmpty()) {
+            SwingUtil.showMessage("Fee field cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Convertir a entero (manejar errores)
+        int enteredFee;
+        try {
+            enteredFee = Integer.parseInt(feeText);
+        } catch (NumberFormatException e) {
+            SwingUtil.showMessage("Invalid fee format. Please enter a number.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Comparar con el event_fee
+        int eventFee = listaEvent.get(selectedEventt).getEvent_fee();
+        if (enteredFee < eventFee) {
+            SwingUtil.showMessage("The suggested amount must be equal or greater than the event fee: " + eventFee + "€", 
+                                 "Rejected fee amount", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
 
         CompanyDTO selectedCompany = this.listaGlobal.get(selectedCompanyIndex);
@@ -169,7 +193,7 @@ public class RegisterSponsorshipAgreeController {
                     
                 	String sponsorshipName = selectedCompany.getCompany_name() + " " + selectedEvent.getEvent_name() + " " + selectedEvent.getEvent_edition();
                 	// Registrar el balance asociado al evento
-                	int balanceId = model.registerBalance(selectedEvent.getEvent_id(), sponsorshipName, selectedEvent.getEvent_fee());
+                	int balanceId = model.registerBalance(selectedEvent.getEvent_id(), sponsorshipName, enteredFee);
                 	
                 	// Registrar el acuerdo de patrocinio
                     int eventId = model.registerSponsorship(
@@ -223,6 +247,7 @@ public class RegisterSponsorshipAgreeController {
         view.setComboBoxIndexes(-1);
         view.getListaContacts().setModel(new DefaultTableModel(new String[] {},0));
         view.setLlbFee("");
+        view.settFeventFee("");
     }
     
     private void loadSponsorshipLevels(int sponsorshipId) {

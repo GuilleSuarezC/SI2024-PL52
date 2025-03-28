@@ -175,4 +175,12 @@ public class RegisterEventView {
 	public void settFeventFee(JTextField tFeventFee) {
 		this.tFeventFee = tFeventFee;
 	}
+	
+	public void clearFields() {
+		this.tFendDate.setText("");
+		this.tFeventEdition.setText("");
+		this.tFeventFee.setText("");
+		this.tFeventName.setText("");
+		this.tFstartDate.setText("");		
+	}
 }

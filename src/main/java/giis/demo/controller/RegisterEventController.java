@@ -111,6 +111,20 @@ public class RegisterEventController {
 	            return; // Cancelar el registro si el usuario elige "No"
 	        }
 	    }
+	    
+	    if ((startDate.compareTo(systemDates) == 0)) {
+	        int response = JOptionPane.showConfirmDialog(
+	            view.getFrmRegisterEvents(),
+	            "Dates of the new event are for today. Do you want to register the event anyway?",
+	            "Confirm Registration",
+	            JOptionPane.YES_NO_OPTION,
+	            JOptionPane.WARNING_MESSAGE
+	        );
+
+	        if (response != JOptionPane.YES_OPTION) {
+	            return; // Cancelar el registro si el usuario elige "No"
+	        }
+	    }
 
 	    // Validar tarifa del evento
 	    int eventFee;

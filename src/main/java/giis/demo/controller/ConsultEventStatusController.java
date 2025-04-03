@@ -101,12 +101,12 @@ public class ConsultEventStatusController {
         view.getTblExpenses().setModel(new DefaultTableModel());
 
         // Limpiar los totales
-        view.getLblIncomeSummary().setText("Income: 0.00 €");
+        view.getLblIncomeSummary().setText("Estimated: 0.00 €");
         view.getLblIncomePaid().setText("Paid: 0.00 €");
         view.getLblIncomeEstimated().setText("Estimated: 0.00 €");
-        view.getLblExpensesSummary().setText("Expenses: 0.00 €");
-        view.getLblExpensesPaid().setText("Paid: 0.00 €");
-        view.getLblExpensesEstimated().setText("Estimated: 0.00 €");
+        view.getLblExpensesSummary().setText("Paid: 0.00 €");
+        //view.getLblExpensesPaid().setText("Paid: 0.00 €");
+        //view.getLblExpensesEstimated().setText("Estimated: 0.00 €");
         
         // Limpiar las listas de datos
         sponsorList.clear();
@@ -185,6 +185,8 @@ public class ConsultEventStatusController {
 
     
     public void showSponsors(int eventId) {
+    	int total = 0;
+    	int paid = 0;
     	if(eventId < 0) return;
         // Obtener la lista de patrocinios asociados al evento
         List<SponsorshipInfoDTO> sponsors = model.getSponsorshipsByEventId(eventId);
@@ -193,64 +195,94 @@ public class ConsultEventStatusController {
         		s.setpayment_status("Estimated");
         	}
         	this.sponsorList.add(s);
+        	total+=s.getevent_fee();
+        	if("Paid".equals(s.getpayment_status())) {
+        		paid+=s.getevent_fee();
+        	}
         }
         TableModel tableModel = SwingUtil.getTableModelFromPojos(sponsors,new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status", "event_fee"});
         view.getTblSponsorships().setModel(tableModel);
+        view.setLblSponsorshipsEstimated(total);
+        view.setLblSponsorshipsPaid(paid);
         SwingUtil.autoAdjustColumns(view.getTblSponsorships());
     }
     
+//    private void calculateAndDisplayTotals(int eventId) {
+//        // Obtener datos
+//        List<SponsorshipInfoDTO> sponsors = model.getSponsorshipsByEventId(eventId);
+//        List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
+//        
+//        // Inicializar acumuladores para balance pagado y estimado
+//        double totalPaidBalance = 0.0;
+//        double totalEstimatedBalance = 0.0;
+//        
+//        // Procesar Sponsorships
+//        for (SponsorshipInfoDTO sponsor : sponsors) {
+//            // Si el estado es "Paid", se suma al balance pagado; de lo contrario, al estimado.
+//            if ("Paid".equals(sponsor.getpayment_status())) {
+//                totalPaidBalance += sponsor.getevent_fee();
+//            } 
+//            totalEstimatedBalance += sponsor.getevent_fee();
+//            
+//        }
+//        
+//        // Procesar Other Balances (ingresos y gastos)
+//        for (OtherBalanceDTO balance : otherBalances) {
+//            // La cantidad de balance puede ser positiva (ingreso) o negativa (gasto)
+//            // Si el estado es "Paid", se suma al balance pagado; de lo contrario, al estimado.
+//            if ("Paid".equals(balance.getPaymentStatus())) {
+//                totalPaidBalance += balance.getAmount();
+//            } else {
+//                totalEstimatedBalance += balance.getAmount();
+//            }
+//        }
+//        
+//        // Actualizar la vista: aquí se utilizan los labels para mostrar el balance estimado y el pagado
+//        view.getLblIncomeSummary().setText(String.format("Estimated Balance: %.2f €", totalEstimatedBalance));
+//        view.getLblExpensesSummary().setText(String.format("Paid Balance: %.2f €", totalPaidBalance));
+//    }
+
     private void calculateAndDisplayTotals(int eventId) {
         // Obtener datos
         List<SponsorshipInfoDTO> sponsors = model.getSponsorshipsByEventId(eventId);
         List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
         
-        // Inicializar totales
-        double incomePaid = 0.0, incomeEstimated = 0.0;
-        double expensePaid = 0.0, expenseEstimated = 0.0;
-
-        // Procesar Sponsorships (solo ingresos)
+        // Inicializar acumuladores para balance pagado y estimado
+        double totalPaidBalance = 0.0;
+        double totalEstimatedBalance = 0.0;
+        
+        // Procesar Sponsorships
         for (SponsorshipInfoDTO sponsor : sponsors) {
+            // Sumar siempre al balance estimado
+            totalEstimatedBalance += sponsor.getevent_fee();
+            // Si el estado es "Paid", se suma al balance pagado
             if ("Paid".equals(sponsor.getpayment_status())) {
-                incomePaid += sponsor.getevent_fee();
-            } else { // "Unpaid" se considera "Estimated"
-                incomeEstimated += sponsor.getevent_fee();
+                totalPaidBalance += sponsor.getevent_fee();
             }
         }
-
+        
         // Procesar Other Balances (ingresos y gastos)
         for (OtherBalanceDTO balance : otherBalances) {
-            if (balance.getAmount() > 0) { // Ingreso
-                if ("Paid".equals(balance.getPaymentStatus())) {
-                    incomePaid += balance.getAmount();
-                } else {
-                    incomeEstimated += balance.getAmount();
-                }
-            } else { // Gasto
-                if ("Paid".equals(balance.getPaymentStatus())) {
-                    expensePaid += balance.getAmount(); // Monto negativo
-                } else {
-                    expenseEstimated += balance.getAmount(); // Monto negativo
-                }
+            // Sumar siempre al balance estimado
+            totalEstimatedBalance += balance.getAmount();
+            // Si el estado es "Paid", se suma al balance pagado
+            if ("Paid".equals(balance.getPaymentStatus())) {
+                totalPaidBalance += balance.getAmount();
             }
         }
-
-        // Calcular totales
-        double totalIncome = incomePaid + incomeEstimated;
-        double totalExpenses = expensePaid + expenseEstimated;
-
-        // Actualizar la vista (usar Math.abs() para gastos)
-        view.getLblIncomeSummary().setText(String.format("Income: %.2f €", totalIncome));
-        view.getLblIncomePaid().setText(String.format("Paid: %.2f €", incomePaid));
-        view.getLblIncomeEstimated().setText(String.format("Estimated: %.2f €", incomeEstimated));
         
-        view.getLblExpensesSummary().setText(String.format("Expenses: %.2f €", Math.abs(totalExpenses)));
-        view.getLblExpensesPaid().setText(String.format("Paid: %.2f €", Math.abs(expensePaid)));
-        view.getLblExpensesEstimated().setText(String.format("Estimated: %.2f €", Math.abs(expenseEstimated)));
+        // Actualizar la vista: aquí se utilizan los labels para mostrar el balance estimado y el pagado
+        view.getLblIncomeSummary().setText(String.format("Estimated Balance: %.2f €", totalEstimatedBalance));
+        view.getLblExpensesSummary().setText(String.format("Paid Balance: %.2f €", totalPaidBalance));
     }
+
 
     public void showIncomeEntries(int eventId) {
         if (eventId < 0) return;
-
+        int paidInc = 0;
+        int totalInc = 0;
+        int paidExp = 0;
+        int totalExp = 0;
         // Obtener balances de Otras Fuentes (NO Sponsorships)
         List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
 
@@ -266,8 +298,16 @@ public class ConsultEventStatusController {
             
             if (balance.getAmount() > 0) {
                 incomeList.add(entry);
+                totalInc += balance.getAmount();
+                System.out.println(balance.getPaymentStatus());
+                if("Paid".equals(balance.getPaymentStatus()))
+                	paidInc += balance.getAmount();
+                
             } else {
                 expenseList.add(entry);
+                totalExp += balance.getAmount();
+                if("Paid".equals(balance.getPaymentStatus()))
+                	paidExp += balance.getAmount();
             }
         }
 
@@ -276,63 +316,66 @@ public class ConsultEventStatusController {
             new String[]{"name", "amount", "status"}));
         view.getTblExpenses().setModel(SwingUtil.getTableModelFromPojos(expenseList, 
             new String[]{"name", "amount", "status"}));
-
+        view.setLblIncomeEstimated(totalInc);
+        view.setLblIncomePaid(paidInc);
+        view.setLblExpensesEstimated(totalExp);
+        view.setLblExpensesPaid(paidExp);
         SwingUtil.autoAdjustColumns(view.getTblIncome());
         SwingUtil.autoAdjustColumns(view.getTblExpenses());
     }
     
-    private void calculateIncomeTotals(List<IncomeEntryDTO> incomeEntries) {
-        double totalIncome = 0.0;
-        double totalPaid = 0.0;
-        double totalEstimated = 0.0;
-
-        for (IncomeEntryDTO entry : incomeEntries) {
-            if (entry.getAmount() > 0) { // Solo ingresos (montos positivos)
-                totalIncome += entry.getAmount();
-                if ("Paid".equals(entry.getStatus())) {
-                    totalPaid += entry.getAmount();
-                } else if ("Estimated".equals(entry.getStatus())) {
-                    totalEstimated += entry.getAmount();
-                }
-            }
-        }
-        // Sumar los pagos de los sponsorships
-        for (SponsorshipInfoDTO sponsor : sponsorList) {
-            if (sponsor.getevent_fee() > 0) { // Solo montos positivos (ingresos)
-                totalIncome += sponsor.getevent_fee();
-                if ("Paid".equals(sponsor.getpayment_status())) {
-                    totalPaid += sponsor.getevent_fee();
-                } else if ("Estimated".equals(sponsor.getpayment_status())) {
-                    totalEstimated += sponsor.getevent_fee();
-                }
-            }
-        }
-        // Actualizar las etiquetas de Income
-        view.getLblIncomeSummary().setText(String.format("Income: %.2f €", totalIncome));
-        view.getLblIncomePaid().setText(String.format("Paid: %.2f €", totalPaid));
-        view.getLblIncomeEstimated().setText(String.format("Estimated: %.2f €", totalEstimated));
-    }
+//    private void calculateIncomeTotals(List<IncomeEntryDTO> incomeEntries) {
+//        double totalIncome = 0.0;
+//        double totalPaid = 0.0;
+//        double totalEstimated = 0.0;
+//
+//        for (IncomeEntryDTO entry : incomeEntries) {
+//            if (entry.getAmount() > 0) { // Solo ingresos (montos positivos)
+//                totalIncome += entry.getAmount();
+//                if ("Paid".equals(entry.getStatus())) {
+//                    totalPaid += entry.getAmount();
+//                } else if ("Estimated".equals(entry.getStatus())) {
+//                    totalEstimated += entry.getAmount();
+//                }
+//            }
+//        }
+//        // Sumar los pagos de los sponsorships
+//        for (SponsorshipInfoDTO sponsor : sponsorList) {
+//            if (sponsor.getevent_fee() > 0) { // Solo montos positivos (ingresos)
+//                totalIncome += sponsor.getevent_fee();
+//                if ("Paid".equals(sponsor.getpayment_status())) {
+//                    totalPaid += sponsor.getevent_fee();
+//                } else if ("Estimated".equals(sponsor.getpayment_status())) {
+//                    totalEstimated += sponsor.getevent_fee();
+//                }
+//            }
+//        }
+//        // Actualizar las etiquetas de Income
+//        view.getLblIncomeSummary().setText(String.format("Income: %.2f €", totalIncome));
+//        view.getLblIncomePaid().setText(String.format("Paid: %.2f €", totalPaid));
+//        view.getLblIncomeEstimated().setText(String.format("Estimated: %.2f €", totalEstimated));
+//    }
     
-    private void calculateExpensesTotals(List<IncomeEntryDTO> incomeEntries) {
-        double totalExpenses = 0.0;
-        double totalPaid = 0.0;
-        double totalEstimated = 0.0;
-
-        for (IncomeEntryDTO entry : incomeEntries) {
-            if (entry.getAmount() < 0) { // Solo gastos (montos negativos)
-                totalExpenses += entry.getAmount();
-                if ("Paid".equals(entry.getStatus())) {
-                    totalPaid += entry.getAmount();
-                } else if ("Estimated".equals(entry.getStatus())) {
-                    totalEstimated += entry.getAmount();
-                }
-            }
-        }
-
-        // Actualizar las etiquetas de Expenses
-        view.getLblExpensesSummary().setText(String.format("Expenses: %.2f €", totalExpenses));
-        view.getLblExpensesPaid().setText(String.format("Paid: %.2f €", totalPaid));
-        view.getLblExpensesEstimated().setText(String.format("Estimated: %.2f €", totalEstimated));
-    }
+//    private void calculateExpensesTotals(List<IncomeEntryDTO> incomeEntries) {
+//        double totalExpenses = 0.0;
+//        double totalPaid = 0.0;
+//        double totalEstimated = 0.0;
+//
+//        for (IncomeEntryDTO entry : incomeEntries) {
+//            if (entry.getAmount() < 0) { // Solo gastos (montos negativos)
+//                totalExpenses += entry.getAmount();
+//                if ("Paid".equals(entry.getStatus())) {
+//                    totalPaid += entry.getAmount();
+//                } else if ("Estimated".equals(entry.getStatus())) {
+//                    totalEstimated += entry.getAmount();
+//                }
+//            }
+//        }
+//
+//        // Actualizar las etiquetas de Expenses
+//        view.getLblExpensesSummary().setText(String.format("Expenses: %.2f €", totalExpenses));
+//        //view.getLblExpensesPaid().setText(String.format("Paid: %.2f €", totalPaid));
+//        //view.getLblExpensesEstimated().setText(String.format("Estimated: %.2f €", totalEstimated));
+//    }
 }
 

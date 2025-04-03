@@ -76,14 +76,27 @@ public class ConsultEventStatusModel {
         "GROUP BY b.balance_id";
 
     // Consulta para Otras Fuentes (incluye cálculo de estado de pago)
+//    private static final String SQL_GET_OTHER_BALANCES = 
+//        "SELECT b.balance_id, b.concept, b.amount, " +
+//        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS paymentStatus " +
+//        "FROM Balance b " +
+//        "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+//        "WHERE b.event_id = ? " +
+//        "  AND b.balance_id NOT IN (SELECT balance_id FROM Sponsorship) " +
+//        "GROUP BY b.balance_id";
     private static final String SQL_GET_OTHER_BALANCES = 
-        "SELECT b.balance_id, b.concept, b.amount, " +
-        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS paymentStatus " +
-        "FROM Balance b " +
-        "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
-        "WHERE b.event_id = ? " +
-        "  AND b.balance_id NOT IN (SELECT balance_id FROM Sponsorship) " +
-        "GROUP BY b.balance_id";
+    	    "SELECT b.balance_id, b.concept, " +
+    	    "       b.amount, " +
+    	    "       CASE " +
+    	    "           WHEN (b.amount > 0 AND COALESCE(SUM(m.movement_amount), 0) >= b.amount) THEN 'Paid' " +
+    	    "           WHEN (b.amount < 0 AND COALESCE(SUM(m.movement_amount), 0) <= b.amount) THEN 'Paid' " +
+    	    "           ELSE 'Unpaid' " +
+    	    "       END AS paymentStatus " +
+    	    "FROM Balance b " +
+    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+    	    "WHERE b.event_id = ? " +
+    	    "  AND b.balance_id NOT IN (SELECT balance_id FROM Sponsorship) " +
+    	    "GROUP BY b.balance_id, b.concept, b.amount";
 
     public List<SponsorshipBalanceDTO> getSponsorshipBalances(int eventId) {
         return db.executeQueryPojo(SponsorshipBalanceDTO.class, SQL_GET_SPONSORSHIP_BALANCES, eventId);

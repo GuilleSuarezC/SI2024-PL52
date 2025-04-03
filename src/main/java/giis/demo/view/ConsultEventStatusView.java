@@ -13,6 +13,7 @@ public class ConsultEventStatusView {
     private JTable tblEvents, tblSponsorships, tblIncome, tblExpenses;
     private JLabel lblBalanceEstimated, lblIncomeEstimated, lblIncomePaid;
     private JLabel lblBalancePaid, lblExpensesEstimated, lblExpensesPaid;
+    private JLabel lblSponsorshipsEstimated, lblSponsorshipsPaid;
     private JButton btnExit;
 
     /**
@@ -51,11 +52,11 @@ public class ConsultEventStatusView {
         spSponsorships.setBounds(531, 28, 471, 218);
         frmConsultEventStatus.getContentPane().add(spSponsorships);
         
-        JLabel lblSponsorshipsEstimated = new JLabel("Estimated Total: €");
+        lblSponsorshipsEstimated = new JLabel("Estimated Total: ");
         lblSponsorshipsEstimated.setBounds(531, 250, 200, 14);
         frmConsultEventStatus.getContentPane().add(lblSponsorshipsEstimated);
         
-        JLabel lblSponsorshipsPaid = new JLabel("Paid Total: €");
+        lblSponsorshipsPaid = new JLabel("Paid Total: ");
         lblSponsorshipsPaid.setBounds(731, 250, 200, 14);
         frmConsultEventStatus.getContentPane().add(lblSponsorshipsPaid);
 
@@ -68,8 +69,8 @@ public class ConsultEventStatusView {
         spExpenses.setBounds(531, 296, 471, 218);
         frmConsultEventStatus.getContentPane().add(spExpenses);
         
-        JLabel lblExpensesEstimated = new JLabel("Estimated Total: €");
-        JLabel lblExpensesPaid = new JLabel("Paid Total: €");
+        lblExpensesEstimated = new JLabel("Estimated Total: ");
+        lblExpensesPaid = new JLabel("Paid Total: ");
         
         lblExpensesEstimated.setBounds(531, 518, 200, 14);
         lblExpensesPaid.setBounds(731, 518, 200, 14);
@@ -86,8 +87,8 @@ public class ConsultEventStatusView {
         spIncome.setBounds(7, 296, 457, 218);
         frmConsultEventStatus.getContentPane().add(spIncome);
         
-        lblIncomeEstimated = new JLabel("Estimated Total: €");
-        lblIncomePaid = new JLabel("Paid Total: €");
+        lblIncomeEstimated = new JLabel("Estimated Total: ");
+        lblIncomePaid = new JLabel("Paid Total: ");
         
         lblIncomeEstimated.setBounds(7, 518, 200, 14);
         lblIncomePaid.setBounds(207, 518, 200, 14);
@@ -182,16 +183,16 @@ public class ConsultEventStatusView {
 		return lblIncomeEstimated;
 	}
 
-	public void setLblIncomeEstimated(JLabel lblIncomeEstimated) {
-		this.lblIncomeEstimated = lblIncomeEstimated;
+	public void setLblIncomeEstimated(int num) {
+		this.lblIncomeEstimated.setText("Estimated Total: "+num+" €");
 	}
 
 	public JLabel getLblIncomePaid() {
 		return lblIncomePaid;
 	}
 
-	public void setLblIncomePaid(JLabel lblIncomePaid) {
-		this.lblIncomePaid = lblIncomePaid;
+	public void setLblIncomePaid(int num) {
+		this.lblIncomePaid.setText("Paid Total: "+num+" €");
 	}
 
 	public JLabel getLblExpensesSummary() {
@@ -206,16 +207,16 @@ public class ConsultEventStatusView {
 		return lblExpensesEstimated;
 	}
 
-	public void setLblExpensesEstimated(JLabel lblExpensesEstimated) {
-		this.lblExpensesEstimated = lblExpensesEstimated;
+	public void setLblExpensesEstimated(int num) {
+		this.lblExpensesEstimated.setText("Estimated Total: "+num+" €");
 	}
 
 	public JLabel getLblExpensesPaid() {
 		return lblExpensesPaid;
 	}
 
-	public void setLblExpensesPaid(JLabel lblExpensesPaid) {
-		this.lblExpensesPaid = lblExpensesPaid;
+	public void setLblExpensesPaid(int num) {
+		this.lblExpensesPaid.setText("Paid Total: "+num+" €");
 	}
 
 	public JButton getBtnExit() {
@@ -224,5 +225,29 @@ public class ConsultEventStatusView {
 
 	public void setBtnExit(JButton btnExit) {
 		this.btnExit = btnExit;
+	}
+
+	public JLabel getLblBalanceEstimated() {
+		return lblBalanceEstimated;
+	}
+
+	public void setLblBalanceEstimated(JLabel lblBalanceEstimated) {
+		this.lblBalanceEstimated = lblBalanceEstimated;
+	}
+
+	public JLabel getLblBalancePaid() {
+		return lblBalancePaid;
+	}
+
+	public void setLblBalancePaid(JLabel lblBalancePaid) {
+		this.lblBalancePaid = lblBalancePaid;
+	}
+	
+	public void setLblSponsorshipsEstimated(int num) {
+		this.lblSponsorshipsEstimated.setText("Estimated Total: "+num + " €");
+	}
+	
+	public void setLblSponsorshipsPaid(int num) {
+		this.lblSponsorshipsPaid.setText("Paid Total: "+num + " €");
 	}
 }

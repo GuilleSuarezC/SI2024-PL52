@@ -64,7 +64,7 @@ public class RegisterPaymentsController {
     private void loadPendingPayments() {
         List<PendingPaymentDTO> payments = model.getPendingPayments();
         TableModel tableModel = SwingUtil.getTableModelFromPojos(payments,
-            new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "invoice_id"});
+            new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "taxData_Fnumber"});
         
         view.getLstPayments().setModel(tableModel);
         view.getLstPayments().getColumnModel().getColumn(0).setMinWidth(0);
@@ -81,13 +81,13 @@ public class RegisterPaymentsController {
         try {
         	
             selectedPayment = new PendingPaymentDTO(
-                Integer.parseInt(table.getValueAt(rowIndex, 0).toString()),  // sponsorshipId
-                table.getValueAt(rowIndex, 1).toString(),                   // sponsorshipName
-                table.getValueAt(rowIndex, 2).toString(), // agreementDate
-                Double.parseDouble(table.getValueAt(rowIndex, 3).toString()), // amount
-                table.getValueAt(rowIndex, 4).toString(),                   // eventName
-                table.getValueAt(rowIndex, 5).toString(), // invoiceDate
-                Integer.parseInt(table.getValueAt(rowIndex, 6).toString())  // invoiceId
+                Integer.parseInt(table.getValueAt(rowIndex, 0).toString()),  	// sponsorshipId
+                table.getValueAt(rowIndex, 1).toString(),                   	// sponsorshipName
+                table.getValueAt(rowIndex, 2).toString(), 						// agreementDate
+                Double.parseDouble(table.getValueAt(rowIndex, 3).toString()),	// amount
+                table.getValueAt(rowIndex, 4).toString(),                   	// eventName
+                table.getValueAt(rowIndex, 5).toString(), 						// invoiceDate
+                table.getValueAt(rowIndex, 6).toString()  	// invoiceId
             );
 
             view.setLblSponsorshipName(selectedPayment.getSponsorship_name());
@@ -95,7 +95,7 @@ public class RegisterPaymentsController {
             view.setLblAmount((int) selectedPayment.getAmount());
             view.setLblEventName(selectedPayment.getEvent_name());
             view.setLblInvoiceDate(selectedPayment.getInvoice_date());
-            view.setLblInvoiceId(selectedPayment.getInvoice_id());
+            view.setLblFiscalNumber(selectedPayment.getTaxData_Fnumber());
         } catch (Exception e) {
             System.out.println("Error al seleccionar el pago: " + e.getMessage());
         }
@@ -140,7 +140,7 @@ public class RegisterPaymentsController {
     
     private void RegisterPayment() {
         if (selectedPayment == null) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Selects a pending payment before make a registration.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "You must select a pending payment to be able to make a registration.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -148,13 +148,13 @@ public class RegisterPaymentsController {
             // Obtener la cantidad ingresada
             String amountPaidStr = view.getAmountPaidField();
             if (amountPaidStr.isEmpty()) {
-                JOptionPane.showMessageDialog(view.getFrame(), "Ingrese un monto válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view.getFrame(), "You must input a valid amount.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             double amountPaid = Double.parseDouble(amountPaidStr);
             double amount = selectedPayment.getAmount();
             if(amount != amountPaid) {
-            	JOptionPane.showMessageDialog(view.getFrame(), "The amount Paid must be the same as the amount.", "Error", JOptionPane.ERROR_MESSAGE);
+            	JOptionPane.showMessageDialog(view.getFrame(), "The amount paid must be the same as the expected amount.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -168,7 +168,7 @@ public class RegisterPaymentsController {
             // Obtener la fecha ingresada
             String paymentDateStr = view.getPaymentDate();
             if (paymentDateStr.isEmpty()) {
-                JOptionPane.showMessageDialog(view.getFrame(), "Insert a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view.getFrame(), "You must insert a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             Date paymentDate = Util.isoStringToDate(paymentDateStr);
@@ -190,15 +190,15 @@ public class RegisterPaymentsController {
             // Registrar el pago en la BD
             model.RegisterPayment(amountPaid, paymentDate, selectedPayment.getBalance_id());            
             model.UpdateBalance(paymentDateStr, selectedPayment.getBalance_id());                                
-            JOptionPane.showMessageDialog(view.getFrame(), "Pago registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "The payment had been registered correctly.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             // Refrescar la tabla y limpiar selección
             loadPendingPayments();
             clearSelection();
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Ingrese un monto numérico válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "Input a numeric amount.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Error al registrar el pago: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "Error registering the payment: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -207,9 +207,9 @@ public class RegisterPaymentsController {
     private void clearSelection() {
         view.getLstPayments().clearSelection();
         selectedPayment = null;
-        view.setLblSponsorshipName("");
+        view.setLblSponsorshipName(null);
         view.setLblAgreementDate(null);
         view.setLblAmount(0);
-        view.setLblInvoiceId(0);;
+        view.setLblFiscalNumber(null);;
     } 
 }

@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * Vista de la pantalla para registrar acuerdos de patrocinio.
@@ -39,7 +40,7 @@ public class RegisterPaymentsView {
     private JLabel lblSponsorshipName;
     private JLabel lblAmount;
     private JLabel lblAgreementDate;
-    private JLabel lblInoviceId;
+    private JLabel lblFnumber;
     private JLabel lblAmountPaid;
     private JLabel lblPaymentDate;
     private JLabel lblInvoiceDate;
@@ -58,8 +59,8 @@ public class RegisterPaymentsView {
         frmRegisterPaymentsView = new JFrame();
         frmRegisterPaymentsView.setTitle("Register Payments ");
         frmRegisterPaymentsView.setName("SponsorshipView");
-        frmRegisterPaymentsView.setBounds(0, 0, 626, 547);
-        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[601.00px]", "[15px][193px][21px][183px][56px]"));
+        frmRegisterPaymentsView.setBounds(0, 0, 751, 547);
+        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[718.00px]", "[15px][193px][21px][183px][56px]"));
         
         JLabel lblPendingPayments = new JLabel("Pending Payments");
         lblPendingPayments.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -91,9 +92,9 @@ public class RegisterPaymentsView {
         lblAgreementDate.setBounds(10, 60, 232, 23);
         DetailsPanel.add(lblAgreementDate);
         
-        lblInoviceId = new JLabel("Invoice ID:  ");
-        lblInoviceId.setBounds(10, 110, 232, 23);
-        DetailsPanel.add(lblInoviceId);
+        lblFnumber = new JLabel("Fiscal Number:  ");
+        lblFnumber.setBounds(10, 110, 232, 23);
+        DetailsPanel.add(lblFnumber);
         
         lblAmountPaid = new JLabel("Amount Paid: ");
         lblAmountPaid.setBounds(343, 63, 86, 23);
@@ -146,7 +147,7 @@ public class RegisterPaymentsView {
     public void setLblAmount(int amount) {this.lblAmount.setText("Amount to pay: " + amount+"€");}
     public void setLblSponsorshipName(String sponsorshipName) {this.lblSponsorshipName.setText("Sponsorship Name: " + sponsorshipName);}
     public void setLblSponsorshipID(int sponsorshipId) {this.lblEventName.setText("Sponsorship Id: " + sponsorshipId);}
-    public void setLblInvoiceId(int invoiceId) {this.lblInoviceId.setText("Invoice Id: " + invoiceId);}
+    public void setLblFiscalNumber(String fiscalNumber) {this.lblFnumber.setText("Fiscal Number: " + fiscalNumber);}
     public void setLblAgreementDate(String date) {this.lblAgreementDate.setText("Agreement Date: " + date);}
     public void setLblEventName(String eventName) {this.lblEventName.setText("Event name: " + eventName);}
     public void setLblInvoiceDate(String invoiceDate) {this.lblInvoiceDate.setText("Invoice Date: " + invoiceDate);}

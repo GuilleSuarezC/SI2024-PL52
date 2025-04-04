@@ -16,6 +16,8 @@ import javax.swing.UIManager;
 
 import com.toedter.calendar.JDateChooser;
 
+import giis.demo.util.Util;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JPanel;
@@ -125,6 +127,14 @@ public class ReportIncomeExpensesView {
     public String getEndDate() {
         Date date = this.endDateChooser.getDate();
         return (date != null) ? new SimpleDateFormat("yyyy-MM-dd").format(date) : "";
+    }
+    public void setStartDate(String dateStr) {
+    	Date date = Util.isoStringToDate(dateStr);
+    	this.startDateChooser.setDate(date);
+    }
+    public void setEndDate(String dateStr) {
+    	Date date = Util.isoStringToDate(dateStr);
+    	this.endDateChooser.setDate(date);
     }
     public JComboBox<Object> getStatus() { return this.activityStatusCB; }
     

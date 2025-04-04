@@ -22,7 +22,7 @@ public class InvoiceSendModel {
     	String sql = "SELECT c.company_name, c.company_email, i.taxData_Fnumber, CAST(b.amount AS REAL) " +
                 "FROM Sponsorship s " +
                 "JOIN Company c ON s.company_id = c.company_id " +
-                "JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id " +
+                "LEFT JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id " +
                 "JOIN Balance b ON s.balance_id = b.balance_id " +
                 "JOIN Event ev ON s.event_id = ev.event_id " +
                 "WHERE ev.event_name = ?";

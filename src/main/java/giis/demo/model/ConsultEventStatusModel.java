@@ -24,7 +24,7 @@ public class ConsultEventStatusModel {
 //        "WHERE s.event_id = ?";
     private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
     	    "SELECT s.sponsorship_name, s.sponsorship_agreementDate, " +
-    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS payment_status, " +
+    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
     	    "       e.event_fee " +
     	    "FROM Sponsorship s " +
     	    "JOIN Balance b ON s.balance_id = b.balance_id " + // Balance asociado al Sponsorship
@@ -44,7 +44,7 @@ public class ConsultEventStatusModel {
     	    "       b.amount AS amount, " +
     	    "       CASE " +
     	    "           WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' " +
-    	    "           ELSE 'Unpaid' " +
+    	    "           ELSE 'Estimated' " +
     	    "       END AS status " +
     	    "FROM Balance b " +
     	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
@@ -68,7 +68,7 @@ public class ConsultEventStatusModel {
  // Consulta para Sponsorships (incluye cálculo de estado de pago)
     private static final String SQL_GET_SPONSORSHIP_BALANCES = 
         "SELECT b.balance_id, b.concept, b.amount, " +
-        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS paymentStatus " +
+        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS paymentStatus " +
         "FROM Balance b " +
         "INNER JOIN Sponsorship s ON b.balance_id = s.balance_id " +
         "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
@@ -90,7 +90,7 @@ public class ConsultEventStatusModel {
     	    "       CASE " +
     	    "           WHEN (b.amount > 0 AND COALESCE(SUM(m.movement_amount), 0) >= b.amount) THEN 'Paid' " +
     	    "           WHEN (b.amount < 0 AND COALESCE(SUM(m.movement_amount), 0) <= b.amount) THEN 'Paid' " +
-    	    "           ELSE 'Unpaid' " +
+    	    "           ELSE 'Estimated' " +
     	    "       END AS paymentStatus " +
     	    "FROM Balance b " +
     	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +

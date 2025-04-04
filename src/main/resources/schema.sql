@@ -41,7 +41,7 @@ CREATE TABLE "Member" (
 CREATE TABLE "Event" (
     "event_id" INTEGER PRIMARY KEY,
     "event_name" VARCHAR(30) NOT NULL,
-    "event_edition" VARCHAR(30) NOT NULL,
+    "event_edition" VARCHAR(30),
     "event_date" DATE NOT NULL,
     "event_endDate" INTEGER NOT NULL,
     "event_status" TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')),

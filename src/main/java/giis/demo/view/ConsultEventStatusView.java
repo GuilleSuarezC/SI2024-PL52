@@ -2,11 +2,7 @@ package giis.demo.view;
 
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.border.TitledBorder;
 
 /**
  * Vista de la pantalla para consultar el estado de las actividades.
@@ -15,8 +11,9 @@ public class ConsultEventStatusView {
 
     private JFrame frmConsultEventStatus;
     private JTable tblEvents, tblSponsorships, tblIncome, tblExpenses;
-    private JLabel lblIncomeSummary, lblIncomeEstimated, lblIncomePaid;
-    private JLabel lblExpensesSummary, lblExpensesEstimated, lblExpensesPaid;
+    private JLabel lblBalanceEstimated, lblIncomeEstimated, lblIncomePaid;
+    private JLabel lblBalancePaid, lblExpensesEstimated, lblExpensesPaid;
+    private JLabel lblSponsorshipsEstimated, lblSponsorshipsPaid;
     private JButton btnExit;
 
     /**
@@ -54,135 +51,203 @@ public class ConsultEventStatusView {
         JScrollPane spSponsorships = new JScrollPane(tblSponsorships);
         spSponsorships.setBounds(531, 28, 471, 218);
         frmConsultEventStatus.getContentPane().add(spSponsorships);
+        
+        lblSponsorshipsEstimated = new JLabel("Estimated Total: ");
+        lblSponsorshipsEstimated.setBounds(531, 250, 200, 14);
+        frmConsultEventStatus.getContentPane().add(lblSponsorshipsEstimated);
+        
+        lblSponsorshipsPaid = new JLabel("Paid Total: ");
+        lblSponsorshipsPaid.setBounds(731, 250, 200, 14);
+        frmConsultEventStatus.getContentPane().add(lblSponsorshipsPaid);
 
         // Expenses Table
         JLabel label_3 = new JLabel("Expenses:");
-        label_3.setBounds(531, 257, 471, 14);
+        label_3.setBounds(531, 275, 471, 14);
         frmConsultEventStatus.getContentPane().add(label_3);
         tblExpenses = new JTable();
         JScrollPane spExpenses = new JScrollPane(tblExpenses);
-        spExpenses.setBounds(531, 278, 471, 218);
+        spExpenses.setBounds(531, 296, 471, 218);
         frmConsultEventStatus.getContentPane().add(spExpenses);
-                        
-                                // Income Table
-                                JLabel label_2 = new JLabel("Income:");
-                                label_2.setBounds(7, 257, 457, 14);
-                                frmConsultEventStatus.getContentPane().add(label_2);
-                        tblIncome = new JTable();
-                        JScrollPane spIncome = new JScrollPane(tblIncome);
-                        spIncome.setBounds(7, 278, 457, 218);
-                        frmConsultEventStatus.getContentPane().add(spIncome);
-                
-                        // Total Summary Panel
-                        JPanel pnlTotal = new JPanel(new MigLayout("", "[grow]", "[][]"));
-                        pnlTotal.setBounds(7, 507, 276, 141);
-                        pnlTotal.setBorder(BorderFactory.createTitledBorder("Total"));
-                        
-                                // Agrupar Income
-                                JPanel pnlIncome = new JPanel(new MigLayout("", "[grow]", "[][]"));
-                                lblIncomeSummary = new JLabel("Income: 0.00");
-                                pnlIncome.add(lblIncomeSummary, "wrap");
-                                
-                                        lblIncomeEstimated = new JLabel("Estimated: 0.00");
-                                        pnlIncome.add(lblIncomeEstimated);
-                                        lblIncomePaid = new JLabel("Paid: 0.00");
-                                        pnlIncome.add(lblIncomePaid);
-                                        
-                                                pnlTotal.add(pnlIncome, "growy, wrap");
-                                                
-                                                        // Agrupar Expenses
-                                                        JPanel pnlExpenses = new JPanel(new MigLayout("", "[grow]", "[][]"));
-                                                        lblExpensesSummary = new JLabel("Expenses: 0.00");
-                                                        pnlExpenses.add(lblExpensesSummary, "wrap");
-                                                        
-                                                                lblExpensesEstimated = new JLabel("Estimated: 0.00");
-                                                                pnlExpenses.add(lblExpensesEstimated);
-                                                                lblExpensesPaid = new JLabel("Paid: 0.00");
-                                                                pnlExpenses.add(lblExpensesPaid);
-                                                                
-                                                                        pnlTotal.add(pnlExpenses, "growy");
-                                                                        
-                                                                                frmConsultEventStatus.getContentPane().add(pnlTotal);
-                
-                        // Exit Button
-                        btnExit = new JButton("Exit");
-                        btnExit.setBounds(880, 625, 116, 23);
-                        frmConsultEventStatus.getContentPane().add(btnExit);
-    
-                        pnlTotal.add(pnlIncome, "growy, wrap");
-                        pnlTotal.add(pnlExpenses, "growy");
-                        
-                        frmConsultEventStatus.setResizable(false); // Habilitar redimensionamiento
+        
+        lblExpensesEstimated = new JLabel("Estimated Total: ");
+        lblExpensesPaid = new JLabel("Paid Total: ");
+        
+        lblExpensesEstimated.setBounds(531, 518, 200, 14);
+        lblExpensesPaid.setBounds(731, 518, 200, 14);
+        
+        frmConsultEventStatus.getContentPane().add(lblExpensesEstimated);
+        frmConsultEventStatus.getContentPane().add(lblExpensesPaid);
 
-
+        // Income Table
+        JLabel label_2 = new JLabel("Income:");
+        label_2.setBounds(7, 275, 457, 14);
+        frmConsultEventStatus.getContentPane().add(label_2);
+        tblIncome = new JTable();
+        JScrollPane spIncome = new JScrollPane(tblIncome);
+        spIncome.setBounds(7, 296, 457, 218);
+        frmConsultEventStatus.getContentPane().add(spIncome);
+        
+        lblIncomeEstimated = new JLabel("Estimated Total: ");
+        lblIncomePaid = new JLabel("Paid Total: ");
+        
+        lblIncomeEstimated.setBounds(7, 518, 200, 14);
+        lblIncomePaid.setBounds(207, 518, 200, 14);
+        
+        frmConsultEventStatus.getContentPane().add(lblIncomeEstimated);
+        frmConsultEventStatus.getContentPane().add(lblIncomePaid);
+        
+        // Total Summary Panel
+        JPanel pnlTotal = new JPanel(new MigLayout("", "[grow][grow]", "[][]"));
+        pnlTotal.setBounds(7, 566, 500, 78);
+        pnlTotal.setBorder(new TitledBorder(null, "Balance", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        
+        // Income Summary
+        JPanel pnlIncome = new JPanel(new MigLayout("", "[grow]", "[][]"));
+        lblBalanceEstimated = new JLabel("Estimated:");
+        pnlIncome.add(lblBalanceEstimated, "wrap");
+        //pnlIncome.add(lblIncomeEstimated);
+        //pnlIncome.add(lblIncomePaid);
+        
+        // Expenses Summary
+        JPanel pnlExpenses = new JPanel(new MigLayout("", "[grow]", "[][]"));
+        lblBalancePaid = new JLabel("Paid:");
+        pnlExpenses.add(lblBalancePaid, "wrap");
+        //pnlExpenses.add(lblExpensesEstimated);
+        //pnlExpenses.add(lblExpensesPaid);
+        
+        pnlTotal.add(pnlIncome, "grow");
+        pnlTotal.add(pnlExpenses, "grow");
+        frmConsultEventStatus.getContentPane().add(pnlTotal);
+        
+        // Exit Button
+        btnExit = new JButton("Exit");
+        btnExit.setBounds(880, 625, 116, 23);
+        frmConsultEventStatus.getContentPane().add(btnExit);
+        
+        frmConsultEventStatus.setResizable(false);
     }
-
 
     public JFrame getFrame() {
         return frmConsultEventStatus;
     }
 
-    public JTable getTblEvents() {
-        return tblEvents;
-    }
+	public JFrame getFrmConsultEventStatus() {
+		return frmConsultEventStatus;
+	}
 
-    public JTable getTblSponsorships() {
-        return tblSponsorships;
-    }
+	public void setFrmConsultEventStatus(JFrame frmConsultEventStatus) {
+		this.frmConsultEventStatus = frmConsultEventStatus;
+	}
 
-    public JTable getTblIncome() {
-        return tblIncome;
-    }
-
-    public JTable getTblExpenses() {
-        return tblExpenses;
-    }
-
-    public JLabel getLblIncomeSummary() {
-        return lblIncomeSummary;
-    }
-
-    public JLabel getLblIncomeEstimated() {
-        return lblIncomeEstimated;
-    }
-
-    public JLabel getLblIncomePaid() {
-        return lblIncomePaid;
-    }
-
-    public JLabel getLblExpensesSummary() {
-        return lblExpensesSummary;
-    }
-
-    public JLabel getLblExpensesEstimated() {
-        return lblExpensesEstimated;
-    }
-
-    public JLabel getLblExpensesPaid() {
-        return lblExpensesPaid;
-    }
-
-    public JButton getBtnExit() {
-        return btnExit;
-    }
+	public JTable getTblEvents() {
+		return tblEvents;
+	}
 
 	public void setTblEvents(JTable tblEvents) {
 		this.tblEvents = tblEvents;
+	}
+
+	public JTable getTblSponsorships() {
+		return tblSponsorships;
 	}
 
 	public void setTblSponsorships(JTable tblSponsorships) {
 		this.tblSponsorships = tblSponsorships;
 	}
 
+	public JTable getTblIncome() {
+		return tblIncome;
+	}
+
 	public void setTblIncome(JTable tblIncome) {
 		this.tblIncome = tblIncome;
+	}
+
+	public JTable getTblExpenses() {
+		return tblExpenses;
 	}
 
 	public void setTblExpenses(JTable tblExpenses) {
 		this.tblExpenses = tblExpenses;
 	}
 
+	public JLabel getLblIncomeSummary() {
+		return lblBalanceEstimated;
+	}
+
+	public void setLblIncomeSummary(JLabel lblIncomeSummary) {
+		this.lblBalanceEstimated = lblIncomeSummary;
+	}
+
+	public JLabel getLblIncomeEstimated() {
+		return lblIncomeEstimated;
+	}
+
+	public void setLblIncomeEstimated(int num) {
+		this.lblIncomeEstimated.setText("Estimated Total: "+num+" €");
+	}
+
+	public JLabel getLblIncomePaid() {
+		return lblIncomePaid;
+	}
+
+	public void setLblIncomePaid(int num) {
+		this.lblIncomePaid.setText("Paid Total: "+num+" €");
+	}
+
+	public JLabel getLblExpensesSummary() {
+		return lblBalancePaid;
+	}
+
+	public void setLblExpensesSummary(JLabel lblExpensesSummary) {
+		this.lblBalancePaid = lblExpensesSummary;
+	}
+
+	public JLabel getLblExpensesEstimated() {
+		return lblExpensesEstimated;
+	}
+
+	public void setLblExpensesEstimated(int num) {
+		this.lblExpensesEstimated.setText("Estimated Total: "+num+" €");
+	}
+
+	public JLabel getLblExpensesPaid() {
+		return lblExpensesPaid;
+	}
+
+	public void setLblExpensesPaid(int num) {
+		this.lblExpensesPaid.setText("Paid Total: "+num+" €");
+	}
+
+	public JButton getBtnExit() {
+		return btnExit;
+	}
+
 	public void setBtnExit(JButton btnExit) {
 		this.btnExit = btnExit;
+	}
+
+	public JLabel getLblBalanceEstimated() {
+		return lblBalanceEstimated;
+	}
+
+	public void setLblBalanceEstimated(JLabel lblBalanceEstimated) {
+		this.lblBalanceEstimated = lblBalanceEstimated;
+	}
+
+	public JLabel getLblBalancePaid() {
+		return lblBalancePaid;
+	}
+
+	public void setLblBalancePaid(JLabel lblBalancePaid) {
+		this.lblBalancePaid = lblBalancePaid;
+	}
+	
+	public void setLblSponsorshipsEstimated(int num) {
+		this.lblSponsorshipsEstimated.setText("Estimated Total: "+num + " €");
+	}
+	
+	public void setLblSponsorshipsPaid(int num) {
+		this.lblSponsorshipsPaid.setText("Paid Total: "+num + " €");
 	}
 }

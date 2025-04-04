@@ -80,9 +80,9 @@ public class SwingMain {
 		frame.getContentPane().setLayout(null);
 		
 
-		JButton btnRegisterSponsorship = new JButton("Register Sponsorships");
+		JButton btnRegisterSponsorship = new JButton("Register Sponsorship Agreements");
 
-		btnRegisterSponsorship.setBounds(20, 175, 195, 23);
+		btnRegisterSponsorship.setBounds(20, 175, 238, 23);
 
 		btnRegisterSponsorship.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -139,7 +139,7 @@ public class SwingMain {
 		
 		
 		JButton btnRegisterIncomeExpenses = new JButton("Register Income/Expenses");
-		btnRegisterIncomeExpenses.setBounds(20, 143, 195, 23);
+		btnRegisterIncomeExpenses.setBounds(20, 143, 238, 23);
 		btnRegisterIncomeExpenses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterIncomeExpensesModel model = new RegisterIncomeExpensesModel();
@@ -153,7 +153,7 @@ public class SwingMain {
 
 		//Fixed conflicts
 		JButton btnSendInvoices = new JButton("Send Invoices");
-		btnSendInvoices.setBounds(20, 242, 195, 23);
+		btnSendInvoices.setBounds(20, 242, 238, 23);
 		btnSendInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InvoiceSendModel model = new InvoiceSendModel();
@@ -175,7 +175,7 @@ public class SwingMain {
 		        controller.initController(SwingMain.this);
 		    }
 		});
-		btnConsultEvt.setBounds(20, 209, 195, 23);
+		btnConsultEvt.setBounds(20, 209, 238, 23);
 		frame.getContentPane().add(btnConsultEvt);
 		String fechaInit = "2025-04-01";
 		this.fechaISO = Util.isoStringToDate(fechaInit);
@@ -183,7 +183,7 @@ public class SwingMain {
 		
 		
 		JButton btnRegisterPayments = new JButton("Register Payments");
-		btnRegisterPayments.setBounds(20, 275, 195, 23);
+		btnRegisterPayments.setBounds(20, 275, 238, 23);
 		frame.getContentPane().add(btnRegisterPayments);
 		btnRegisterPayments.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
@@ -194,7 +194,7 @@ public class SwingMain {
 		frame.getContentPane().add(btnRegisterPayments);
 		
 		JButton btnRegisterEvent = new JButton("Register New Events");
-		btnRegisterEvent.setBounds(250, 143, 175, 23);
+		btnRegisterEvent.setBounds(301, 143, 248, 23);
 		frame.getContentPane().add(btnRegisterEvent);
 		btnRegisterEvent.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
@@ -204,7 +204,7 @@ public class SwingMain {
 		});
 		
 		JButton btnReportIncExp = new JButton("Report Income & Expenses");
-		btnReportIncExp.setBounds(20, 308, 195, 23);
+		btnReportIncExp.setBounds(20, 308, 238, 23);
 		frame.getContentPane().add(btnReportIncExp);
 		btnReportIncExp.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
@@ -222,7 +222,7 @@ public class SwingMain {
 				controller.initController(SwingMain.this);
 			}
 		});
-		btnCloseEvents.setBounds(250, 175, 175, 23);
+		btnCloseEvents.setBounds(301, 175, 248, 23);
 		frame.getContentPane().add(btnCloseEvents);
 	}
 

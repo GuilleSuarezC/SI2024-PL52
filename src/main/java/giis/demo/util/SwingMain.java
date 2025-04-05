@@ -35,7 +35,7 @@ public class SwingMain {
 
 	private JFrame frame;
 	private JTextField tfChangeDate;
-	private Date fechaISO;
+	private static Date fechaISO;
 	private JLabel dateErrorLabel;
 
 	/**
@@ -156,7 +156,9 @@ public class SwingMain {
 		btnSendInvoices.setBounds(20, 242, 238, 23);
 		btnSendInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InvoiceSendModel model = new InvoiceSendModel();
+		        String date = getFechaISO();
+
+				InvoiceSendModel model = new InvoiceSendModel(date);
 				InvoiceSendView view = new InvoiceSendView();
 				InvoiceSendController controller = new InvoiceSendController(model, view);
 			}
@@ -243,7 +245,7 @@ public class SwingMain {
 	/**
 	 * Public method to access registered date in ISO format
 	 */
-	public String getFechaISO() {
+	public static String getFechaISO() {
 		return (fechaISO != null) ? Util.dateToIsoString(fechaISO) : null;
 	}
 

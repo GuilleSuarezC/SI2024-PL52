@@ -58,8 +58,8 @@ public class ReportIncomeExpensesView {
         frmReportIncomeExpenses = new JFrame();
         frmReportIncomeExpenses.setTitle("Report Income and Expenses");
         frmReportIncomeExpenses.setName("SponsorshipView");
-        frmReportIncomeExpenses.setBounds(0, 0, 941, 537);
-        frmReportIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[904.00px]", "[21px][88.00px][15px][319.00px][15.00px]"));
+        frmReportIncomeExpenses.setBounds(0, 0, 1395, 537);
+        frmReportIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[1359.00px]", "[21px][88.00px][15px][319.00px][15.00px]"));
         
      // Crear los selectores de fecha
         

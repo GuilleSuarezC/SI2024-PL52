@@ -1,60 +1,72 @@
 package giis.demo.model;
 
+import java.util.Date;
+
 public class InvoiceDTO {
-    private String sponsorName;
-    private String fiscalNumber;
-    private String invoiceDate;
-    private String eventName;
-    private double paymentAmount; 
-    
 
-    public InvoiceDTO(String sponsorName, String fiscalNumber, String invoiceDate, 
-                      String eventName, double paymentAmount) {
-        this.sponsorName = sponsorName;
-        this.fiscalNumber = fiscalNumber;
+    private int invoiceId;
+    private String taxDataName;
+    private Date invoiceDate;
+    private boolean invoiceAdvance;
+    private String invoiceNumber;  
+    private int sponsorshipId;
+
+    public InvoiceDTO(int invoiceId, String taxDataName, Date invoiceDate, boolean invoiceAdvance, String invoiceNumber, int sponsorshipId) {
+        this.invoiceId = invoiceId;
+        this.taxDataName = taxDataName;
         this.invoiceDate = invoiceDate;
-        this.eventName = eventName;
-        this.paymentAmount = paymentAmount;
-        
+        this.invoiceAdvance = invoiceAdvance;
+        this.invoiceNumber = invoiceNumber;
+        this.sponsorshipId = sponsorshipId;
     }
 
-
-    public String getSponsorName() {
-        return sponsorName;
+    public int getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setSponsorName(String sponsorName) {
-        this.sponsorName = sponsorName;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public String getFiscalNumber() {
-        return fiscalNumber;
+    public String getTaxDataName() {
+        return taxDataName;
     }
 
-    public void setFiscalNumber(String fiscalNumber) {
-        this.fiscalNumber = fiscalNumber;
+    public void setTaxDataName(String taxDataName) {
+        this.taxDataName = taxDataName;
     }
 
-    public String getInvoiceDate() {
+    public Date getInvoiceDate() {
         return invoiceDate;
     }
 
-    public void setInvoiceDate(String invoiceDate) {
+    public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
 
-    public String getEventName() {
-        return eventName;
+    public boolean isInvoiceAdvance() {
+        return invoiceAdvance;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setInvoiceAdvance(boolean invoiceAdvance) {
+        this.invoiceAdvance = invoiceAdvance;
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public int getSponsorshipId() {
+        return sponsorshipId;
+    }
+
+    public void setSponsorshipId(int sponsorshipId) {
+        this.sponsorshipId = sponsorshipId;
     }
 
     
-
-   
-    }
-
-    
-
+}

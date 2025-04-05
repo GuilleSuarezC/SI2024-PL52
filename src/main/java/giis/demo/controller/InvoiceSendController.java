@@ -9,6 +9,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import giis.demo.model.*;
+import giis.demo.util.SwingMain;
 import giis.demo.view.*;
 
 
@@ -39,6 +40,9 @@ public class InvoiceSendController {
                 generateAndSendInvoice();
             }
         });
+        String date= SwingMain.getFechaISO();
+        int year = Integer.parseInt(date.substring(0, 4));  
+        model = new InvoiceSendModel(date);
     }
 
     private void loadSponsors() {
@@ -51,16 +55,17 @@ public class InvoiceSendController {
         List<Object[]> sponsors = model.getSponsorsByEvent(selectedEvent);
         System.out.println("Sponsors for event " + selectedEvent + ": " + sponsors); 
 
-        Object[][] sponsorData = new Object[sponsors.size()][4];  
+        Object[][] sponsorData = new Object[sponsors.size()][5];  
 
         for (int i = 0; i < sponsors.size(); i++) {
             Object[] sponsor = sponsors.get(i);
-            String sponsorName = (String) sponsor[0];  
-            String email = (String) sponsor[1];
-            String fiscalNumber = (String) sponsor[2];
-            Double amount = (Double) sponsor[3];
-            
-            sponsorData[i] = new Object[] { sponsorName, email, fiscalNumber, amount };
+            sponsorData[i] = new Object[]{
+                sponsor[0], 
+                sponsor[1], 
+                sponsor[2], 
+                sponsor[3], 
+                sponsor[4]  
+            };
         }
 
         view.setSponsorData(sponsorData);  
@@ -76,12 +81,15 @@ public class InvoiceSendController {
 
         String sponsorName = view.getSelectedSponsor();
         String fiscalNumber = view.getSelectedFiscalNumber();
+        String address = view.getSelectedAddress(); 
         String email = view.getSelectedEmail();
         String event = view.getSelectedEvent();
         Double amount = view.getAmount();
+        String ad= view.getSelectedAddress();
+        boolean advance = view.isAdvanceInvoiceSelected();
         
 
-        boolean success = model.generateInvoice(sponsorName, fiscalNumber, email, event);
+        boolean success = model.generateInvoice(sponsorName, fiscalNumber, address, email, event, advance);
         if (success) {
             JOptionPane.showMessageDialog(null, "Invoice sent successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("=====================================");
@@ -91,6 +99,7 @@ public class InvoiceSendController {
             System.out.println(" CIF/NIF: " + fiscalNumber);
             System.out.println(" Event: " + event);
             System.out.println(" Sending to: " + email);
+            System.out.println(" Address: " + ad);
             System.out.println(" Amount to pay: " + amount);
             System.out.println(" Invoice sent sucessfully ");
             System.out.println("=====================================");

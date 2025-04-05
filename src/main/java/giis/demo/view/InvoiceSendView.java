@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +22,8 @@ public class InvoiceSendView {
     private DefaultTableModel tableModel;
     private JComboBox<String> eventComboBox;
     private JButton loadSponsorsButton;
+    private JCheckBox advanceInvoiceCheckBox;
+
     //JTextField invoiceDateField = new JTextField(10);
 
     public InvoiceSendView() {
@@ -40,7 +43,7 @@ public class InvoiceSendView {
         topPanel.add(loadSponsorsButton);
 
         
-        String[] columnNames = {"Sponsor", "Email", "Fiscal Number", "Amount"};
+        String[] columnNames = {"Sponsor", "Email", "Fiscal Number", "Amount", "Address"};  
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -50,7 +53,9 @@ public class InvoiceSendView {
 
        
         generateButton = new JButton("Generate and Send Invoice");
-
+        
+        advanceInvoiceCheckBox = new JCheckBox("Generate invoice in advance");
+        topPanel.add(advanceInvoiceCheckBox);
         
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(scrollPane, BorderLayout.CENTER);
@@ -66,16 +71,19 @@ public class InvoiceSendView {
     }
 
     public void setSponsorData(Object[][] data) {
-        tableModel.setRowCount(0); 
+        tableModel.setRowCount(0);  
+
         for (Object[] row : data) {
             tableModel.addRow(new Object[] {
-                row[0],  // Sponsor name
-                row[1],  // Email
-                row[2],  // Fiscal number
-                row[3]   // Payment amount
+                row[0],  
+                row[1],  
+                row[2],  
+                row[3],  
+                row[4]   
             });
         }
     }
+
 
 
     public String getSelectedEvent() {
@@ -107,7 +115,18 @@ public class InvoiceSendView {
     
     public Double getAmount() {
         int row = getSelectedRow();
-        return row != -1 ? (Double) table.getValueAt(row, 3) : null;
+        Object value = table.getValueAt(row, 3);  
+
+        if (value instanceof Number) {
+            return ((Number) value).doubleValue();
+        }
+        return 0.0;  
+    }
+
+
+    public String getSelectedAddress() {
+        int row = getSelectedRow();
+        return row != -1 ? (String) table.getValueAt(row, 4) : null;  
     }
 
     
@@ -118,5 +137,9 @@ public class InvoiceSendView {
 
     public void addGenerateButtonListener(ActionListener listener) {
         generateButton.addActionListener(listener);
+    }
+    
+    public boolean isAdvanceInvoiceSelected() {
+        return advanceInvoiceCheckBox.isSelected();
     }
 }

@@ -44,6 +44,7 @@ public class RegisterPaymentsView {
     private JLabel lblAmountPaid;
     private JLabel lblPaymentDate;
     private JLabel lblInvoiceDate;
+    private JLabel lblAmountAlreadyPaid;
 
     /**
      * Create the application.
@@ -118,6 +119,10 @@ public class RegisterPaymentsView {
         lblInvoiceDate.setBounds(10, 135, 232, 23);
         DetailsPanel.add(lblInvoiceDate);
         
+        lblAmountAlreadyPaid = new JLabel("Amount Already Paid: ");
+        lblAmountAlreadyPaid.setBounds(365, 35, 165, 23);
+        DetailsPanel.add(lblAmountAlreadyPaid);
+        
         lblSelectedPayment = new JLabel("Selected Payment");
         lblSelectedPayment.setFont(new Font("Tahoma", Font.PLAIN, 12));
         frmRegisterPaymentsView.getContentPane().add(lblSelectedPayment, "cell 0 2,grow");
@@ -151,6 +156,7 @@ public class RegisterPaymentsView {
     public void setLblAgreementDate(String date) {this.lblAgreementDate.setText("Agreement Date: " + date);}
     public void setLblEventName(String eventName) {this.lblEventName.setText("Event name: " + eventName);}
     public void setLblInvoiceDate(String invoiceDate) {this.lblInvoiceDate.setText("Invoice Date: " + invoiceDate);}
+    public void setLblAmountAlreadyPaid(double amountAlreadyPaid) {this.lblAmountAlreadyPaid.setText("Amount Already Paid: " + amountAlreadyPaid);}
     public String getAmountPaidField() {return this.AmountPaidField.getText();}
     public String getPaymentDate() {return this.PaymentDateField.getText();}
 }

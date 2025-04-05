@@ -12,9 +12,10 @@ public class PendingPaymentDTO{
     private String event_name;
     private String invoice_date;
     private String invoice_number;
+    private double movement_amount;
 
     // Constructor
-    public PendingPaymentDTO(int balance_id, String sponsorship_name, String sponsorship_agreementDate, double amount, String event_name, String invoice_date, String invoice_number) {
+    public PendingPaymentDTO(int balance_id, String sponsorship_name, String sponsorship_agreementDate, double amount, String event_name, String invoice_date, String invoice_number, double movement_amount) {
     	this.balance_id = balance_id;
         this.sponsorship_name = sponsorship_name;
         this.sponsorship_agreementDate = sponsorship_agreementDate;
@@ -22,6 +23,7 @@ public class PendingPaymentDTO{
         this.event_name = event_name;
         this.invoice_date = invoice_date;
         this.invoice_number = invoice_number;
+        this.movement_amount = movement_amount;
     }
     
     public PendingPaymentDTO() {
@@ -77,7 +79,15 @@ public class PendingPaymentDTO{
     	this.balance_id = balance_id; 
     }
     
-    @Override
+    public double getMovement_amount() {
+		return movement_amount;
+	}
+
+	public void setMovement_amount(double movement_amount) {
+		this.movement_amount = movement_amount;
+	}
+
+	@Override
     public String toString() {
         return "PendingPaymentDTO{" +
                 "balanceId=" + balance_id +
@@ -87,6 +97,7 @@ public class PendingPaymentDTO{
                 ", eventName='" + event_name + '\'' +
                 ", invoiceDate=" + invoice_date +
                 ", invoiceNumber=" + invoice_number +
+                ", movement_amount=" + movement_amount + 
                 '}';
     }
 

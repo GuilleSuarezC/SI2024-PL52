@@ -31,6 +31,7 @@ public class RegisterPaymentsController {
     private List<PendingPaymentDTO> PendingPaymentsList;
     private PendingPaymentDTO selectedPayment;
     private SwingMain main;
+    private double amountAlreadyPaid;
 
     public RegisterPaymentsController(RegisterPaymentsView v, RegisterPaymentsModel m) {
         this.view = v;
@@ -64,7 +65,7 @@ public class RegisterPaymentsController {
     private void loadPendingPayments() {
         List<PendingPaymentDTO> payments = model.getPendingPayments();
         TableModel tableModel = SwingUtil.getTableModelFromPojos(payments,
-            new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "invoice_number"});
+            new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "invoice_number", "movement_amount"});
         
         view.getLstPayments().setModel(tableModel);
         view.getLstPayments().getColumnModel().getColumn(0).setMinWidth(0);
@@ -87,7 +88,8 @@ public class RegisterPaymentsController {
                 Double.parseDouble(table.getValueAt(rowIndex, 3).toString()),	// amount
                 table.getValueAt(rowIndex, 4).toString(),                   	// eventName
                 table.getValueAt(rowIndex, 5).toString(), 						// invoiceDate
-                table.getValueAt(rowIndex, 6).toString()  						// invoiceId
+                table.getValueAt(rowIndex, 6).toString(),						// invoiceId
+                Double.parseDouble(table.getValueAt(rowIndex, 7).toString())	// movementsAmount
             );
 
             view.setLblSponsorshipName(selectedPayment.getSponsorship_name());
@@ -95,48 +97,13 @@ public class RegisterPaymentsController {
             view.setLblAmount((int) selectedPayment.getAmount());
             view.setLblEventName(selectedPayment.getEvent_name());
             view.setLblInvoiceDate(selectedPayment.getInvoice_date());
-            view.setLblFiscalNumber(selectedPayment.getInvoice_number());
+            view.setLblFiscalNumber(selectedPayment.getInvoice_number());            
+            view.setLblAmountAlreadyPaid(selectedPayment.getMovement_amount());
+            
         } catch (Exception e) {
             System.out.println("Error al seleccionar el pago: " + e.getMessage());
         }
     }
-
-/*
-    private void RegisterPayment() {
-        if (selectedPayment == null) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Select a pending payment before register the payment.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            String amountPaidStr = view.getAmountPaidField();
-            if (amountPaidStr.isEmpty()) {
-                JOptionPane.showMessageDialog(view.getFrame(), "Ingrese un monto válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            double amountPaid = Double.parseDouble(amountPaidStr);
-            
-            String paymentDateStr = view.getPaymentDate();
-            if (paymentDateStr.isEmpty()) {
-                JOptionPane.showMessageDialog(view.getFrame(), "Ingrese una fecha válida.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }       
-
-            Date paymentDate = java.sql.Date.valueOf(paymentDateStr);
-
-            model.RegisterPayment(amountPaid, paymentDate, selectedPayment.getSponsorship_id());
-
-            JOptionPane.showMessageDialog(view.getFrame(), "Pago registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            
-            loadPendingPayments();
-            clearSelection();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Ingrese un monto numérico válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Error al registrar el pago: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }*/
     
     private void RegisterPayment() {
         if (selectedPayment == null) {
@@ -150,20 +117,58 @@ public class RegisterPaymentsController {
             if (amountPaidStr.isEmpty()) {
                 JOptionPane.showMessageDialog(view.getFrame(), "You must input a valid amount.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
+            }            
+            double amountAlreadyPaid = selectedPayment.getMovement_amount();
             double amountPaid = Double.parseDouble(amountPaidStr);
             double amount = selectedPayment.getAmount();
+            
+            // Verificar si la cantidad pagada es diferente de la esperada
+            if (amountPaid == 0)
+            {
+            	JOptionPane.showMessageDialog(view.getFrame(), "The amount paid cannot be 0", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            else if (amountPaid < 0) {
+                int option = JOptionPane.showConfirmDialog(view.getFrame(),
+                        "The amount paid is negative, so you mean that we are returning " + amountPaid + " to " + selectedPayment.getSponsorship_name() + " right?",
+                        "Amount Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                    if (option != JOptionPane.YES_OPTION) {
+                        return; // Usuario eligió "Cancel"
+                    }
+            }else if (amountPaid + amountAlreadyPaid < amount) {
+                int option = JOptionPane.showConfirmDialog(view.getFrame(),
+                    "The amount paid is LESS than the expected amount.\nDo you want to continue?",
+                    "Amount Warning",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+                if (option != JOptionPane.YES_OPTION) {
+                    return; // Usuario eligió "Cancel"
+                }
+            } else if (amountPaid + amountAlreadyPaid > amount) {
+                int option = JOptionPane.showConfirmDialog(view.getFrame(),
+                    "The amount paid is MORE than the expected amount.\nDo you want to continue?",
+                    "Amount Warning",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+                if (option != JOptionPane.YES_OPTION) {
+                    return; // Usuario eligió "Cancel"
+                }
+            } 
+            
+            
+            
+            //Comprobar que la cantidad pagada es la misma que la esperada
+            /*
             if(amount != amountPaid) {
             	JOptionPane.showMessageDialog(view.getFrame(), "The amount paid must be the same as the expected amount.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
-
-            //Validar que el amount pagado coincida con el balance en la BD
-            /*double balanceAmount = model.getBalanceAmount(selectedPayment.getSponsorship_id());  // Método que obtiene el balance
-            if (amountPaid != Math.abs(balanceAmount)) {
-                JOptionPane.showMessageDialog(view.getFrame(), "El monto pagado debe ser igual al valor absoluto del balance: " + Math.abs(balanceAmount), "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }*/
+            } */       
 
             // Obtener la fecha ingresada
             String paymentDateStr = view.getPaymentDate();
@@ -188,7 +193,8 @@ public class RegisterPaymentsController {
             }
                         
             // Registrar el pago en la BD
-            model.RegisterPayment(amountPaid, paymentDate, selectedPayment.getBalance_id());            
+            model.RegisterPayment(amountPaid, paymentDate, selectedPayment.getBalance_id());    
+            
             model.UpdateBalance(selectedPayment.getBalance_id());                                
             JOptionPane.showMessageDialog(view.getFrame(), "The payment had been registered correctly.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 

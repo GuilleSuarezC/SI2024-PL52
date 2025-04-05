@@ -22,12 +22,14 @@ public class InvoiceSendModel {
     }
 
     public List<Object[]> getSponsorsByEvent(String eventName) {
+
         String sql = "SELECT c.company_name, c.company_email, c.company_taxNumber, b.amount, c.company_address " +
                      "FROM Sponsorship s " +
                      "JOIN Company c ON s.company_id = c.company_id " +
                      "LEFT JOIN Balance b ON s.balance_id = b.balance_id " +
                      "JOIN Event ev ON s.event_id = ev.event_id " +
                      "WHERE ev.event_name = ?";
+
 
         List<Object[]> results = db.executeQueryArray(sql, eventName);
         return results;

@@ -50,6 +50,9 @@ public class ReportIncomeExpensesController {
         String endDateStr = firstDayOfNextYear.format(formatter);
         
         //loadActivities(startDate,endDate, "All");
+        view.setStartDate(startDateStr);
+        view.setEndDate(endDateStr);
+        
         this.initView(startDateStr, endDateStr);
        
     }
@@ -77,7 +80,7 @@ public class ReportIncomeExpensesController {
     private void loadActivities(String startDate, String endDate, String eventStatus) {
         List<ReportDTO> activities = model.getActivities(startDate, endDate, eventStatus);
         TableModel tableModel = SwingUtil.getTableModelFromPojos(activities,
-            new String[]{"event_id","event_name", "event_date", "event_endDate", "event_status", "total_income", "paid_income", "total_expenses", "paid_expenses","estimated_balance", "paid_balance"});
+            new String[]{"event_id","event_name", "event_date", "event_endDate", "event_status", "total_sponsorship_income","total_other_income", "sponsorship_income_paid", "other_income_paid", "total_expenses", "paid_expenses","estimated_balance", "paid_balance"});
         
         view.getLstActivities().setModel(tableModel);
         view.getLstActivities().getColumnModel().getColumn(0).setMinWidth(0);
@@ -90,7 +93,7 @@ public class ReportIncomeExpensesController {
     private void ApplyFilter() {
        if ((view.getStartDate() == "") || (view.getEndDate() == "")) {
     	   
-           JOptionPane.showMessageDialog(view.getFrame(), "Select a start date and a end date.", "Error", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(view.getFrame(), "You must select a start date and an end date.", "Error", JOptionPane.ERROR_MESSAGE);
            return;
        }
        else {

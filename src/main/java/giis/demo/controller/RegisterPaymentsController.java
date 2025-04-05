@@ -64,7 +64,7 @@ public class RegisterPaymentsController {
     private void loadPendingPayments() {
         List<PendingPaymentDTO> payments = model.getPendingPayments();
         TableModel tableModel = SwingUtil.getTableModelFromPojos(payments,
-            new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "taxData_Fnumber"});
+            new String[]{"balance_id","sponsorship_name", "sponsorship_agreementDate", "amount", "event_name", "invoice_date", "invoice_number"});
         
         view.getLstPayments().setModel(tableModel);
         view.getLstPayments().getColumnModel().getColumn(0).setMinWidth(0);
@@ -87,7 +87,7 @@ public class RegisterPaymentsController {
                 Double.parseDouble(table.getValueAt(rowIndex, 3).toString()),	// amount
                 table.getValueAt(rowIndex, 4).toString(),                   	// eventName
                 table.getValueAt(rowIndex, 5).toString(), 						// invoiceDate
-                table.getValueAt(rowIndex, 6).toString()  	// invoiceId
+                table.getValueAt(rowIndex, 6).toString()  						// invoiceId
             );
 
             view.setLblSponsorshipName(selectedPayment.getSponsorship_name());
@@ -95,7 +95,7 @@ public class RegisterPaymentsController {
             view.setLblAmount((int) selectedPayment.getAmount());
             view.setLblEventName(selectedPayment.getEvent_name());
             view.setLblInvoiceDate(selectedPayment.getInvoice_date());
-            view.setLblFiscalNumber(selectedPayment.getTaxData_Fnumber());
+            view.setLblFiscalNumber(selectedPayment.getInvoice_number());
         } catch (Exception e) {
             System.out.println("Error al seleccionar el pago: " + e.getMessage());
         }
@@ -189,7 +189,7 @@ public class RegisterPaymentsController {
                         
             // Registrar el pago en la BD
             model.RegisterPayment(amountPaid, paymentDate, selectedPayment.getBalance_id());            
-            model.UpdateBalance(paymentDateStr, selectedPayment.getBalance_id());                                
+            model.UpdateBalance(selectedPayment.getBalance_id());                                
             JOptionPane.showMessageDialog(view.getFrame(), "The payment had been registered correctly.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             // Refrescar la tabla y limpiar selección

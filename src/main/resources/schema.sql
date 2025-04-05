@@ -61,8 +61,7 @@ CREATE TABLE "Balance" (
     "event_id" INTEGER NOT NULL,     
     "amount" REAL NOT NULL,
     "balance_status" TEXT NOT NULL CHECK("balance_status" IN ('Paid', 'Overpaid', 'Underpaid', 'Unpaid')),       
-    "description" TEXT,              
-    "dateOfPaid" DATE,               
+    "description" TEXT,            
     FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
 );
 

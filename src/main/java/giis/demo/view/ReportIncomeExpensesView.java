@@ -38,10 +38,10 @@ public class ReportIncomeExpensesView {
     private JLabel lblFilters;
     private JLabel lblStartDate;
     private JLabel lblEndDate;
-    private JDateChooser startDateChooser, endDateChooser;
     private JComboBox activityStatusCB;
     private JLabel lblEndDate_1;
     private JButton btnApplyFilter;
+    private JTextField startDateChooser, endDateChooser;
 
     /**
      * Create the application.
@@ -78,17 +78,17 @@ public class ReportIncomeExpensesView {
         frmReportIncomeExpenses.getContentPane().add(DetailsPanel, "cell 0 1,grow");
         DetailsPanel.setLayout(null);
         
-        startDateChooser = new JDateChooser();
-        startDateChooser.setDateFormatString("yyyy-MM-dd");
+        startDateChooser = new JTextField();
         startDateChooser.setBounds(66, 14, 131, 19);
-        DetailsPanel.add(startDateChooser);          
+        DetailsPanel.add(startDateChooser);
+        startDateChooser.setColumns(10);          
         
         lblStartDate = new JLabel("Start Date: ");
         lblStartDate.setBounds(10, 10, 86, 23);
         DetailsPanel.add(lblStartDate);        
         
-        endDateChooser = new JDateChooser();
-        endDateChooser.setDateFormatString("yyyy-MM-dd");
+        endDateChooser = new JTextField();
+        endDateChooser.setColumns(10);
         endDateChooser.setBounds(326, 14, 131, 19);
         DetailsPanel.add(endDateChooser);
         
@@ -119,24 +119,10 @@ public class ReportIncomeExpensesView {
     public JButton getBtnApplyFilter() { return this.btnApplyFilter; }
     public JTable getLstActivities() {return this.lstActivities;}
     public JFrame getFrame() { return this.frmReportIncomeExpenses; }
-    public String getStartDate() {
-        Date date = this.startDateChooser.getDate();
-        return (date != null) ? new SimpleDateFormat("yyyy-MM-dd").format(date) : "";
-    }
-
-    public String getEndDate() {
-        Date date = this.endDateChooser.getDate();
-        return (date != null) ? new SimpleDateFormat("yyyy-MM-dd").format(date) : "";
-    }
-    public void setStartDate(String dateStr) {
-    	Date date = Util.isoStringToDate(dateStr);
-    	this.startDateChooser.setDate(date);
-    }
-    public void setEndDate(String dateStr) {
-    	Date date = Util.isoStringToDate(dateStr);
-    	this.endDateChooser.setDate(date);
-    }
+    public String getStartDate() {return this.startDateChooser.getText();}
+    public String getEndDate() {return this.endDateChooser.getText();}
+    public void setStartDate(String dateStr) {this.startDateChooser.setText(dateStr);}
+    public void setEndDate(String dateStr) {this.endDateChooser.setText(dateStr);}
     public JComboBox<Object> getStatus() { return this.activityStatusCB; }
-    
 }
 

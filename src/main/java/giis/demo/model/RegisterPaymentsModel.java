@@ -16,11 +16,11 @@ public class RegisterPaymentsModel {
 	private Database db = new Database();
     
 	//Consultas SQL
-	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT b.balance_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.taxData_Fnumber FROM Sponsorship s LEFT JOIN Balance b ON s.balance_id = b.balance_id LEFT JOIN Event e ON s.event_id = e.event_id JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id WHERE b.balance_status != 'Paid'";
+	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT b.balance_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_name, i.invoice_date, i.invoice_number FROM Sponsorship s LEFT JOIN Balance b ON s.balance_id = b.balance_id LEFT JOIN Event e ON s.event_id = e.event_id JOIN Invoice i ON s.sponsorship_id = i.sponsorship_id WHERE b.balance_status != 'Paid'";
 	
 	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
 	
-	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid', dateOfPaid = ? WHERE balance_id = ?";
+	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid' WHERE balance_id = ?";
 
 
 	public List<PendingPaymentDTO> getPendingPayments() {
@@ -35,10 +35,10 @@ public class RegisterPaymentsModel {
 		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);		
 	}
 	
-	public void UpdateBalance(String dateOfPaid, int balanceId)
+	public void UpdateBalance( int balanceId)
 	{
 		validateNotNull(balanceId, "The balance id cannot be null");
-		db.executeUpdate(SQL_UPDATE_PAYMENTS, dateOfPaid, balanceId);		
+		db.executeUpdate(SQL_UPDATE_PAYMENTS, balanceId);		
 	}
 	
 	

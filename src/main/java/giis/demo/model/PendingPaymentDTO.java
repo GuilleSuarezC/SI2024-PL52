@@ -11,17 +11,17 @@ public class PendingPaymentDTO{
     private double amount;
     private String event_name;
     private String invoice_date;
-    private String taxData_Fnumber;
+    private String invoice_number;
 
     // Constructor
-    public PendingPaymentDTO(int balance_id, String sponsorship_name, String sponsorship_agreementDate, double amount, String event_name, String invoice_date, String taxData_Fnumber) {
+    public PendingPaymentDTO(int balance_id, String sponsorship_name, String sponsorship_agreementDate, double amount, String event_name, String invoice_date, String invoice_number) {
     	this.balance_id = balance_id;
         this.sponsorship_name = sponsorship_name;
         this.sponsorship_agreementDate = sponsorship_agreementDate;
         this.amount = amount;
         this.event_name = event_name;
         this.invoice_date = invoice_date;
-        this.taxData_Fnumber = taxData_Fnumber;
+        this.invoice_number = invoice_number;
     }
     
     public PendingPaymentDTO() {
@@ -63,11 +63,11 @@ public class PendingPaymentDTO{
     	this.invoice_date = invoice_date; 
     }
 
-    public String getTaxData_Fnumber() { 
-    	return taxData_Fnumber; 
+    public String getInvoice_number() { 
+    	return invoice_number; 
     }
-    public void setTaxData_Fnumber(String taxData_Fnumber) { 
-    	this.taxData_Fnumber = taxData_Fnumber; 
+    public void setInvoice_number(String invoice_number) { 
+    	this.invoice_number = invoice_number; 
     }
     
     public int getBalance_id() { 
@@ -86,7 +86,7 @@ public class PendingPaymentDTO{
                 ", amount=" + amount +
                 ", eventName='" + event_name + '\'' +
                 ", invoiceDate=" + invoice_date +
-                ", Fiscal number=" + taxData_Fnumber +
+                ", invoiceNumber=" + invoice_number +
                 '}';
     }
 

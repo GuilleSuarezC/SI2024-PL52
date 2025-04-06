@@ -47,16 +47,8 @@ public class RegisterIncomeExpensesController {
         String concept = view.getConceptField();  
         String description = view.getDescriptionField();
         String amountText = view.getAmountField();
-        String dateOfPaid = view.getDateOfPaidField();
+        String dateOfPaid = view.getDateOfPaidField(); 
         String balanceStatus = (String) view.getBalanceStatusComboBox().getSelectedItem();
-
-        if (dateOfPaid != null && !dateOfPaid.isEmpty()) {
-            if (!isValidDate(dateOfPaid)) {
-                view.showMessage("Invalid date. Should be in format YYYY-MM-DD and can't be future.", "Date Error");
-                return;
-            }
-        }	
-        	
 
         double amount;
         try {
@@ -66,65 +58,79 @@ public class RegisterIncomeExpensesController {
             return;
         }
 
+        if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {
+            view.showMessage("Please enter a valid date of payment.", "Input Error");
+            return;
+        }
+
+        if (!Util.isValidISODate(dateOfPaid)) {
+            view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");
+            return;
+        }
+
         String selectedEvent = view.getSelectedEvent();
         int eventId = model.getEventIdByName(selectedEvent);  
 
-        
-        model.addBalance(concept, eventId, amount, description, dateOfPaid, balanceStatus);
-        
-        
+        // Pasar la fecha de pago al modelo:
+        model.addBalance(concept, eventId, amount, description, balanceStatus, dateOfPaid);
+
         loadBalances();
-
-       
         view.clearFields();
-
         view.showMessage("Balance added successfully!", "Success");
     }
 
 
 
+
     
     private void saveChanges() {
-        BalanceDTO balance = view.getSelectedBalanceDetails();  
-        if (balance == null) return;  
+    	BalanceDTO balance = view.getSelectedBalanceDetails();
+        if (balance == null) {
+            view.showMessage("Please select a balance to update.", "Selection Error");
+            return;
+        }
+
+        String concept = view.getConceptField();  
+        String description = view.getDescriptionField();
+        String amountText = view.getAmountField();
+        String dateOfPaid = view.getDateOfPaidField();  // ⬅️ Usamos esta fecha
+        String balanceStatus = (String) view.getBalanceStatusComboBox().getSelectedItem();
+        String selectedEvent = view.getSelectedEvent();
+
+        int eventId = model.getEventIdByName(selectedEvent);
+        double amount;
 
         try {
-            String concept = view.getConceptField();
-            String description = view.getDescriptionField();
-            double amount = Double.parseDouble(view.getAmountField());
-            String dateOfPaid = view.getDateOfPaidField();
-            String balanceStatus = (String) view.getBalanceStatusComboBox().getSelectedItem();
-            
-            if (dateOfPaid != null && !dateOfPaid.isEmpty()) {
-                if (!isValidDate(dateOfPaid)) {
-                    view.showMessage("Invalid date. Should be in format YYYY-MM-DD and can't be future.", "Date Error");
-                    return;
-                }
-            }
-
-            
-            balance.setConcept(concept);
-            balance.setDescription(description);
-            balance.setAmount(amount);
-            balance.setDateOfPaid(dateOfPaid);
-            balance.setBalanceStatus(balanceStatus);
-
-            
-            boolean success = model.updateBalance(balance);
-            if (success) {
-                view.updateBalanceInTable(balance);
-                view.showMessage("Balance updated successfully!", "Success");
-            } else {
-                view.showMessage("Error updating balance. Check database connection.", "Error");
-            }
-
+            amount = Double.parseDouble(amountText);
         } catch (NumberFormatException e) {
             view.showMessage("Amount must be a valid number.", "Input Error");
-        } catch (Exception e) {
-            e.printStackTrace();
-            view.showMessage("Unexpected error: " + e.getMessage(), "Error");
+            return;
         }
+
+        if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {
+            view.showMessage("Please enter a valid date of payment.", "Input Error");
+            return;
+        }
+
+        if (!Util.isValidISODate(dateOfPaid)) {
+            view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");
+            return;
+        }
+
+        balance.setConcept(concept);
+        balance.setEventId(eventId);
+        balance.setAmount(amount);
+        balance.setDescription(description);
+        balance.setBalanceStatus(balanceStatus);
+
+        // ⬇️ Pasamos la fecha de pago al modelo
+        model.updateBalance(balance, dateOfPaid);
+
+        loadBalances();
+        view.clearFields();
+        view.showMessage("Balance updated successfully!", "Success");
     }
+
     
     
     private boolean isValidDate(String date) {

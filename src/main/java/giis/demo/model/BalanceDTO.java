@@ -6,16 +6,14 @@ public class BalanceDTO {
     private int eventId;
     private double amount;
     private String description;
-    private String dateOfPaid;
     private String balanceStatus;
 
-    public BalanceDTO(int balanceId, String concept, int eventId, double amount, String description, String dateOfPaid, String balanceStatus) {
+    public BalanceDTO(int balanceId, String concept, int eventId, double amount, String description, String balanceStatus) {
         this.balanceId = balanceId;
         this.concept = concept;
         this.eventId = eventId;
         this.amount = amount;
         this.description = description;
-        this.dateOfPaid = dateOfPaid;
         this.balanceStatus = balanceStatus;
     }
 
@@ -35,8 +33,7 @@ public class BalanceDTO {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getDateOfPaid() { return dateOfPaid; }
-    public void setDateOfPaid(String dateOfPaid) { this.dateOfPaid = dateOfPaid; }
+   
 
 
     public String getBalanceStatus() { return balanceStatus; }

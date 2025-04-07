@@ -44,6 +44,7 @@ INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) V
     ('AI Research Fund', 3, 5000.0, 'Estimated', 'AI Research Fund sponsorship'),
     ('Sponsorship Future Innovators', 3, 5000.0, 'Estimated', 'Future Innovators sponsorship');
 
+
 -- Insertar datos en la tabla "Sponsorship"
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES
     ('Tech Innovators', '2024-08-01', 1, 1, 1, 1),

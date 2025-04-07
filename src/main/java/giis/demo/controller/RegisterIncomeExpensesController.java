@@ -76,7 +76,7 @@ public class RegisterIncomeExpensesController {
 
         loadBalances();
         view.clearFields();
-        view.showMessage("Balance added successfully!", "Success");
+        view.showMessage("Other income/expense added successfully!", "Success");
     }
 
 

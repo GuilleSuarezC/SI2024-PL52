@@ -40,7 +40,7 @@ public class RegisterPaymentsView {
     private JLabel lblSponsorshipName;
     private JLabel lblAmount;
     private JLabel lblAgreementDate;
-    private JLabel lblFnumber;
+    private JLabel lblInvoiceIdentificator;
     private JLabel lblAmountPaid;
     private JLabel lblPaymentDate;
     private JLabel lblInvoiceDate;
@@ -92,9 +92,9 @@ public class RegisterPaymentsView {
         lblAgreementDate.setBounds(10, 60, 232, 23);
         DetailsPanel.add(lblAgreementDate);
         
-        lblFnumber = new JLabel("Fiscal Number:  ");
-        lblFnumber.setBounds(10, 110, 232, 23);
-        DetailsPanel.add(lblFnumber);
+        lblInvoiceIdentificator = new JLabel("Invoice Identificator:  ");
+        lblInvoiceIdentificator.setBounds(10, 110, 232, 23);
+        DetailsPanel.add(lblInvoiceIdentificator);
         
         lblAmountPaid = new JLabel("Amount Paid: ");
         lblAmountPaid.setBounds(343, 63, 86, 23);
@@ -147,7 +147,7 @@ public class RegisterPaymentsView {
     public void setLblAmount(int amount) {this.lblAmount.setText("Amount to pay: " + amount+"€");}
     public void setLblSponsorshipName(String sponsorshipName) {this.lblSponsorshipName.setText("Sponsorship Name: " + sponsorshipName);}
     public void setLblSponsorshipID(int sponsorshipId) {this.lblEventName.setText("Sponsorship Id: " + sponsorshipId);}
-    public void setLblFiscalNumber(String fiscalNumber) {this.lblFnumber.setText("Fiscal Number: " + fiscalNumber);}
+    public void setLblFiscalNumber(String invoiceIdentificator) {this.lblInvoiceIdentificator.setText("Invoice Identificator: " + invoiceIdentificator);}
     public void setLblAgreementDate(String date) {this.lblAgreementDate.setText("Agreement Date: " + date);}
     public void setLblEventName(String eventName) {this.lblEventName.setText("Event name: " + eventName);}
     public void setLblInvoiceDate(String invoiceDate) {this.lblInvoiceDate.setText("Invoice Date: " + invoiceDate);}

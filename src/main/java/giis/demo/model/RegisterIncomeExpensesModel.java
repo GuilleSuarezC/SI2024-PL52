@@ -27,10 +27,11 @@ public class RegisterIncomeExpensesModel {
 
 
     public List<BalanceDTO> getBalancesByEvent(String eventName) {
-        String sql = "SELECT balance_id, concept, Balance.event_id, amount, description, dateOfPaid, balance_status " + 
-                     "FROM Balance " + 
-                     "JOIN Event ev ON Balance.event_id = ev.event_id " + 
-                     "WHERE ev.event_name = ?";
+    	String sql = "SELECT balance_id, concept, Balance.event_id, amount, description, balance_status " + 
+                "FROM Balance " + 
+                "JOIN Event ev ON Balance.event_id = ev.event_id " + 
+                "WHERE ev.event_name = ?";
+
         List<Object[]> results = db.executeQueryArray(sql, eventName);
         
         return results.stream().map(row -> {
@@ -46,31 +47,27 @@ public class RegisterIncomeExpensesModel {
             }
 
             String description = (String) row[4];  
-            String dateOfPaid = (String) row[5];  
-            String balanceStatus = (String) row[6];  
+            String balanceStatus = (String) row[5];  
 
-            return new BalanceDTO(balanceId, concept, eventId, amount, description, dateOfPaid, balanceStatus);
+            return new BalanceDTO(balanceId, concept, eventId, amount, description, balanceStatus);
         }).collect(Collectors.toList());
     }
 
     
-    public void addBalance(String concept, int eventId, double amount, String description, String dateOfPaid, String balanceStatus) {
+    public void addBalance(String concept, int eventId, double amount, String description, String balanceStatus, String dateOfPaid) {
         if (balanceStatus == null || balanceStatus.trim().isEmpty() || 
             !isValidBalanceStatus(balanceStatus)) {
             throw new IllegalArgumentException("Invalid balance status: " + balanceStatus);
         }
 
-        
-        String sql = "INSERT INTO Balance (concept, event_id, amount, description, dateOfPaid, balance_status) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-        db.executeUpdate(sql, concept, eventId, amount, description, dateOfPaid, balanceStatus);
+        String sql = "INSERT INTO Balance (concept, event_id, amount, description, balance_status) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        db.executeUpdate(sql, concept, eventId, amount, description, balanceStatus);
 
-      
-        String getLastInsertIdSQL = "SELECT last_insert_rowid()";
+        String getLastInsertIdSQL = "SELECT MAX(balance_id) FROM Balance";
         List<Object[]> results = db.executeQueryArray(getLastInsertIdSQL);
         int balanceId = ((Number) results.get(0)[0]).intValue();
 
-        
         if ("Paid".equals(balanceStatus)) {
             String movementSql = "INSERT INTO Movement (movement_amount, movement_date, balance_id) " +
                                  "VALUES (?, ?, ?)";
@@ -81,33 +78,38 @@ public class RegisterIncomeExpensesModel {
 
 
 
+
     private boolean isValidBalanceStatus(String balanceStatus) {
-        return balanceStatus.equals("Paid") || balanceStatus.equals("Overpaid") ||
-               balanceStatus.equals("Underpaid") || balanceStatus.equals("Unpaid");
+        return balanceStatus.equals("Paid") || balanceStatus.equals("Estimated") ;
     }
 
  
-    public boolean updateBalance(BalanceDTO balance) {
-        
-        String sql = "UPDATE Balance SET concept = ?, amount = ?, description = ?, dateOfPaid = ?, balance_status = ? " +
-                     "WHERE balance_id = ?";
-        try {
-            db.executeUpdate(sql, balance.getConcept(), balance.getAmount(), balance.getDescription(),
-                             balance.getDateOfPaid(), balance.getBalanceStatus(), balance.getBalanceId());
+    public void updateBalance(BalanceDTO balance, String dateOfPaid) {
+        // Obtener el estado anterior
+        String sqlGetStatus = "SELECT balance_status FROM Balance WHERE balance_id = ?";
+        List<Object[]> result = db.executeQueryArray(sqlGetStatus, balance.getBalanceId());
 
-           
-            if ("Paid".equals(balance.getBalanceStatus())) {
-                String movementSql = "INSERT INTO Movement (movement_amount, movement_date, balance_id) " +
-                                     "VALUES (?, ?, ?)";
-                db.executeUpdate(movementSql, balance.getAmount(), balance.getDateOfPaid(), balance.getBalanceId());
-            }
-            
-            return true;
-        } catch (UnexpectedException e) {
-            e.printStackTrace();
-            return false;
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("Balance ID not found: " + balance.getBalanceId());
+        }
+
+        String previousStatus = (String) result.get(0)[0];
+
+        // Actualizar el balance
+        String updateSql = "UPDATE Balance SET concept = ?, event_id = ?, amount = ?, description = ?, balance_status = ? WHERE balance_id = ?";
+        db.executeUpdate(updateSql, balance.getConcept(), balance.getEventId(), balance.getAmount(),
+                         balance.getDescription(), balance.getBalanceStatus(), balance.getBalanceId());
+
+        // Si cambia de Estimated a Paid, registrar movimiento
+        if ("Estimated".equals(previousStatus) && "Paid".equals(balance.getBalanceStatus())) {
+            String insertMovementSql = "INSERT INTO Movement (movement_amount, movement_date, balance_id) " +
+                                       "VALUES (?, ?, ?)";
+            db.executeUpdate(insertMovementSql, balance.getAmount(), dateOfPaid, balance.getBalanceId());
         }
     }
+
+
+
 
 
 }

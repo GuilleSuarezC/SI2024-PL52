@@ -40,9 +40,10 @@ INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event
 INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) VALUES
     ('Sponsorship Tech Solutions S.L.', 1, 3000.0, 'Paid', 'Tech Solutions S.L.'),
     ('Sponsorship Innovate Asturias', 2, 4000.0, 'Paid', 'Innovate Asturias'),
-    ('Expense', 3, -1000.0, 'Unpaid', 'Rent a building for the event'),
-    ('AI Research Fund', 3, 5000.0, 'Unpaid', 'AI Research Fund sponsorship'),
-    ('Sponsorship Future Innovators', 3, 5000.0, 'Unpaid', 'Future Innovators sponsorship');
+    ('Expense', 3, -1000.0, 'Estimated', 'Rent a building for the event'),
+    ('AI Research Fund', 3, 5000.0, 'Estimated', 'AI Research Fund sponsorship'),
+    ('Sponsorship Future Innovators', 3, 5000.0, 'Estimated', 'Future Innovators sponsorship');
+
 
 -- Insertar datos en la tabla "Sponsorship"
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES

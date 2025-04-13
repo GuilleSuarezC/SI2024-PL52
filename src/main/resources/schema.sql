@@ -12,14 +12,14 @@ DROP TABLE IF EXISTS "COIIPA_GBMember";
 DROP TABLE IF EXISTS "SponsorshipLevel";
 
 -- Crear las tablas desde cero
-
 CREATE TABLE "SponsorshipLevel" (
     "level_id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "sponsorship_id" INTEGER NOT NULL,
     "level_name" VARCHAR(255) NOT NULL,
     "level_price" DOUBLE NOT NULL,
-    FOREIGN KEY ("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
+    "event_id" INTEGER NOT NULL,
+    FOREIGN KEY ("event_id") REFERENCES "Event"("event_id")
 );
+
 
 CREATE TABLE "Company" (
     "company_id" INTEGER PRIMARY KEY,

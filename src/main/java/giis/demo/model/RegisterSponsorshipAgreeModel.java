@@ -23,11 +23,11 @@ public class RegisterSponsorshipAgreeModel {
     private static final String SQL_GET_GOVERNING_BOARD_MEMBERS = "SELECT gb_id, gb_name, gb_rank FROM COIIPA_GBMember";
     private static final String SQL_GET_CONTACT_MEMBERS="SELECT member_id, member_name, member_email, member_phone, company_id FROM Member WHERE company_id=?";
     private static final String SQL_INSERT_SPONSORSHIP = "INSERT INTO Sponsorship (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES (?, ?, ?, ?, ?, ?)";    
-    private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, concept, amount, balance_status) VALUES (?, ?, ?, 'Unpaid')";    
+    private static final String SQL_INSERT_BALANCE = "INSERT INTO Balance (event_id, concept, amount, balance_status) VALUES (?, ?, ?, 'Estimated')";    
     private static final String SQL_GET_SPONSORSHIPS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship ORDER BY sponsorship_agreementDate DESC";
     private static final String SQL_GET_SPONSORSHIP_DETAILS = "SELECT sponsorship_id, sponsorship_name, sponsorship_agreementDate FROM Sponsorship WHERE sponsorship_id = ?";
     private static final String SQL_GET_EVENT_BALANCE = "SELECT balance_id, concept, amount FROM Balance WHERE event_id = ? ORDER BY balance_id";
-    private static final String SQL_GET_SPONSORSHIP_LEVELS = "SELECT * FROM SponsorshipLevel WHERE sponsorship_id = ?";
+    private static final String SQL_GET_SPONSORSHIP_LEVELS = "SELECT * FROM SponsorshipLevel WHERE event_id = ?";
 
     /**
      * Obtiene la lista de empresas disponibles para patrocinio.
@@ -84,11 +84,11 @@ public class RegisterSponsorshipAgreeModel {
 //        db.executeUpdate(SQL_INSERT_BALANCE, eventId, concept, amount);
 //    }
     
-    public int registerBalance(int eventId, String concept, int amount) {
+    public int registerBalance(int eventId, String concept, double enteredFee) {
         validateNotNull(concept, "El concepto no puede ser nulo");
-        validateNotNull(amount, "La cantidad no puede ser nula");
+        validateNotNull(enteredFee, "La cantidad no puede ser nula");
         String sql = SQL_INSERT_BALANCE + "; SELECT last_insert_rowid()"; // SQLite
-        return db.executeUpdateAndGetKey(sql, eventId, concept, amount);
+        return db.executeUpdateAndGetKey(sql, eventId, concept, enteredFee);
     }
 
     /**
@@ -103,7 +103,7 @@ public class RegisterSponsorshipAgreeModel {
      */
     public SponsorshipDTO getSponsorshipDetails(int sponsorshipId) {
         List<SponsorshipDTO> result = db.executeQueryPojo(SponsorshipDTO.class, SQL_GET_SPONSORSHIP_DETAILS, sponsorshipId);
-        validateCondition(!result.isEmpty(), "No se encontró el acuerdo con ID: " + sponsorshipId);
+        validateCondition(!result.isEmpty(), "Sponsorship agreement not found with ID: " + sponsorshipId);
         return result.get(0);
     }
 
@@ -147,15 +147,17 @@ public class RegisterSponsorshipAgreeModel {
         }
     }
     
-    public List<SponsorshipLevelDTO> getSponsorshipLevels(int sponsorshipId) {
-        String sql = "SELECT * FROM SponsorshipLevel WHERE sponsorship_id = ?";
-        return db.executeQueryPojo(SponsorshipLevelDTO.class, sql, sponsorshipId);
+    public List<SponsorshipLevelDTO> getSponsorshipLevelsByEvent(int eventId) {
+        String sql = "SELECT * FROM SponsorshipLevel WHERE event_id = ?";
+        return db.executeQueryPojo(SponsorshipLevelDTO.class, sql, eventId);
     }
 
-    public void addSponsorshipLevel(int sponsorshipId, String levelName, double price) {
-        String sql = "INSERT INTO SponsorshipLevel (sponsorship_id, level_name, level_price) VALUES (?, ?, ?)";
-        db.executeUpdate(sql, sponsorshipId, levelName, price);
+
+    public void addSponsorshipLevel(int eventId, String levelName, double levelPrice) {
+        String sql = "INSERT INTO SponsorshipLevel (event_id, level_name, level_price) VALUES (?, ?, ?)";
+        db.executeUpdate(sql, eventId, levelName, levelPrice);
     }
+
 
 
     

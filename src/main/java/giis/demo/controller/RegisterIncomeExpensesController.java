@@ -128,7 +128,7 @@ public class RegisterIncomeExpensesController {
 
         loadBalances();
         view.clearFields();
-        view.showMessage("Balance updated successfully!", "Success");
+        view.showMessage("Income/Expense updated successfully!", "Success");
     }
 
     

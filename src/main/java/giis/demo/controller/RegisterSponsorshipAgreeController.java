@@ -42,6 +42,15 @@ public class RegisterSponsorshipAgreeController {
         
         view.getListaCompany().addActionListener(e -> SwingUtil.exceptionWrapper(() -> loadCompanyMembers()));
         view.getListaEvent().addActionListener(e -> SwingUtil.exceptionWrapper(() -> loadFee()));
+        view.getListaEvent().addActionListener(e -> {
+            SwingUtil.exceptionWrapper(() -> {
+                loadFee();
+                int selectedEventIndex = view.getListaEvent().getSelectedIndex();
+                if (selectedEventIndex >= 0)
+                    loadSponsorshipLevels(listaEvent.get(selectedEventIndex).getEvent_id());
+            });
+        });
+
 
 
         // Manejador para el botón "Cancelar"
@@ -151,16 +160,17 @@ public class RegisterSponsorshipAgreeController {
         }
         
         // Convertir a entero (manejar errores)
-        int enteredFee;
+        double enteredFee;
         try {
-            enteredFee = Integer.parseInt(feeText);
+            enteredFee = Double.parseDouble(feeText);
         } catch (NumberFormatException e) {
             SwingUtil.showMessage("Invalid fee format. Please enter a number.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         // Comparar con el event_fee
         int eventFee = listaEvent.get(selectedEventt).getEvent_fee();
-        if (enteredFee < eventFee) {
+        if (enteredFee > eventFee) {
             SwingUtil.showMessage("The suggested amount must be equal or greater than the event fee: " + eventFee + "€", 
                                  "Rejected fee amount", JOptionPane.ERROR_MESSAGE);
             return;
@@ -177,7 +187,7 @@ public class RegisterSponsorshipAgreeController {
         else {
         	// Validar que todos los campos estén completos
             if (selectedCompany == null || selectedEvent == null || selectedMember == null || agreementDate.isEmpty()) {
-                throw new ApplicationException("Todos los campos son obligatorios.");
+                throw new ApplicationException("All fields are mandatory.");
             }
             
             // Agreement <= System
@@ -206,8 +216,7 @@ public class RegisterSponsorshipAgreeController {
                     	    balanceId
                     	);
 
-                    // Mostrar mensaje de éxito
-                    SwingUtil.showMessage("Sponsorship agreement successfully registered.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                   SwingUtil.showMessage("Sponsorship agreement successfully registered.", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                     // Limpiar el formulario después del registro
                     clearForm();
@@ -250,10 +259,9 @@ public class RegisterSponsorshipAgreeController {
         view.settFeventFee("");
     }
     
-    private void loadSponsorshipLevels(int sponsorshipId) {
-        List<SponsorshipLevelDTO> levels = model.getSponsorshipLevels(sponsorshipId);
+    private void loadSponsorshipLevels(int eventId) {
+        List<SponsorshipLevelDTO> levels = model.getSponsorshipLevelsByEvent(eventId); // nuevo método
         DefaultTableModel tableModel = new DefaultTableModel();
-        
         tableModel.addColumn("Level Name");
         tableModel.addColumn("Price");
 
@@ -264,12 +272,13 @@ public class RegisterSponsorshipAgreeController {
         view.getListSponsorshipLevels().setModel(tableModel);
     }
 
+
     private void addSponsorshipLevel() {
-        int selectedSponsorship = view.getListaEvent().getSelectedIndex();
-        if (selectedSponsorship < 0) {
-            SwingUtil.showMessage("Please select a sponsorship first.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    	int selectedEventIndex = view.getListaEvent().getSelectedIndex();
+    	if (selectedEventIndex < 0) {
+    	    SwingUtil.showMessage("Please select an event first.", "Error", JOptionPane.ERROR_MESSAGE);
+    	    return;
+    	}
 
         String levelName = JOptionPane.showInputDialog("Enter level name:");
         if (levelName == null || levelName.trim().isEmpty()) {
@@ -291,12 +300,9 @@ public class RegisterSponsorshipAgreeController {
             return;
         }
 
-        int sponsorshipId = listaEvent.get(selectedSponsorship).getEvent_id();
-        model.addSponsorshipLevel(sponsorshipId, levelName, price);
+        int eventId = listaEvent.get(selectedEventIndex).getEvent_id();
+        model.addSponsorshipLevel(eventId, levelName, price);
 
-        loadSponsorshipLevels(sponsorshipId);
+        loadSponsorshipLevels(eventId);
     }
-
-
-   
 }

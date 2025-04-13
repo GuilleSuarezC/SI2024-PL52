@@ -5,7 +5,7 @@ public class SponsorshipLevelDTO {
     private static int currentId = 0;  
 
     private int levelId;
-    private int sponsorshipId;
+    private int eventId;
     private String level_name;
     private double level_price;
     
@@ -27,15 +27,17 @@ public class SponsorshipLevelDTO {
         this.levelId = levelId;
     }
 
-    public int getSponsorshipId() {
-        return sponsorshipId;
-    }
+    
 
-    public void setSponsorshipId(int sponsorshipId) {
-        this.sponsorshipId = sponsorshipId;
-    }
+    public int getEventId() {
+		return eventId;
+	}
 
-    public String getLevel_name() {
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
+	}
+
+	public String getLevel_name() {
         return level_name;
     }
 

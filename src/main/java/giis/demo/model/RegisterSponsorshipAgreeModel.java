@@ -62,7 +62,7 @@ public class RegisterSponsorshipAgreeModel {
         validateNotNull(eventName, "Event can't be null");
         validateNotNull(agreementDate, "Agreement date can't be null");
         validateNotNull(memberName, "GBMember can't be null");
-        validateNotNull(eventEdition, "The edition can't be null");
+        if(eventEdition == null) eventEdition = "";
 
         int companyId = getCompanyIdByName(companyName);
         int eventId = getEventIdByName(eventName);

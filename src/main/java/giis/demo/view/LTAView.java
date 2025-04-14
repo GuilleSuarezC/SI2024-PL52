@@ -24,6 +24,42 @@ public class LTAView {
     private JTextField tFEndDate;
     private JTable eventsTable;
     private JTable summaryTable;
+    public JButton getBtnAddEvt_SPLvL() {
+		return btnAddEvt_SPLvL;
+	}
+
+	public void setBtnAddEvt_SPLvL(JButton btnAddEvt_SPLvL) {
+		this.btnAddEvt_SPLvL = btnAddEvt_SPLvL;
+	}
+
+	public JButton getBtnEdit() {
+		return btnEdit;
+	}
+
+	public void setBtnEdit(JButton btnEdit) {
+		this.btnEdit = btnEdit;
+	}
+
+	public JButton getBtnRemove() {
+		return btnRemove;
+	}
+
+	public void setBtnRemove(JButton btnRemove) {
+		this.btnRemove = btnRemove;
+	}
+
+	public JButton getBtnRegisterAgreement() {
+		return btnRegisterAgreement;
+	}
+
+	public void setBtnRegisterAgreement(JButton btnRegisterAgreement) {
+		this.btnRegisterAgreement = btnRegisterAgreement;
+	}
+
+	private JButton btnAddEvt_SPLvL;
+    private JButton btnEdit;
+    private JButton btnRemove;
+    private JButton btnRegisterAgreement;
     private JComboBox<CompanyDTO> sponsorComboBox;
     private JComboBox<LTASPLevelDTO> spLevelComboBox;
 
@@ -104,7 +140,7 @@ public class LTAView {
         spLevelComboBox.setBounds(10, 325, 174, 22);
         frmCloseEvent.getContentPane().add(spLevelComboBox);
         
-        JButton btnAddEvt_SPLvL = new JButton("Add Event & Sponsorship Level");
+        btnAddEvt_SPLvL = new JButton("Add Event & Sponsorship Level");
         btnAddEvt_SPLvL.setBounds(594, 381, 238, 42);
         frmCloseEvent.getContentPane().add(btnAddEvt_SPLvL);
         
@@ -121,17 +157,20 @@ public class LTAView {
         frmCloseEvent.getContentPane().add(scrollPaneSummary);
         
         summaryTable = new JTable();
+        summaryTable.setModel(new DefaultTableModel(
+            new Object[]{"Event Name", "Edition", "Sponsorship Level"}, 0 // Columnas requeridas
+        ));
         scrollPaneSummary.setViewportView(summaryTable);
         
-        JButton btnEdit = new JButton("Edit Selected Event");
+        btnEdit = new JButton("Edit Selected Event");
         btnEdit.setBounds(10, 608, 174, 42);
         frmCloseEvent.getContentPane().add(btnEdit);
         
-        JButton btnRemove = new JButton("Remove Selected Event");
+        btnRemove = new JButton("Remove Selected Event");
         btnRemove.setBounds(318, 608, 174, 42);
         frmCloseEvent.getContentPane().add(btnRemove);
         
-        JButton btnRegisterAgreement = new JButton("Register Agreement");
+        btnRegisterAgreement = new JButton("Register Agreement");
         btnRegisterAgreement.setBounds(594, 608, 238, 42);
         frmCloseEvent.getContentPane().add(btnRegisterAgreement);
                         

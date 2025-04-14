@@ -1,6 +1,8 @@
 package giis.demo.view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.Dimension;
 import com.jgoodies.forms.layout.FormLayout;
@@ -9,6 +11,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import giis.demo.model.*;
 
 /**
  * Vista de la pantalla para consultar el estado de las actividades.
@@ -21,8 +24,8 @@ public class LTAView {
     private JTextField tFEndDate;
     private JTable eventsTable;
     private JTable summaryTable;
-    private JComboBox<String> sponsorComboBox;
-    private JComboBox<String> spLevelComboBox;
+    private JComboBox<CompanyDTO> sponsorComboBox;
+    private JComboBox<LTASPLevelDTO> spLevelComboBox;
 
     /**
      * Create the application.
@@ -89,6 +92,8 @@ public class LTAView {
         frmCloseEvent.getContentPane().add(scrollPaneEvents);
         
         eventsTable = new JTable();
+        eventsTable.setModel(new DefaultTableModel(
+            new Object[]{"ID", "Name", "Edition", "Start Date", "End Date", "Status"}, 0)); // Columna añadida
         scrollPaneEvents.setViewportView(eventsTable);
         
         JLabel lblSPLvL = new JLabel("Sponsorship Level:");
@@ -181,11 +186,11 @@ public class LTAView {
 		this.summaryTable = summaryTable;
 	}
 
-	public JComboBox<String> getSponsorComboBox() {
+	public JComboBox<CompanyDTO> getSponsorComboBox() {
 		return sponsorComboBox;
 	}
 
-	public JComboBox<String> getSpLevelComboBox() {
+	public JComboBox<LTASPLevelDTO> getSpLevelComboBox() {
 		return spLevelComboBox;
 	}
 }

@@ -15,7 +15,7 @@ public class LTAModel {
     	    "strftime('%Y-%m-%d', event_endDate) AS event_endDate, " +
     	    "event_status " +
     	    "FROM Event " +
-    	    "WHERE event_status NOT IN ('Completed', 'Closed') " +
+    	    "WHERE event_status NOT IN ('Closed') " +
     	    "ORDER BY event_date DESC";
 
     private static final String SQL_GET_SPONSORSHIP_LEVELS = 
@@ -23,6 +23,24 @@ public class LTAModel {
             "FROM SponsorshipLevel " +
             "WHERE event_id = ?";
 
+    private static final String SQL_INSERT_BALANCE = 
+    	    "INSERT INTO Balance (concept, event_id, amount, balance_status) VALUES (?, ?, ?, 'Estimated')";
+    
+    public int createLongTermAgreement(String startDate, String endDate, double totalFee, int companyId) {
+        String sql = "INSERT INTO LongTermAgreement (lta_startDate, lta_endDate, lta_totalFee, company_id) VALUES (?, ?, ?, ?)";
+        return db.executeUpdateAndGetKey(sql, startDate, endDate, totalFee, companyId);
+    }
+    
+    public int createBalanceEntry(String concept, int eventId, double amount) {
+        String sql = "INSERT INTO Balance (concept, event_id, amount, balance_status) VALUES (?, ?, ?, 'Estimated')";
+        return db.executeUpdateAndGetKey(sql, concept, eventId, amount);
+    }
+    
+    public void linkLTAEvent(int ltaId, int eventId, int balanceId) {
+        String sql = "INSERT INTO LTA_Event (lta_id, event_id, balance_id) VALUES (?, ?, ?)";
+        db.executeUpdate(sql, ltaId, eventId, balanceId);
+    }
+    
     public List<LTASPLevelDTO> getSponsorshipLevels(int eventId) {
         return db.executeQueryPojo(LTASPLevelDTO.class, SQL_GET_SPONSORSHIP_LEVELS, eventId);
     }

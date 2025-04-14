@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -231,5 +233,18 @@ public class LTAView {
 
 	public JComboBox<LTASPLevelDTO> getSpLevelComboBox() {
 		return spLevelComboBox;
+	}
+	
+	public void setDateFieldsEditable(boolean editable) {
+	    tFStartDate.setEditable(editable);
+	    tFEndDate.setEditable(editable);
+	    tFTotalFee.setEditable(editable);
+	    sponsorComboBox.setEnabled(editable);
+	    // Opcional: Cambiar color de fondo para indicar estado
+	    tFStartDate.setBackground(editable ? Color.WHITE : Color.LIGHT_GRAY);
+	    tFEndDate.setBackground(editable ? Color.WHITE : Color.LIGHT_GRAY);
+	    tFTotalFee.setBackground(editable ? Color.WHITE : Color.LIGHT_GRAY);
+	    sponsorComboBox.setBackground(editable ? Color.WHITE : Color.LIGHT_GRAY);
+
 	}
 }

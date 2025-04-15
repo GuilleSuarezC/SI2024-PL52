@@ -114,7 +114,7 @@ public class ConsultEventStatusModel {
     	    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
     	    	    "JOIN Event e ON s.event_id = e.event_id " +
     	    	    "WHERE s.event_id = ? " +
-    	    	    "GROUP BY s.sponsorship_id, s.sponsorship_name, s.sponsorship_agreementDate, b.amount, e.event_fee";
+    	    	    "GROUP BY s.sponsorship_id, b.balance_id";
 
     // Consulta para LTAs
     private static final String SQL_GET_LTA_SPONSORSHIPS_BY_EVENT_ID = 
@@ -128,7 +128,7 @@ public class ConsultEventStatusModel {
     				"LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
     				"JOIN Event e ON le.event_id = e.event_id " +
     				"WHERE le.event_id = ? " +
-    				"GROUP BY lta.lta_id, lta.lta_startDate, b.concept, b.amount, e.event_fee";
+    				"GROUP BY b.balance_id";
 
 
     
@@ -141,19 +141,7 @@ public class ConsultEventStatusModel {
             "WHERE le.event_id = ? " +
             "GROUP BY b.balance_id, b.amount";
     
-    // Consulta para LTAs (Long-Term Agreements)
-//    private static final String SQL_GET_LTA_SPONSORSHIPS_BY_EVENT_ID = 
-//        "SELECT s.sponsorship_name, s.sponsorship_agreementDate, " +
-//        "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
-//        "       b.amount AS event_fee " + // Monto positivo
-//        "FROM Sponsorship s " +
-//        "JOIN LTA_Event le ON s.event_id = le.event_id " +
-//        "JOIN Balance b ON le.balance_id = b.balance_id " +
-//        "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
-//        "WHERE s.event_id = ? " +
-//        "GROUP BY s.sponsorship_id, b.amount";
-    
-    public List<SponsorshipInfoDTO> getLTASponsorshipsByEventId(int eventId) {
+       public List<SponsorshipInfoDTO> getLTASponsorshipsByEventId(int eventId) {
         return db.executeQueryPojo(SponsorshipInfoDTO.class, SQL_GET_LTA_SPONSORSHIPS_BY_EVENT_ID, eventId);
     }
     

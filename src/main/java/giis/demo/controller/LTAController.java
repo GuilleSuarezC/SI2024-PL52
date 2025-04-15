@@ -76,34 +76,6 @@ public class LTAController {
 	    });  
     }
     
-//    // Método para añadir filas a la tabla de resumen
-//    private void addEventToSummary() {
-//        // Obtener selecciones
-//        int selectedEventRow = view.getEventsTable().getSelectedRow();
-//        LTASPLevelDTO selectedLevel = (LTASPLevelDTO) view.getSpLevelComboBox().getSelectedItem();
-//        
-//        // Validar selecciones
-//        if (selectedEventRow == -1 || selectedLevel == null) {
-//            JOptionPane.showMessageDialog(view.getFrmCloseEvent(), 
-//                "¡Selecciona un evento y un nivel de patrocinio!", "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        
-//        // Obtener datos
-//        LTAEventDTO event = events.get(selectedEventRow);
-//        String levelInfo = selectedLevel.getLevel_name() + " - " + selectedLevel.getLevel_price() + "€";
-//        
-//        // Añadir a la tabla
-//        DefaultTableModel model = (DefaultTableModel) view.getSummaryTable().getModel();
-//        model.addRow(new Object[]{
-//            event.getEvent_name(),
-//            event.getEvent_edition() != null ? event.getEvent_edition() : "", // Edición (o vacío)
-//            levelInfo  // Formato: "Nombre - Precio€"
-//        });
-//        
-//        // Actualizar Total Fee (sumar el precio del nivel)
-//        updateTotalFee(selectedLevel.getLevel_price());
-//    }
 
     // Método auxiliar para actualizar el total
     private void updateTotalFee(double amount) {
@@ -178,6 +150,7 @@ public class LTAController {
             JOptionPane.showMessageDialog(view.getFrmCloseEvent(), 
                 e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        view.setDateFieldsEditable(true);
     }
     
     private void loadSponsorshipLevels(int eventId) {
@@ -347,6 +320,17 @@ public class LTAController {
             } catch (ApplicationException e) { // Captura errores de formato de fecha
                 JOptionPane.showMessageDialog(view.getFrmCloseEvent(), 
                     "Invalid date format. Use YYYY-MM-DD", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // ===== NUEVA VALIDACIÓN: ACUERDO EN BBDD DUPLICADO =====
+            CompanyDTO sponsor = (CompanyDTO) view.getSponsorComboBox().getSelectedItem();
+            LTAEventDTO evento = events.get(selectedEventRow);
+            
+            if (model.existsAgreementForCompanyAndEvent(sponsor.getCompany_id(), evento.getEvent_id())) {
+                JOptionPane.showMessageDialog(view.getFrmCloseEvent(),
+                    "This sponsor already has an agreement registered in the database for: \nEvent: " + evento.getEvent_name() + " \nCompany: "+sponsor.getCompany_name(),
+                    "Duplicate Agreement", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             

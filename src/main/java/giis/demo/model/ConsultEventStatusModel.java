@@ -24,14 +24,13 @@ public class ConsultEventStatusModel {
 //        "WHERE s.event_id = ?";
     private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
     	    "SELECT s.sponsorship_name, s.sponsorship_agreementDate, " +
-    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
-    	    "       e.event_fee " +
+    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status " +
     	    "FROM Sponsorship s " +
-    	    "JOIN Balance b ON s.balance_id = b.balance_id " + // Balance asociado al Sponsorship
-    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " + // Movimientos del Balance
-    	    "JOIN Event e ON s.event_id = e.event_id " +
+    	    "JOIN Balance b ON s.balance_id = b.balance_id " +
+    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
     	    "WHERE s.event_id = ? " +
-    	    "GROUP BY s.sponsorship_id, b.amount"; // Agrupar para sumar movimientos
+    	    "GROUP BY s.sponsorship_id, b.amount";
+
     
     private static final String SQL_GET_PAYMENTS_BY_EVENT_ID = 
     	    "SELECT p.payment_id, p.payment_amount, p.payment_date, p.payment_status " +

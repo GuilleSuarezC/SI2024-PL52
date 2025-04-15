@@ -2,9 +2,15 @@ package giis.demo.model;
 
 import java.util.List;
 import giis.demo.util.Database;
+import giis.demo.util.DbUtil;
 
 public class RegisterEventModel {
     private Database db = new Database();
+    private RegisterEventDTO lastRegisteredEvent;
+
+    
+    private static final String SQL_GET_LAST_INSERTED_ID = "SELECT last_insert_rowid()";
+
 
     // Consulta para buscar eventos por nombre (case-insensitive)
     private static final String SQL_GET_EVENTS_BY_NAME = 
@@ -14,8 +20,11 @@ public class RegisterEventModel {
 
     // Consulta para insertar un nuevo evento
     private static final String SQL_INSERT_EVENT = 
-        "INSERT INTO Event (event_name, event_edition, event_date, event_endDate, event_status, event_fee) " +
-        "VALUES (?, ?, ?, ?, ?, ?)";
+    	    "INSERT INTO Event (event_name, event_edition, event_date, event_endDate, event_status) " +
+    	    "VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT_SPONSORSHIP_LEVEL =
+    	    "INSERT INTO SponsorshipLevel (level_name, level_price, event_id) VALUES (?, ?, ?)";
+
 
     /**
      * Obtiene eventos existentes cuyo nombre coincida con un patrón (case-insensitive).
@@ -37,8 +46,20 @@ public class RegisterEventModel {
             event.getEvent_edition(),
             event.getEvent_date(),
             event.getEvent_endDate(),
-            event.getEvent_status(),
-            event.getEvent_fee()
+            event.getEvent_status()
         );
+        lastRegisteredEvent = event; // Save the registered event
     }
+    
+    public void addSponsorshipLevel(String name, double price, int eventId) {
+        db.executeUpdate(SQL_INSERT_SPONSORSHIP_LEVEL, name, price, eventId);
+    }
+    
+
+    
+    public RegisterEventDTO getLastRegisteredEvent() {
+        return lastRegisteredEvent;
+    }
+   
+
 }

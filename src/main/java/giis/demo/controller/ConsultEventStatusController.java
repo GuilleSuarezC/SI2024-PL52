@@ -200,7 +200,7 @@ public class ConsultEventStatusController {
         		paid+=s.getevent_fee();
         	}
         }
-        TableModel tableModel = SwingUtil.getTableModelFromPojos(sponsors,new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status", "event_fee"});
+        TableModel tableModel = SwingUtil.getTableModelFromPojos(sponsors,new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status"});
         view.getTblSponsorships().setModel(tableModel);
         view.setLblSponsorshipsEstimated(total);
         view.setLblSponsorshipsPaid(paid);

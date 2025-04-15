@@ -36,7 +36,11 @@ public class RegisterSponsorshipAgreeView {
     private JTextField tFeventFee;
     private JLabel lbleuroFee;
 
-    /**
+    public void settFeventFee(JTextField tFeventFee) {
+		this.tFeventFee = tFeventFee;
+	}
+
+	/**
      * Create the application.
      */
     public RegisterSponsorshipAgreeView() {

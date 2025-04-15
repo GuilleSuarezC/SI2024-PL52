@@ -48,9 +48,7 @@ INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) V
     ('LTA - Tech Solutions S.L.', 2, 1000.0, 'Estimated', 'LTA Hackathon UNIOVI IV Tech Solutions S.L.'),
     ('LTA - Tech Solutions S.L.', 3, 1000.0, 'Estimated', 'LTA Asturias AI Summit III Tech Solutions S.L.'),
     ('LTA - Innovate Asturias', 1, 1000.0, 'Estimated', 'LTA ImpulsoTIC Week XII Innovate Asturias'),
-    ('LTA - Innovate Asturias', 3, 1000.0, 'Estimated', 'LTA Asturias AI Summit III Innovate Asturias'),
-    ('Sponsorship Future Innovators', 3, 5000.0, 'Estimated', 'Future Innovators sponsorship');
-
+    ('LTA - Innovate Asturias', 3, 1000.0, 'Estimated', 'LTA Asturias AI Summit III Innovate Asturias');
     
 -- Insertar datos en la tabla "Sponsorship"
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES

@@ -182,22 +182,18 @@ public class ConsultEventStatusController {
                 s.setpayment_status("Estimated");
             }
             sponsorList.add(s);
-            total += s.getagreed_quantity(); // Sumar todos los agreed_quantity (positivos)
+            total += s.getagreed_quantity(); // Sumar todos los event_fee (positivos)
             if ("Paid".equals(s.getpayment_status())) {
                 paid += s.getagreed_quantity();
             }
         }
 
-        TableModel tableModel = SwingUtil.getTableModelFromPojos(sponsorsNormal,new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status"});
-        view.getTblSponsorships().setModel(tableModel);
-
         // Actualizar la vista
-
         view.setLblSponsorshipsEstimated(total);
         view.setLblSponsorshipsPaid(paid);
-        TableModel tableModel1 = SwingUtil.getTableModelFromPojos(allSponsors, 
+        TableModel tableModel = SwingUtil.getTableModelFromPojos(allSponsors, 
             new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status", "agreed_quantity"});
-        view.getTblSponsorships().setModel(tableModel1);
+        view.getTblSponsorships().setModel(tableModel);
         
         // Deshabilitar redimensionamiento de la columna sponsorship_name (columna 0)
         view.getTblSponsorships().getColumnModel().getColumn(0).setResizable(false);

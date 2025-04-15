@@ -98,7 +98,7 @@ public class ConsultEventStatusModel {
     	    "SELECT s.sponsorship_name, " +
     	    	    "       s.sponsorship_agreementDate, " +
     	    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
-    	    	    "       b.amount AS agreed_quantity " + // Cambiar agreed_quantity por b.amount
+    	    	    "       b.amount AS agreed_quantity " + 
     	    	    "FROM Sponsorship s " +
     	    	    "JOIN Balance b ON s.balance_id = b.balance_id " +
     	    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +

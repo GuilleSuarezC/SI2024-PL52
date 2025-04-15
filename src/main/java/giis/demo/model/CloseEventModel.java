@@ -8,9 +8,11 @@ public class CloseEventModel {
 
     // Query para obtener todos los eventos (excluyendo los ya cerrados)
     private static final String SQL_GET_ALL_EVENTS = 
-        "SELECT event_id, event_name, event_edition, event_date, event_endDate, event_status, event_fee " +
-        "FROM Event " +
-        "WHERE event_status != 'Closed'"; // ❗ Excluye eventos ya cerrados
+    	    "SELECT event_id, event_name, event_edition, event_date, event_endDate, event_status " +
+    	    "FROM Event " +
+    	    "WHERE event_status != 'Closed'";
+
+
 
     // Query para cerrar un evento
     private static final String SQL_CLOSE_EVENT = 

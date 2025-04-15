@@ -36,7 +36,7 @@ CREATE TABLE "Member" (
     "member_name" TEXT NOT NULL,
     "member_email" TEXT,
     "member_phone" TEXT,
-    "company_id" INTEGER NOT NULL,
+    "company_id" INTEGER,
     FOREIGN KEY("company_id") REFERENCES "Company"("company_id")
 );
 

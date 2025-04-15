@@ -244,7 +244,7 @@ public class RegisterSponsorshipAgreeController {
         view.setAgreementDate(""); 
         view.setComboBoxIndexes(-1);
         view.getListaContacts().setModel(new DefaultTableModel(new String[] {},0));
-        view.setLlbFee("");
+        view.settFeventFee("");
         view.getListSponsorshipLevels().setModel(new DefaultTableModel(new String[] {},0));
         
     }

@@ -16,20 +16,14 @@ public class ConsultEventStatusModel {
 
     // Consulta SQL para obtener los patrocinios asociados a un evento
 //    private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
-//        "SELECT s.sponsorship_name, s.sponsorship_agreementDate, p.balance_status, e.event_fee " +
+//        "SELECT s.sponsorship_name, s.sponsorship_agreementDate, p.balance_status, e.agreed_quantity " +
 //        "FROM Sponsorship s " +
 //        "JOIN Company c ON s.company_id = c.company_id " +
 //        "LEFT JOIN Balance p ON s.balance_id = p.balance_id " +
 //        "JOIN Event e ON s.event_id = e.event_id " +
 //        "WHERE s.event_id = ?";
-    private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
-    	    "SELECT s.sponsorship_name, s.sponsorship_agreementDate, " +
-    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status " +
-    	    "FROM Sponsorship s " +
-    	    "JOIN Balance b ON s.balance_id = b.balance_id " +
-    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
-    	    "WHERE s.event_id = ? " +
-    	    "GROUP BY s.sponsorship_id, b.amount";
+
+
 
     
     private static final String SQL_GET_PAYMENTS_BY_EVENT_ID = 
@@ -95,8 +89,57 @@ public class ConsultEventStatusModel {
     	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
     	    "WHERE b.event_id = ? " +
     	    "  AND b.balance_id NOT IN (SELECT balance_id FROM Sponsorship) " +
+    	    "  AND b.balance_id NOT IN (SELECT balance_id FROM LTA_Event) " +
     	    "GROUP BY b.balance_id, b.concept, b.amount";
+    
+    
+    // Consulta para Sponsorships normales
+    private static final String SQL_GET_SPONSORSHIPS_BY_EVENT_ID = 
+    	    "SELECT s.sponsorship_name, " +
+    	    	    "       s.sponsorship_agreementDate, " +
+    	    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
+    	    	    "       b.amount AS agreed_quantity " + // Cambiar agreed_quantity por b.amount
+    	    	    "FROM Sponsorship s " +
+    	    	    "JOIN Balance b ON s.balance_id = b.balance_id " +
+    	    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+    	    	    "JOIN Event e ON s.event_id = e.event_id " +
+    	    	    "WHERE s.event_id = ? " +
+    	    	    "GROUP BY s.sponsorship_id, b.balance_id";
 
+    // Consulta para LTAs
+    private static final String SQL_GET_LTA_SPONSORSHIPS_BY_EVENT_ID = 
+    		"SELECT b.concept AS sponsorship_name, " +
+    				"       lta.lta_startDate AS sponsorship_agreementDate, " +
+    				"       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
+    				"       b.amount AS agreed_quantity " +
+    				"FROM LongTermAgreement lta " +
+    				"JOIN LTA_Event le ON lta.lta_id = le.lta_id " +
+    				"JOIN Balance b ON le.balance_id = b.balance_id " +
+    				"LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+    				"JOIN Event e ON le.event_id = e.event_id " +
+    				"WHERE le.event_id = ? " +
+    				"GROUP BY b.balance_id";
+
+
+    
+    private static final String SQL_GET_LTA_BALANCES = 
+            "SELECT b.balance_id, b.concept, b.amount, " +
+            "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Unpaid' END AS paymentStatus " +
+            "FROM LTA_Event le " +
+            "JOIN Balance b ON le.balance_id = b.balance_id " +
+            "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
+            "WHERE le.event_id = ? " +
+            "GROUP BY b.balance_id, b.amount";
+    
+       public List<SponsorshipInfoDTO> getLTASponsorshipsByEventId(int eventId) {
+        return db.executeQueryPojo(SponsorshipInfoDTO.class, SQL_GET_LTA_SPONSORSHIPS_BY_EVENT_ID, eventId);
+    }
+    
+    public List<SponsorshipBalanceDTO> getLTABalancesByEvent(int eventId) {      
+        return db.executeQueryPojo(SponsorshipBalanceDTO.class, SQL_GET_LTA_BALANCES, eventId);
+    }
+
+    
     public List<SponsorshipBalanceDTO> getSponsorshipBalances(int eventId) {
         return db.executeQueryPojo(SponsorshipBalanceDTO.class, SQL_GET_SPONSORSHIP_BALANCES, eventId);
     }

@@ -3,7 +3,7 @@
 	public class ConsultEventDTO {
 	    private int event_id;
 	    private String event_name;
-	    private int event_fee;
+	    private int agreed_quantity;
 	    private String event_date;
 	    private String event_endDate;
 	    private String event_edition;
@@ -11,10 +11,10 @@
 	
 	    public ConsultEventDTO() {}
 	    
-	    public ConsultEventDTO(int event_id, String event_name, int event_fee, String event_date, String event_endDate, String event_edition, String event_status) {
+	    public ConsultEventDTO(int event_id, String event_name, int agreed_quantity, String event_date, String event_endDate, String event_edition, String event_status) {
 	        this.event_id = event_id;
 	        this.event_name = event_name;
-	        this.event_fee = event_fee;
+	        this.agreed_quantity = agreed_quantity;
 	        this.event_date = event_date;
 	        this.event_endDate = event_endDate;
 	        this.event_edition = event_edition;
@@ -69,16 +69,16 @@
 			this.event_name = event_name;
 		}
 	
-		public int getEvent_fee() {
-			return event_fee;
+		public int getagreed_quantity() {
+			return agreed_quantity;
 		}
 	
-		public void setEvent_fee(int event_fee) {
-			this.event_fee = event_fee;
+		public void setagreed_quantity(int agreed_quantity) {
+			this.agreed_quantity = agreed_quantity;
 		}
 	
 	//    // Getters y Setters
 	//    public int getEventId() { return event_id; }
 	//    public String getEventName() { return event_name; }
-	//    public int getEventFee() { return event_fee; }
+	//    public int getEventFee() { return agreed_quantity; }
 	}

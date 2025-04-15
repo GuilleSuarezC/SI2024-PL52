@@ -226,6 +226,16 @@ public class SwingMain {
 		});
 		btnCloseEvents.setBounds(301, 175, 248, 23);
 		frame.getContentPane().add(btnCloseEvents);
+		
+		JButton btnLTA = new JButton("Register Long Term Agreements");
+		btnLTA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LTAController controller=new LTAController(new LTAModel(), new LTAView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		btnLTA.setBounds(301, 209, 248, 23);
+		frame.getContentPane().add(btnLTA);
 	}
 
 	/**

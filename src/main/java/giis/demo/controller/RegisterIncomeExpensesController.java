@@ -63,7 +63,7 @@ public class RegisterIncomeExpensesController {
             return;
         }
 
-        if (!Util.isValidISODate(dateOfPaid)) {
+        if ("Paid".equals(balanceStatus) && !Util.isValidISODate(dateOfPaid)) {
             view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");
             return;
         }

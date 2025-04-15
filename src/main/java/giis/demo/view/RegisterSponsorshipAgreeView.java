@@ -74,7 +74,7 @@ public class RegisterSponsorshipAgreeView {
         frame.getContentPane().add(lstEvent, "cell 0 1,growx");
 
         // Fee
-        lblFee = new JLabel("Fee: ");
+        lblFee = new JLabel("Amount: ");
         frame.getContentPane().add(lblFee, "flowx,cell 0 2");
         
 

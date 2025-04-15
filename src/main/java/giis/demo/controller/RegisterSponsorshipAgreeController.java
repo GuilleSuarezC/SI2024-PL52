@@ -191,7 +191,7 @@ public class RegisterSponsorshipAgreeController {
             double levelPrice = Double.parseDouble(levelModel.getValueAt(selectedLevelRow, 1).toString());
 
             String sponsorshipName = selectedCompany.getCompany_name() + " " + selectedEvent.getEvent_name() + " " + selectedEvent.getEvent_edition();
-            String sponsorshipLevelName = view.getListSponsorshipLevels().getValueAt(selectedLevelRow, 0).toString();
+            String sponsorshipLevelName = view.getListSponsorshipLevels().getValueAt(selectedLevelRow, 0).toString() + " Sponsorship";
 
             int balanceId = model.registerBalance(
             	    selectedEvent.getEvent_id(), 

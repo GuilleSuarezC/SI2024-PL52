@@ -48,7 +48,9 @@ INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) V
     ('LTA - Tech Solutions S.L.', 2, 1000.0, 'Estimated', 'LTA Hackathon UNIOVI IV Tech Solutions S.L.'),
     ('LTA - Tech Solutions S.L.', 3, 1000.0, 'Estimated', 'LTA Asturias AI Summit III Tech Solutions S.L.'),
     ('LTA - Innovate Asturias', 1, 1000.0, 'Estimated', 'LTA ImpulsoTIC Week XII Innovate Asturias'),
-    ('LTA - Innovate Asturias', 3, 1000.0, 'Estimated', 'LTA Asturias AI Summit III Innovate Asturias');
+    ('LTA - Innovate Asturias', 3, 1000.0, 'Estimated', 'LTA Asturias AI Summit III Innovate Asturias'),
+    ('Sponsorship Future Innovators', 3, 5000.0, 'Estimated', 'Future Innovators sponsorship');
+
     
 -- Insertar datos en la tabla "Sponsorship"
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES
@@ -87,10 +89,12 @@ INSERT INTO "LongTermAgreement" (lta_startDate, lta_endDate, lta_totalFee, compa
 	("2025-06-11", "2027-06-11", 10000.0, 1),
 	("2024-05-10", "2026-05-10", 8000.0, 2);
 
+
 INSERT INTO "LTA_Event" (lta_id, event_id, balance_id) VALUES
 	(1, 2, 6),
 	(1, 3, 7),
 	(2, 1, 8),
 	(2, 3, 9);
+
 
 COMMIT;

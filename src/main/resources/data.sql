@@ -33,10 +33,10 @@ INSERT INTO "COIIPA_GBMember" (gb_name, gb_rank) VALUES
     ('Rosa', 'Secretary');
 
 -- Insertar datos en la tabla "Event"
-INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event_status, event_fee) VALUES  
-    ('ImpulsoTIC Week', 'XII', '2025-02-15', '2025-02-18', 'Planned', 1000.0),  
-    ('Hackathon UNIOVI', 'IV', '2025-03-05', '2025-03-07', 'Planned', 1000.0),  
-    ('Asturias AI Summit', 'III', '2025-04-12', '2025-04-13', 'Planned', 1000.0);
+INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event_status) VALUES  
+    ('ImpulsoTIC Week', 'XII', '2025-02-15', '2025-02-18', 'Planned'),  
+    ('Hackathon UNIOVI', 'IV', '2025-03-05', '2025-03-07', 'Planned'),  
+    ('Asturias AI Summit', 'III', '2025-04-12', '2025-04-13', 'Planned');
 
 -- Insertar datos en la tabla "Balance"
 INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) VALUES

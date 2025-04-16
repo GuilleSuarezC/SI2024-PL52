@@ -29,6 +29,11 @@ public class CompanyDTO {
 		this.company_name = company_name;
 	}
 
+	// ¡Este método es clave!
+    @Override
+    public String toString() {
+        return this.company_name; // Retorna directamente el nombre
+    }
 //	// Getters y Setters
 //    public int getCompanyId() { return company_id; }
 //    public String getCompanyName() { return company_name; }

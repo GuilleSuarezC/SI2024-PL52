@@ -3,16 +3,14 @@ package giis.demo.model;
 public class EventDTO {
     private int event_id;
     private String event_name;
-    private int event_fee;
     private String event_date;
     private String event_edition;
 
     public EventDTO() {}
     
-    public EventDTO(int event_id, String event_name, int event_fee, String event_date, String event_edition) {
+    public EventDTO(int event_id, String event_name, String event_date, String event_edition) {
         this.event_id = event_id;
         this.event_name = event_name;
-        this.event_fee = event_fee;
         this.event_date = event_date;
         this.event_edition = event_edition;
     }
@@ -49,13 +47,7 @@ public class EventDTO {
 		this.event_name = event_name;
 	}
 
-	public int getEvent_fee() {
-		return event_fee;
-	}
-
-	public void setEvent_fee(int event_fee) {
-		this.event_fee = event_fee;
-	}
+	
 
 //    // Getters y Setters
 //    public int getEventId() { return event_id; }

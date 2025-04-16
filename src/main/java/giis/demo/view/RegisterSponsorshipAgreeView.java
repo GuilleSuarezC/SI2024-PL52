@@ -1,3 +1,4 @@
+
 package giis.demo.view;
 
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import javax.swing.JList;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * Vista de la pantalla para registrar acuerdos de patrocinio.
@@ -20,7 +22,6 @@ import javax.swing.UIManager;
  * y asegurando que la UI se pueda manipular desde el controlador.
  */
 public class RegisterSponsorshipAgreeView {
-
     private JFrame frame;
     private JComboBox<Object> lstCompany;
     private JComboBox<Object> lstEvent;
@@ -35,7 +36,11 @@ public class RegisterSponsorshipAgreeView {
     private JTextField tFeventFee;
     private JLabel lbleuroFee;
 
-    /**
+    public void settFeventFee(JTextField tFeventFee) {
+		this.tFeventFee = tFeventFee;
+	}
+
+	/**
      * Create the application.
      */
     public RegisterSponsorshipAgreeView() {
@@ -54,10 +59,11 @@ public class RegisterSponsorshipAgreeView {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+
     	frame = new JFrame();
         frame.setTitle("Register Sponsorship Agreements");
-        frame.setBounds(0, 0, 741, 430);
-        frame.getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][][][pref!][][pref!][pref!]"));
+        frame.setBounds(0, 0, 871, 645);
+        frame.getContentPane().setLayout(new MigLayout("", "[grow]", "[][][][][][pref!][][pref!][pref!][]"));
 
         // Company
         JLabel lblCompany = new JLabel("Company:");
@@ -72,8 +78,9 @@ public class RegisterSponsorshipAgreeView {
         frame.getContentPane().add(lstEvent, "cell 0 1,growx");
 
         // Fee
-        lblFee = new JLabel("Fee: ");
+        lblFee = new JLabel("Amount: ");
         frame.getContentPane().add(lblFee, "flowx,cell 0 2");
+        
 
         // Agreement Date
         JLabel lblAgreementDate = new JLabel("Agreement Date (ISO):");
@@ -95,34 +102,50 @@ public class RegisterSponsorshipAgreeView {
         lstContacts = new JTable();
         lstContacts.setPreferredScrollableViewportSize(new Dimension(500, 60));
         contactsPanel.setViewportView(lstContacts);
-        frame.getContentPane().add(contactsPanel, "cell 0 5,growx,height 60px::160px, wrap");
+        frame.getContentPane().add(contactsPanel, "cell 0 5,growx,height 200px::160px");
 
         // Sponsorship Levels
         JLabel lblSponsorshipLevels = new JLabel("Sponsorship Levels:");
         frame.getContentPane().add(lblSponsorshipLevels, "cell 0 6,alignx left,aligny center");
         
         JScrollPane levelsPanel = new JScrollPane();
+        levelsPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         lstSponsorshipLevels = new JTable();
         lstSponsorshipLevels.setPreferredScrollableViewportSize(new Dimension(500, 60));
         levelsPanel.setViewportView(lstSponsorshipLevels);
-        frame.getContentPane().add(levelsPanel, "cell 0 6,growx,height 60px::80px, split 2");
+        frame.getContentPane().add(levelsPanel, "cell 0 6 1 2,growx,height 200px::100px");
+        
+        lstSponsorshipLevels.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = lstSponsorshipLevels.getSelectedRow();
+                if (selectedRow != -1 && lstSponsorshipLevels.getColumnCount() >= 2) {
+                    Object value = lstSponsorshipLevels.getValueAt(selectedRow, 1); // columna 2 (índice 1)
+                    if (value != null) {
+                        tFeventFee.setText(value.toString());
+                    }
+                }
+            }
+        });
+
         
         // Botón Add Level debajo de la etiqueta y al lado de la tabla
         btnAddLevel = new JButton("Add Level");
-        frame.getContentPane().add(btnAddLevel, "cell 0 6,aligny center,wrap");
-
-        // Botones Register y Cancel debajo de la tabla
-        btnRegistrar = new JButton("Register");
-        btnCancelar = new JButton("Cancel");
-        frame.getContentPane().add(btnRegistrar, "split 2,cell 0 7,alignx right,aligny center");
-        frame.getContentPane().add(btnCancelar, "cell 0 7");
+        frame.getContentPane().add(btnAddLevel, "cell 0 6,aligny center");
         
         tFeventFee = new JTextField();
         frame.getContentPane().add(tFeventFee, "cell 0 2");
+    	tFeventFee.setEditable(true);
+    	
         tFeventFee.setColumns(10);
         
         lbleuroFee = new JLabel("€");
         frame.getContentPane().add(lbleuroFee, "cell 0 2,alignx left,aligny center");
+        
+                // Botones Register y Cancel debajo de la tabla
+                btnRegistrar = new JButton("Register");
+                frame.getContentPane().add(btnRegistrar, "flowx,cell 0 9,alignx right,aligny center");
+                btnCancelar = new JButton("Cancel");
+                frame.getContentPane().add(btnCancelar, "cell 0 9");
     }
 
     public String gettFeventFee() {
@@ -161,4 +184,3 @@ public class RegisterSponsorshipAgreeView {
 
 	
 }
-

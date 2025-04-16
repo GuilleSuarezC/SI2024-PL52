@@ -17,8 +17,6 @@ import java.awt.event.ActionEvent;
 import giis.demo.controller.RegisterSponsorshipAgreeController;
 import giis.demo.model.RegisterSponsorshipAgreeModel;
 import giis.demo.tkrun.*;
-import giis.demo.view.RegisterSponsorshipAgreeView;
-
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -226,6 +224,35 @@ public class SwingMain {
 		});
 		btnCloseEvents.setBounds(301, 175, 248, 23);
 		frame.getContentPane().add(btnCloseEvents);
+		
+		JButton btnLTA = new JButton("Register Long Term Agreements");
+		btnLTA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LTAController controller=new LTAController(new LTAModel(), new LTAView());
+				controller.initController(SwingMain.this);
+			}
+		});
+		btnLTA.setBounds(301, 209, 248, 23);
+		frame.getContentPane().add(btnLTA);
+		
+		
+		
+		JButton btnCompanyMembers = new JButton("Manage Company Members");
+		btnCompanyMembers.setBounds(301, 242, 248, 23);
+		frame.getContentPane().add(btnCompanyMembers);
+
+		btnCompanyMembers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFrame memberFrame = new JFrame("Company Members");
+				memberFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				memberFrame.setSize(600, 400);
+				memberFrame.setLocationRelativeTo(null);
+				memberFrame.add(new ManageContactMemberView());
+				memberFrame.setVisible(true);
+			}
+		});
+
 	}
 
 	/**

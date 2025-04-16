@@ -1,6 +1,8 @@
 BEGIN TRANSACTION;
 
 -- Borrar datos previos en orden inverso a las dependencias (hijos primero)
+DELETE FROM "LTA_Event";
+DELETE FROM "LongTermAgreement";
 DELETE FROM "Movement";
 DELETE FROM "Invoice";
 DELETE FROM "Sponsorship"; -- Depende de Member, Edition, COIIPA_GBMember, Balance
@@ -31,10 +33,10 @@ INSERT INTO "COIIPA_GBMember" (gb_name, gb_rank) VALUES
     ('Rosa', 'Secretary');
 
 -- Insertar datos en la tabla "Event"
-INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event_status, event_fee) VALUES  
-    ('ImpulsoTIC Week', 'XII', '2025-02-15', '2025-02-18', 'Planned', 3000.0),  
-    ('Hackathon UNIOVI', 'IV', '2025-03-05', '2025-03-07', 'Planned', 4000.0),  
-    ('Asturias AI Summit', 'III', '2025-04-12', '2025-04-13', 'Planned', 5000.0);
+INSERT INTO "Event" (event_name, event_edition, event_date, event_endDate, event_status) VALUES  
+    ('ImpulsoTIC Week', 'XII', '2025-02-15', '2025-02-18', 'Planned'),  
+    ('Hackathon UNIOVI', 'IV', '2025-03-05', '2025-03-07', 'Planned'),  
+    ('Asturias AI Summit', 'III', '2025-04-12', '2025-04-13', 'Planned');
 
 -- Insertar datos en la tabla "Balance"
 INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) VALUES
@@ -44,7 +46,7 @@ INSERT INTO "Balance" (concept, event_id, amount, balance_status, description) V
     ('AI Research Fund', 3, 5000.0, 'Estimated', 'AI Research Fund sponsorship'),
     ('Sponsorship Future Innovators', 3, 5000.0, 'Estimated', 'Future Innovators sponsorship');
 
-
+    
 -- Insertar datos en la tabla "Sponsorship"
 INSERT INTO "Sponsorship" (sponsorship_name, sponsorship_agreementDate, company_id, event_id, gb_id, balance_id) VALUES
     ('Tech Innovators', '2024-08-01', 1, 1, 1, 1),
@@ -63,5 +65,19 @@ INSERT INTO "Invoice" (taxData_name, invoice_date, invoice_advance, invoice_numb
 INSERT INTO "Movement" (movement_amount, movement_date, balance_id) VALUES
     (3000, '2024-09-10', 1),
     (4000, '2024-09-15', 2);
+    
+-- Insertar datos en la tabla "SponsorshipLevel"
+INSERT INTO "SponsorshipLevel" (level_name, level_price, event_id) VALUES
+    ('Gold', 3000.0, 1),
+    ('Silver', 2000.0, 1),
+    ('Bronze', 1000.0, 1),
+
+    ('Platinum', 4000.0, 2),
+    ('Gold', 2500.0, 2),
+    ('Supporter', 1000.0, 2),
+
+    ('Diamond', 5000.0, 3),
+    ('Gold', 3000.0, 3),
+    ('Contributor', 1500.0, 3);
 
 COMMIT;

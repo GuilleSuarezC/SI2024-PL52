@@ -1,12 +1,12 @@
 package giis.demo.model;
 
 public class RegisterEventDTO {
+	private int event_id;
     private String event_name;
     private String event_edition;
     private String event_date;
     private String event_endDate;
     private String event_status;
-    private int event_fee;
 
     // Constructor vacío
     public RegisterEventDTO() {}
@@ -27,6 +27,15 @@ public class RegisterEventDTO {
     public String getEvent_status() { return event_status; }
     public void setEvent_status(String event_status) { this.event_status = event_status; }
 
-    public int getEvent_fee() { return event_fee; }
-    public void setEvent_fee(int event_fee) { this.event_fee = event_fee; }
+	public int getEvent_id() {
+		return event_id;
+	}
+
+	public void setEvent_id(int event_id) {
+		this.event_id = event_id;
+	}
+
+  
+    
+    
 }

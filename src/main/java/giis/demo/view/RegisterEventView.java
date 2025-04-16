@@ -1,6 +1,8 @@
 package giis.demo.view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.Dimension;
 import com.jgoodies.forms.layout.FormLayout;
@@ -8,6 +10,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 /**
@@ -21,9 +24,15 @@ public class RegisterEventView {
     private JTextField tFstartDate;
     private JTextField tFeventEdition;
     private JTextField tFendDate;
-    private JTextField tFeventFee;
     private JButton btnRegisterEvent;
+    private JButton btnAddSponsorshipLevels;
+    private JTable sponsorshipLevelsTable;
+    private DefaultTableModel sponsorshipLevelsTableModel;
 
+    private java.util.List<String[]> sponsorshipLevels = new ArrayList<>(); // temporal
+
+
+    
     /**
      * Create the application.
      */
@@ -38,7 +47,7 @@ public class RegisterEventView {
         frmRegisterEvents = new JFrame();
         frmRegisterEvents.setTitle("Register New Events");
         frmRegisterEvents.setName("RegisterEventView");
-        frmRegisterEvents.setBounds(100, 100, 879, 288);
+        frmRegisterEvents.setBounds(150, 150, 900, 300);
         frmRegisterEvents.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frmRegisterEvents.getContentPane().setLayout(null);
                 
@@ -83,14 +92,7 @@ public class RegisterEventView {
                         tFendDate.setBounds(436, 106, 280, 20);
                         frmRegisterEvents.getContentPane().add(tFendDate);
                         
-                        JLabel lblEventFee = new JLabel("Fee of the event:");
-                        lblEventFee.setBounds(27, 155, 280, 14);
-                        frmRegisterEvents.getContentPane().add(lblEventFee);
                         
-                        tFeventFee = new JTextField();
-                        tFeventFee.setColumns(10);
-                        tFeventFee.setBounds(27, 170, 280, 20);
-                        frmRegisterEvents.getContentPane().add(tFeventFee);
                         
                         JLabel lblEventStatus = new JLabel("Status of the event:");
                         lblEventStatus.setBounds(436, 155, 280, 14);
@@ -107,6 +109,8 @@ public class RegisterEventView {
                         });
                         btnRegisterEvent.setBounds(436, 215, 116, 23);
                         frmRegisterEvents.getContentPane().add(btnRegisterEvent);
+                        
+                     
                         
                         frmRegisterEvents.setResizable(false); // Habilitar redimensionamiento
 
@@ -167,20 +171,15 @@ public class RegisterEventView {
 	public void settFendDate(JTextField tFendDate) {
 		this.tFendDate = tFendDate;
 	}
-
-	public JTextField gettFeventFee() {
-		return tFeventFee;
-	}
-
-	public void settFeventFee(JTextField tFeventFee) {
-		this.tFeventFee = tFeventFee;
-	}
+	
+	
+	
 	
 	public void clearFields() {
 		this.tFendDate.setText("");
 		this.tFeventEdition.setText("");
-		this.tFeventFee.setText("");
 		this.tFeventName.setText("");
-		this.tFstartDate.setText("");		
+		this.tFstartDate.setText("");
+
 	}
 }

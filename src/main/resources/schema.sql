@@ -1,6 +1,8 @@
 BEGIN TRANSACTION;
 
 -- Primero borramos las tablas si existen
+DROP TABLE IF EXISTS LTA_Event;
+DROP TABLE IF EXISTS LongTermAgreement;
 DROP TABLE IF EXISTS "Invoice";
 DROP TABLE IF EXISTS "Movement";
 DROP TABLE IF EXISTS "Sponsorship";
@@ -12,13 +14,12 @@ DROP TABLE IF EXISTS "COIIPA_GBMember";
 DROP TABLE IF EXISTS "SponsorshipLevel";
 
 -- Crear las tablas desde cero
-
 CREATE TABLE "SponsorshipLevel" (
     "level_id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "sponsorship_id" INTEGER NOT NULL,
     "level_name" VARCHAR(255) NOT NULL,
     "level_price" DOUBLE NOT NULL,
-    FOREIGN KEY ("sponsorship_id") REFERENCES "Sponsorship"("sponsorship_id")
+    "event_id" INTEGER NOT NULL,
+    FOREIGN KEY ("event_id") REFERENCES "Event"("event_id")
 );
 
 CREATE TABLE "Company" (
@@ -35,7 +36,7 @@ CREATE TABLE "Member" (
     "member_name" TEXT NOT NULL,
     "member_email" TEXT,
     "member_phone" TEXT,
-    "company_id" INTEGER NOT NULL,
+    "company_id" INTEGER,
     FOREIGN KEY("company_id") REFERENCES "Company"("company_id")
 );
 
@@ -51,8 +52,7 @@ CREATE TABLE "Event" (
     "event_edition" VARCHAR(30),
     "event_date" DATE NOT NULL,
     "event_endDate" DATE NOT NULL,
-    "event_status" TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')) NOT NULL,
-    "event_fee" REAL NOT NULL
+    "event_status" TEXT CHECK("event_status" IN ('Planned', 'Ongoing', 'Completed', 'Closed')) NOT NULL
 );
 
 CREATE TABLE "Balance" (
@@ -96,6 +96,27 @@ CREATE TABLE "Movement" (
     "movement_date" DATE NOT NULL,
     "balance_id" INTEGER,
     FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id")
+);
+
+
+CREATE TABLE "LongTermAgreement" (
+    "lta_id" INTEGER PRIMARY KEY,
+    "lta_startDate" DATE NOT NULL,
+    "lta_endDate" DATE NOT NULL,
+    "lta_totalFee" REAL NOT NULL,
+    "company_id" INTEGER NOT NULL,
+    FOREIGN KEY("company_id") REFERENCES "Company"("company_id")
+);
+
+CREATE TABLE "LTA_Event" (
+    "lta_id" INTEGER NOT NULL,
+    "event_id" INTEGER NOT NULL,
+    "balance_id" INTEGER NOT NULL,
+    PRIMARY KEY("lta_id", "event_id"),
+    FOREIGN KEY("lta_id") REFERENCES "LongTermAgreement"("lta_id"),
+    FOREIGN KEY("event_id") REFERENCES "Event"("event_id"),
+    FOREIGN KEY("balance_id") REFERENCES "Balance"("balance_id"),
+    UNIQUE("balance_id") 
 );
 
 COMMIT;

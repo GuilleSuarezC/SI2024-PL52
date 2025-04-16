@@ -58,15 +58,15 @@ public class RegisterIncomeExpensesController {
             return;
         }
 
-        if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {
-            view.showMessage("Please enter a valid date of payment.", "Input Error");
-            return;
-        }
-
-        if (!Util.isValidISODate(dateOfPaid)) {
+        if ("Paid".equals(balanceStatus) && !Util.isValidISODate(dateOfPaid)) {
+        	if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {	
+                view.showMessage("Please enter a valid date of payment.", "Input Error");
+                return;
+            }
             view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");
             return;
         }
+
 
         String selectedEvent = view.getSelectedEvent();
         int eventId = model.getEventIdByName(selectedEvent);  
@@ -107,16 +107,16 @@ public class RegisterIncomeExpensesController {
             return;
         }
 
-        if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {
-            view.showMessage("Please enter a valid date of payment.", "Input Error");
-            return;
-        }
-
-        if (!Util.isValidISODate(dateOfPaid)) {
+        if ("Paid".equals(balanceStatus) && !Util.isValidISODate(dateOfPaid)) {
+        	if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {	
+                view.showMessage("Please enter a valid date of payment.", "Input Error");
+                return;
+            }
             view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");
             return;
         }
-
+        
+        
         balance.setConcept(concept);
         balance.setEventId(eventId);
         balance.setAmount(amount);

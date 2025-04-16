@@ -229,6 +229,8 @@ public class RegIncomeExpensesView {
         dateOfPaidField.setText(""); // Mantener este campo vacío
         balanceStatusComboBox.setSelectedIndex(0);  // Resetear el ComboBox a la primera opción
     }
+  
+    
 
     // Configurar el ComboBox de eventos
     public void setEventOptions(String[] events) {

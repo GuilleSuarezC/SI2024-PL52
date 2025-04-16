@@ -266,6 +266,20 @@ public class SwingMain {
 		        ReOpenEventController controller = new ReOpenEventController( view, modelr);
 		    }
 		});
+		
+		JButton btnManageGBMembers = new JButton("Manage GB Members");
+		btnManageGBMembers.setBounds(301, 308, 248, 23);
+		frame.getContentPane().add(btnManageGBMembers);
+
+		btnManageGBMembers.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        ManageGBMemberView view = new ManageGBMemberView();
+		        ManageGBMemberModel model = new ManageGBMemberModel();
+		        ManageGBMemberController controller = new ManageGBMemberController(view, model);
+		        view.setVisible(true); // Mostramos la vista
+		    }
+		});
+
 
 
 	}

@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import giis.demo.model.*;
 import giis.demo.util.Util;
 import giis.demo.view.RegIncomeExpensesView;
@@ -25,6 +28,7 @@ public class RegisterIncomeExpensesController {
         view.addLoadBalancesListener(e -> loadBalances());
         view.addAddBalanceListener(e -> addBalance());
         view.addSaveChangesListener(e -> saveChanges());  
+        view.addRegMovementListener(e -> registerMovement());
     }
 
 
@@ -131,6 +135,81 @@ public class RegisterIncomeExpensesController {
         view.showMessage("Income/Expense updated successfully!", "Success");
     }
 
+    @SuppressWarnings("unused")
+	private void registerMovement()
+    {
+    	BalanceDTO balance = view.getSelectedBalanceDetails();
+        if (balance == null) {
+            view.showMessage("Please select a balance to register the movement.", "Selection Error");
+            return;
+        }
+        String amountText = view.getAmountFieldM();
+        String dateOfPaid = view.getDateM();
+        
+        int balanceId = balance.getBalanceId();
+        double amount;
+        
+        try {
+            amount = Double.parseDouble(amountText);
+        } catch (NumberFormatException e) {
+            view.showMessage("Amount must be a valid number.", "Input Error");
+            return;
+        }
+
+        if ((dateOfPaid == null || dateOfPaid.isEmpty())) {
+            view.showMessage("Please enter a valid date of payment.", "Input Error");
+            return;
+        }
+
+        if (!Util.isValidISODate(dateOfPaid)) {
+            view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");
+            return;
+        }
+        if (amount < 0) {
+            int option = JOptionPane.showConfirmDialog(view.getFrame(),
+                    "The amount paid is negative, so this payment is an expense",
+                    "Amount Warning",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+                if (option != JOptionPane.YES_OPTION) {
+                    return; // Usuario eligió "Cancel"
+                }
+        }else if (amount < balance.getAmount()) {
+            int option = JOptionPane.showConfirmDialog(view.getFrame(),
+                "The amount paid is LESS than the expected amount.\nDo you want to continue?",
+                "Amount Warning",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+            if (option != JOptionPane.YES_OPTION) {
+                return; // Usuario eligió "Cancel"
+            }
+        } else if (balance.getAmount() < amount) {
+            int option = JOptionPane.showConfirmDialog(view.getFrame(),
+                "The amount paid is MORE than the expected amount.\nDo you want to continue?",
+                "Amount Warning",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+            if (option != JOptionPane.YES_OPTION) {
+                return; // Usuario eligió "Cancel"
+            }
+        } else if (amount == balance.getAmount()) {
+        	model.updateBalanceM(balanceId);
+        }
+        
+        model.addMovement(amount, dateOfPaid, balanceId);
+
+        loadBalances();
+        view.clearFields();
+        if (amount < 0)
+        {
+        	view.showMessage("Expense registered successfully!", "Success");
+        }else {
+        	view.showMessage("Income registered successfully!", "Success");
+        }
+    }
     
     
     private boolean isValidDate(String date) {

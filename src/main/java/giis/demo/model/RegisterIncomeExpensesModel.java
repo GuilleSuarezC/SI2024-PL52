@@ -27,10 +27,12 @@ public class RegisterIncomeExpensesModel {
 
 
     public List<BalanceDTO> getBalancesByEvent(String eventName) {
-    	String sql = "SELECT balance_id, concept, Balance.event_id, amount, description, balance_status " + 
-                "FROM Balance " + 
-                "JOIN Event ev ON Balance.event_id = ev.event_id " + 
-                "WHERE ev.event_name = ?";
+    	String sql = "SELECT b.balance_id, b.concept, b.event_id, b.amount, b.description, b.balance_status " + 
+                "FROM Balance b " + 
+                "JOIN Event ev ON b.event_id = ev.event_id " +
+                "LEFT JOIN Sponsorship s ON b.balance_id = s.balance_id " + 
+                "WHERE ev.event_name = ? " +
+                "AND s.sponsorship_id IS NULL";
 
         List<Object[]> results = db.executeQueryArray(sql, eventName);
         
@@ -74,8 +76,17 @@ public class RegisterIncomeExpensesModel {
             db.executeUpdate(movementSql, amount, dateOfPaid, balanceId);
         }
     }
+    
+    public void addMovement(double amount, String balanceStatus, int balanceId) {
+    	String sql = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
+    	db.executeUpdate(sql,amount, balanceStatus, balanceId);
+    }
 
-
+    public void updateBalanceM(int balanceId)
+    {
+    	 String updateSql = "UPDATE Balance SET balance_status = 'Paid' WHERE balance_id = ?";
+         db.executeUpdate(updateSql,balanceId);
+    }
 
 
 

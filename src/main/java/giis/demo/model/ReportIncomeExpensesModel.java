@@ -64,12 +64,12 @@ public class ReportIncomeExpensesModel {
 		    "            WHEN b.amount > 0 AND s.sponsorship_id IS NULL THEN b.amount \r\n" +
 		    "            ELSE 0 \r\n" +
 		    "        END) AS total_other_income,\r\n" +
+		    "        SUM(CASE \r\n" + 
+		    "            WHEN b.amount > 0 AND s.sponsorship_id IS NOT NULL THEN IFNULL(m.movement_paid, 0)\r\n" + 
+		    "            ELSE 0\r\n" + 
+		    "        END) AS sponsorship_income_paid," +
 		    "        SUM(CASE \r\n" +
-		    "            WHEN b.amount > 0 AND b.balance_status = 'Paid' AND s.sponsorship_id IS NOT NULL THEN b.amount \r\n" +
-		    "            ELSE 0 \r\n" +
-		    "        END) AS sponsorship_income_paid,\r\n" +
-		    "        SUM(CASE \r\n" +
-		    "            WHEN b.amount > 0 AND b.balance_status = 'Paid' AND s.sponsorship_id IS NULL THEN b.amount \r\n" +
+		    "            WHEN b.amount > 0 AND s.sponsorship_id IS NULL THEN IFNULL(m.movement_paid, 0) \r\n" +
 		    "            ELSE 0 \r\n" +
 		    "        END) AS other_income_paid,\r\n" +
 		    "        SUM(CASE \r\n" +
@@ -77,12 +77,15 @@ public class ReportIncomeExpensesModel {
 		    "            ELSE 0 \r\n" +
 		    "        END) AS total_expenses,\r\n" +
 		    "        SUM(CASE \r\n" +
-		    "            WHEN b.amount < 0 AND b.balance_status = 'Paid' THEN b.amount \r\n" +
+		    "            WHEN b.amount < 0 THEN IFNULL(m.movement_paid, 0) * -1 \r\n" +
 		    "            ELSE 0 \r\n" +
 		    "        END) AS paid_expenses\r\n" +
 		    "    FROM Event e\r\n" +
 		    "    LEFT JOIN Balance b ON e.event_id = b.event_id\r\n" +
 		    "    LEFT JOIN Sponsorship s ON b.balance_id = s.balance_id\r\n" +
+		    "	 LEFT JOIN (\r\n" +
+		    " 	 	SELECT balance_id, SUM(movement_amount) as movement_paid\r\n" +
+		    " 		FROM Movement GROUP BY balance_id) m ON b.balance_id = m.balance_id\r\n" +
 		    "    WHERE e.event_date BETWEEN ? AND ?\r\n" +
 		    "    AND (e.event_status = ? OR ? = 'All')\r\n" +
 		    "    GROUP BY e.event_id, e.event_name, e.event_date, e.event_endDate, e.event_status\r\n" +

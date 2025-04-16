@@ -60,6 +60,17 @@ public class RegisterEventModel {
     public RegisterEventDTO getLastRegisteredEvent() {
         return lastRegisteredEvent;
     }
+    
+    public void insertSponsorshipLevel(int eventId, String name, double amount) {
+        String sql = "INSERT INTO SponsorshipLevel (event_id, level_name, level_price) VALUES (?, ?, ?)";
+        db.executeUpdate(sql, eventId, name, amount);
+    }
+    
+    
+
+
+
+
    
 
 }

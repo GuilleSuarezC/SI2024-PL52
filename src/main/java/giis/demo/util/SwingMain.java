@@ -252,6 +252,21 @@ public class SwingMain {
 				memberFrame.setVisible(true);
 			}
 		});
+		
+		
+		JButton btnReopenEvent = new JButton("Reopen Event");
+		btnReopenEvent.setBounds(301, 275, 248, 23);
+		frame.getContentPane().add(btnReopenEvent);
+
+		btnReopenEvent.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        ReOpenEventModel modelr = new ReOpenEventModel();
+		        ReOpenEventView view = new ReOpenEventView();
+		        
+		        ReOpenEventController controller = new ReOpenEventController( view, modelr);
+		    }
+		});
+
 
 	}
 

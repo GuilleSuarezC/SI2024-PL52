@@ -21,6 +21,7 @@ import giis.demo.model.PaymentDTO;
 import giis.demo.model.RegisterEventDTO;
 import giis.demo.model.RegisterEventModel;
 import giis.demo.model.SponsorshipInfoDTO;
+import giis.demo.model.SponsorshipLevelDTO;
 import giis.demo.util.SwingMain;
 import giis.demo.util.SwingUtil;
 import giis.demo.util.Util;
@@ -69,7 +70,8 @@ public class RegisterEventController {
     // Cerrar la ventana actual
     view.getRegisterEvent().addActionListener(e -> SwingUtil.exceptionWrapper(() -> onRegisterButtonClick()));
  
-  
+    
+
 
  }
 

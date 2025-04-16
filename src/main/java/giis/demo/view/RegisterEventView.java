@@ -4,13 +4,22 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import giis.demo.model.SponsorshipLevelDTO;
+import giis.demo.util.SwingUtil;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 /**
@@ -28,8 +37,10 @@ public class RegisterEventView {
     private JButton btnAddSponsorshipLevels;
     private JTable sponsorshipLevelsTable;
     private DefaultTableModel sponsorshipLevelsTableModel;
+    private JButton btnSave;
 
-    private java.util.List<String[]> sponsorshipLevels = new ArrayList<>(); // temporal
+
+    private List<SponsorshipLevelDTO> sponsorshipLevels = new ArrayList<>(); // temporal
 
 
     
@@ -114,6 +125,25 @@ public class RegisterEventView {
                         
                         frmRegisterEvents.setResizable(false); // Habilitar redimensionamiento
 
+                     // Nueva sección para niveles de patrocinio
+                        JPanel sponsorshipPanel = new JPanel(new BorderLayout());
+                        sponsorshipPanel.setBorder(BorderFactory.createTitledBorder("Sponsorship Levels"));
+
+                        JPanel inputPanel = new JPanel(new GridLayout(1, 4, 5, 5));
+                        JTextField txtLevelName = new JTextField();
+                        JTextField txtLevelAmount = new JTextField();
+                        JButton btnAddLevel = new JButton("Add Level");
+
+                        inputPanel.add(new JLabel("Name:"));
+                        inputPanel.add(txtLevelName);
+                        inputPanel.add(new JLabel("Amount:"));
+                        inputPanel.add(txtLevelAmount);
+
+                        
+                        
+
+
+    
     }
 
 	public JFrame getFrmRegisterEvents() {
@@ -182,4 +212,14 @@ public class RegisterEventView {
 		this.tFstartDate.setText("");
 
 	}
+	
+	public List<SponsorshipLevelDTO> getSponsorshipLevels() {
+		return sponsorshipLevels;
+	}
+	
+	public JButton getBtnSave() {
+	    return btnSave;
+	}
+
+
 }

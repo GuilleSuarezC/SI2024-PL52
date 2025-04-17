@@ -60,8 +60,8 @@ public class RegisterPaymentsView {
         frmRegisterPaymentsView = new JFrame();
         frmRegisterPaymentsView.setTitle("Register Payments ");
         frmRegisterPaymentsView.setName("SponsorshipView");
-        frmRegisterPaymentsView.setBounds(0, 0, 751, 547);
-        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[718.00px]", "[15px][193px][21px][183px][56px]"));
+        frmRegisterPaymentsView.setBounds(0, 0, 842, 547);
+        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[774.00px]", "[15px][193px][21px][183px][56px]"));
         
         JLabel lblPendingPayments = new JLabel("Pending Payments");
         lblPendingPayments.setFont(new Font("Tahoma", Font.PLAIN, 12));

@@ -91,7 +91,7 @@ public class CancelIncomeExpensesView {
         DetailsPanel.setLayout(null);
         
         startDateChooser = new JTextField();
-        startDateChooser.setBounds(66, 14, 131, 19);
+        startDateChooser.setBounds(74, 14, 131, 19);
         DetailsPanel.add(startDateChooser);
         startDateChooser.setColumns(10);          
         
@@ -101,7 +101,7 @@ public class CancelIncomeExpensesView {
         
         endDateChooser = new JTextField();
         endDateChooser.setColumns(10);
-        endDateChooser.setBounds(326, 14, 131, 19);
+        endDateChooser.setBounds(332, 14, 131, 19);
         DetailsPanel.add(endDateChooser);
         
         String[] status = {"Sponsor Agreement", "Income", "Expense"};

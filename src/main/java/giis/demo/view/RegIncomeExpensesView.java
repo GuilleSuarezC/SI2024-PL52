@@ -57,7 +57,7 @@ public class RegIncomeExpensesView {
 
         // Panel de formulario y botones (Ajustado para que los campos estén debajo)
         JPanel formPanel = new JPanel();
-        formPanel.setBounds(0, 271, 482, 315);
+        formPanel.setBounds(0, 271, 482, 291);
         formPanel.setLayout(null);
         JLabel lblConcept = new JLabel("Concept:");
         lblConcept.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -97,13 +97,13 @@ public class RegIncomeExpensesView {
 
         // Botones para guardar, agregar y limpiar
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBounds(10, 622, 976, 41);
+        buttonPanel.setBounds(10, 602, 976, 61);
         addBalanceButton = new JButton("Add Income/expense");
-        addBalanceButton.setBounds(81, 10, 129, 21);
+        addBalanceButton.setBounds(10, 10, 166, 21);
         saveChangesButton = new JButton("Save Changes");
-        saveChangesButton.setBounds(215, 10, 97, 21);
+        saveChangesButton.setBounds(186, 10, 116, 21);
         clearFieldsButtonB = new JButton("Clear Fields");
-        clearFieldsButtonB.setBounds(317, 10, 87, 21);
+        clearFieldsButtonB.setBounds(312, 10, 116, 21);
         buttonPanel.setLayout(null);
 
         buttonPanel.add(addBalanceButton);
@@ -112,7 +112,7 @@ public class RegIncomeExpensesView {
 
         // Crear un JSplitPane para dividir la vista en dos partes
         JPanel mainPanel = new JPanel();
-        mainPanel.setBounds(0, 31, 986, 590);
+        mainPanel.setBounds(0, 31, 986, 570);
         mainPanel.setLayout(null);
         mainPanel.add(scrollPane);
         mainPanel.add(formPanel);
@@ -129,7 +129,7 @@ public class RegIncomeExpensesView {
         
         JPanel formPanel_1 = new JPanel();
         formPanel_1.setLayout(null);
-        formPanel_1.setBounds(513, 271, 473, 315);
+        formPanel_1.setBounds(513, 271, 473, 291);
         mainPanel.add(formPanel_1);
         
         JLabel lblAmountM = new JLabel("Amount:");
@@ -169,11 +169,11 @@ public class RegIncomeExpensesView {
         buttonPanel.add(separator_1);
         
         btnRegisterMovement = new JButton("Register Movement");
-        btnRegisterMovement.setBounds(627, 10, 129, 21);
+        btnRegisterMovement.setBounds(590, 10, 166, 21);
         buttonPanel.add(btnRegisterMovement);
         
         JButton clearFieldsButtonM = new JButton("Clear Fields");
-        clearFieldsButtonM.setBounds(778, 10, 87, 21);
+        clearFieldsButtonM.setBounds(778, 10, 116, 21);
         buttonPanel.add(clearFieldsButtonM);
 
         frame.setVisible(true);

@@ -60,7 +60,7 @@ CREATE TABLE "Balance" (
     "concept" TEXT NOT NULL,         
     "event_id" INTEGER NOT NULL,     
     "amount" REAL NOT NULL,
-    "balance_status" TEXT NOT NULL CHECK("balance_status" IN ('Paid', 'Estimated')),       
+    "balance_status" TEXT NOT NULL CHECK("balance_status" IN ('Paid', 'Estimated', 'Cancelled')),       
     "description" TEXT,            
     FOREIGN KEY("event_id") REFERENCES "Event"("event_id")
 );

@@ -248,7 +248,7 @@ public class SwingMain {
 				memberFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				memberFrame.setSize(600, 400);
 				memberFrame.setLocationRelativeTo(null);
-				memberFrame.add(new ManageContactMemberView());
+				memberFrame.getContentPane().add(new ManageContactMemberView());
 				memberFrame.setVisible(true);
 			}
 		});
@@ -279,6 +279,18 @@ public class SwingMain {
 		        view.setVisible(true); // Mostramos la vista
 		    }
 		});
+		
+		JButton btnCancelIncomeExpense = new JButton("Cancel Income & Expenes");
+		btnCancelIncomeExpense.setBounds(20, 341, 238, 23);
+		
+		btnCancelIncomeExpense.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				String fecha = tfChangeDate.getText();
+				CancelIncomeExpensesController controller=new CancelIncomeExpensesController(new CancelIncomeExpensesView(), new CancelIncomeExpenseModel(), fecha);
+				controller.initController(SwingMain.this);
+			}
+		});
+		frame.getContentPane().add(btnCancelIncomeExpense);
 
 
 

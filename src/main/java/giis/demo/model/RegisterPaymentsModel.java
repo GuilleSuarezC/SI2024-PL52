@@ -27,7 +27,7 @@ public class RegisterPaymentsModel {
     	return db.executeQueryPojo(PendingPaymentDTO.class, SQL_GET_PENDING_PAYMENTS);
     }
 	
-	public void RegisterPayment(double amount, Date paymentDate, int sponsorshipID)
+	public void RegisterPayment(double amount, String paymentDate, int sponsorshipID)
 	{
 		validateNotNull(amount, "The amount cannot be null");
 		validateNotNull(paymentDate, "The date of payment cannot be null");

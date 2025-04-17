@@ -51,7 +51,7 @@ public class CloseEventView {
                         btnCloseEvent.setBounds(348, 257, 181, 23);
                         frmCloseEvent.getContentPane().add(btnCloseEvent);
                         
-                        frmCloseEvent.setResizable(false); // Habilitar redimensionamiento
+                        frmCloseEvent.setResizable(false); 
 
 
     }

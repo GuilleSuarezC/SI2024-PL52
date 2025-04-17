@@ -75,7 +75,6 @@ public class RegisterIncomeExpensesController {
         String selectedEvent = view.getSelectedEvent();
         int eventId = model.getEventIdByName(selectedEvent);  
 
-        // Pasar la fecha de pago al modelo:
         model.addBalance(concept, eventId, amount, description, balanceStatus, dateOfPaid);
 
         loadBalances();
@@ -97,7 +96,7 @@ public class RegisterIncomeExpensesController {
         String concept = view.getConceptField();  
         String description = view.getDescriptionField();
         String amountText = view.getAmountField();
-        String dateOfPaid = view.getDateOfPaidField();  // ⬅️ Usamos esta fecha
+        String dateOfPaid = view.getDateOfPaidField();  
         String balanceStatus = (String) view.getBalanceStatusComboBox().getSelectedItem();
         String selectedEvent = view.getSelectedEvent();
 
@@ -173,7 +172,7 @@ public class RegisterIncomeExpensesController {
                     JOptionPane.WARNING_MESSAGE);
 
                 if (option != JOptionPane.YES_OPTION) {
-                    return; // Usuario eligió "Cancel"
+                    return; 
                 }
         }else if (amount < balance.getAmount()) {
             int option = JOptionPane.showConfirmDialog(view.getFrame(),
@@ -183,7 +182,7 @@ public class RegisterIncomeExpensesController {
                 JOptionPane.WARNING_MESSAGE);
 
             if (option != JOptionPane.YES_OPTION) {
-                return; // Usuario eligió "Cancel"
+                return; 
             }
         } else if (balance.getAmount() < amount) {
             int option = JOptionPane.showConfirmDialog(view.getFrame(),
@@ -193,7 +192,7 @@ public class RegisterIncomeExpensesController {
                 JOptionPane.WARNING_MESSAGE);
 
             if (option != JOptionPane.YES_OPTION) {
-                return; // Usuario eligió "Cancel"
+                return; 
             }
         } else if (amount == balance.getAmount()) {
         	model.updateBalanceM(balanceId);

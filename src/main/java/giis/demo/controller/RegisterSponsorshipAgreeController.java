@@ -100,9 +100,9 @@ public class RegisterSponsorshipAgreeController {
         DefaultComboBoxModel<Object> comboModel = new DefaultComboBoxModel<>();
         for (EventDTO event : events) {
         	this.listaEvent.add(event);
-            comboModel.addElement(event.getEvent_name()); // Agregar EventDTO como Object
+            comboModel.addElement(event.getEvent_name()); 
         }
-        view.getListaEvent().setModel(comboModel); // Asignar el modelo al JComboBox<Object>
+        view.getListaEvent().setModel(comboModel); 
     }
     
    
@@ -250,7 +250,7 @@ public class RegisterSponsorshipAgreeController {
     }
     
     private void loadSponsorshipLevels(int eventId) {
-        List<SponsorshipLevelDTO> levels = model.getSponsorshipLevelsByEvent(eventId); // nuevo método
+        List<SponsorshipLevelDTO> levels = model.getSponsorshipLevelsByEvent(eventId); 
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Level Name");
         tableModel.addColumn("Price");
@@ -264,11 +264,11 @@ public class RegisterSponsorshipAgreeController {
 
 
     private void addSponsorshipLevel() {
-    	int selectedEventIndex = view.getListaEvent().getSelectedIndex();
-    	if (selectedEventIndex < 0) {
-    	    SwingUtil.showMessage("Please select an event first.", "Error", JOptionPane.ERROR_MESSAGE);
-    	    return;
-    	}
+        int selectedEventIndex = view.getListaEvent().getSelectedIndex();
+        if (selectedEventIndex < 0) {
+            SwingUtil.showMessage("Please select an event first.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         String levelName = JOptionPane.showInputDialog("Enter level name:");
         if (levelName == null || levelName.trim().isEmpty()) {
@@ -285,6 +285,17 @@ public class RegisterSponsorshipAgreeController {
         double price;
         try {
             price = Double.parseDouble(priceStr);
+
+            if (price < 0) {
+                SwingUtil.showMessage("Price cannot be negative.", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (Math.round(price * 100.0) != price * 100.0) {
+                SwingUtil.showMessage("Price must have at most two decimal places.", "Invalid Format", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
         } catch (NumberFormatException e) {
             SwingUtil.showMessage("Invalid price format.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -295,4 +306,5 @@ public class RegisterSponsorshipAgreeController {
 
         loadSponsorshipLevels(eventId);
     }
+
 }

@@ -48,8 +48,7 @@ public class InvoiceSendView {
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
-        //topPanel.add(new JLabel("Invoice Date:"));
-        //topPanel.add(invoiceDateField);
+       
 
        
         generateButton = new JButton("Generate and Send Invoice");

@@ -22,8 +22,8 @@ public class RegIncomeExpensesView {
     private JButton addBalanceButton;
     private JButton saveChangesButton;
     private JButton btnRegisterMovement;
-    private JComboBox<String> balanceStatusComboBox;  // ComboBox for balance status
-    private JButton clearFieldsButtonB;  // Botón para limpiar los campos
+    private JComboBox<String> balanceStatusComboBox;  
+    private JButton clearFieldsButtonB;  
     private JTextField AmountFieldM;
     private JTextField DateFieldM;
 
@@ -32,7 +32,6 @@ public class RegIncomeExpensesView {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 700);
 
-        // Panel superior con el combo de Evento
         JPanel topPanel = new JPanel(new FlowLayout());
         topPanel.setBounds(0, 0, 986, 31);
         JLabel eventLabel = new JLabel("Select Event:");
@@ -43,19 +42,16 @@ public class RegIncomeExpensesView {
         topPanel.add(eventComboBox);
         topPanel.add(loadBalancesButton);
 
-        // Tabla de balances
         String[] columnNames = {"Concept", "Description", "Amount", "Balance Status", "Balance ID"};
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 0, 986, 269);
 
-        // Ocultar la columna "Balance ID"
         table.getColumnModel().getColumn(4).setMaxWidth(0);
         table.getColumnModel().getColumn(4).setMinWidth(0);
         table.getColumnModel().getColumn(4).setPreferredWidth(0);
 
-        // Panel de formulario y botones (Ajustado para que los campos estén debajo)
         JPanel formPanel = new JPanel();
         formPanel.setBounds(0, 271, 482, 291);
         formPanel.setLayout(null);
@@ -110,7 +106,6 @@ public class RegIncomeExpensesView {
         buttonPanel.add(saveChangesButton);
         buttonPanel.add(clearFieldsButtonB);
 
-        // Crear un JSplitPane para dividir la vista en dos partes
         JPanel mainPanel = new JPanel();
         mainPanel.setBounds(0, 31, 986, 570);
         mainPanel.setLayout(null);
@@ -123,7 +118,6 @@ public class RegIncomeExpensesView {
         formPanel.add(lblNewLabel);
         frame.getContentPane().setLayout(null);
 
-        // Agregar todo al frame
         frame.getContentPane().add(topPanel);
         frame.getContentPane().add(mainPanel);
         
@@ -178,37 +172,30 @@ public class RegIncomeExpensesView {
 
         frame.setVisible(true);
 
-        // Agregar MouseListener a la tabla dentro del constructor
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Cuando se haga clic en una fila, carga los datos del balance seleccionado en los campos de texto
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
-                    // Recuperar los valores de la fila seleccionada
                     String concept = (String) tableModel.getValueAt(selectedRow, 0);
                     String description = (String) tableModel.getValueAt(selectedRow, 1);
                     double amount = (Double) tableModel.getValueAt(selectedRow, 2);
                     String balanceStatus = (String) tableModel.getValueAt(selectedRow, 3);
                     int balanceId = (int) tableModel.getValueAt(selectedRow, 4); // Recuperar balanceId
 
-                    // Cargar los datos de la fila seleccionada en los campos de texto
                     conceptField.setText(concept);
                     descriptionField.setText(description);
                     amountField.setText(String.valueOf(amount));
                     balanceStatusComboBox.setSelectedItem(balanceStatus);
 
-                    // No vaciar el campo de Date of Paid al seleccionar una fila
-                    // dateOfPaidField.setText(""); // Ya no vaciamos este campo
+                    // dateOfPaidField.setText(""); 
                 }
             }
         });
 
-        // Listener para el botón de limpiar campos
         clearFieldsButtonB.addActionListener(e -> clearFields());
     }
 
-    // Métodos para obtener los valores de los campos de texto
     public String getConceptField() {
         return conceptField.getText();
     }
@@ -237,7 +224,6 @@ public class RegIncomeExpensesView {
         return balanceStatusComboBox;
     }
 
-    // Método para obtener los detalles del balance seleccionado en la tabla
     public BalanceDTO getSelectedBalanceDetails() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow == -1) {
@@ -245,18 +231,16 @@ public class RegIncomeExpensesView {
             return null;
         }
 
-        // Extraer los valores de la tabla
-        int balanceId = (int) tableModel.getValueAt(selectedRow, 4);  // Asegúrate de que la columna 4 tenga balanceId
+        int balanceId = (int) tableModel.getValueAt(selectedRow, 4);  
         String concept = (String) tableModel.getValueAt(selectedRow, 0);
         String description = (String) tableModel.getValueAt(selectedRow, 1);
         double amount = Double.parseDouble(tableModel.getValueAt(selectedRow, 2).toString());
         String balanceStatus = (String) tableModel.getValueAt(selectedRow, 3);
-        String dateOfPaid = (String) tableModel.getValueAt(selectedRow, 3); // Asumiendo que tienes la fecha de pago en la tabla
+        String dateOfPaid = (String) tableModel.getValueAt(selectedRow, 3); 
 
         return new BalanceDTO(balanceId, concept, 0, amount, description, balanceStatus);
     }
 
-    // Método para actualizar la fila de la tabla con los nuevos datos
     public void updateBalanceInTable(BalanceDTO balance) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
@@ -267,9 +251,8 @@ public class RegIncomeExpensesView {
         }
     }
 
-    // Actualizar la tabla de balances después de agregar un nuevo balance
     public void setBalanceData(List<BalanceDTO> balances) {
-        tableModel.setRowCount(0); // Limpiar la tabla antes de llenarla
+        tableModel.setRowCount(0); 
 
         for (BalanceDTO balance : balances) {
             tableModel.addRow(new Object[] {
@@ -277,53 +260,46 @@ public class RegIncomeExpensesView {
                 balance.getDescription(),
                 balance.getAmount(),
                 balance.getBalanceStatus(),
-                balance.getBalanceId()  // Agregar el balance_id para futuras actualizaciones
+                balance.getBalanceId()  
             });
         }
     }
 
-    // Mostrar mensajes de error o éxito
     public void showMessage(String message, String title) {
         JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Limpiar los campos del formulario
     public void clearFields() {
         conceptField.setText("");
         descriptionField.setText("");
         amountField.setText("");
-        dateOfPaidField.setText(""); // Mantener este campo vacío
-        balanceStatusComboBox.setSelectedIndex(0);  // Resetear el ComboBox a la primera opción
+        dateOfPaidField.setText("");
+        balanceStatusComboBox.setSelectedIndex(0);  
     }
     
     public void clearFieldsM() {
         AmountFieldM.setText("");
-        DateFieldM.setText(""); // Mantener este campo vacío
+        DateFieldM.setText(""); 
     }
   
     
 
-    // Configurar el ComboBox de eventos
     public void setEventOptions(String[] events) {
         eventComboBox.setModel(new DefaultComboBoxModel<>(events));
     }
 
-    // Obtener el evento seleccionado
     public String getSelectedEvent() {
         return (String) eventComboBox.getSelectedItem();
     }
 
-    // Añadir listener al botón de "Guardar cambios"
     public void addSaveChangesListener(ActionListener listener) {
         saveChangesButton.addActionListener(listener);
     }
 
-    // Añadir listener al botón de "Cargar balances"
     public void addLoadBalancesListener(ActionListener listener) {
         loadBalancesButton.addActionListener(listener);
     }
 
-    // Añadir listener al botón de "Añadir balance"
     public void addAddBalanceListener(ActionListener listener) {
         addBalanceButton.addActionListener(listener);
     }

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import giis.demo.model.CMemberDTO;
 import giis.demo.model.CompanyDTO;
 import giis.demo.model.ManageContactMemberModel;
+import giis.demo.util.SwingUtil;
 
 public class ManageContactMemberController {
     private ManageContactMemberModel model;
@@ -20,19 +21,30 @@ public class ManageContactMemberController {
         return model.getMembersByCompany(companyId);
     }
 
+    public void handleCompanySelection(List<Integer> companyIds) {
+        if (companyIds == null || companyIds.isEmpty()) {
+            SwingUtil.showMessage("No companies available.", "Company not selected", JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
+        int firstCompanyId = companyIds.get(0);
+    }
+    
     public void addMember(String name, String email, String phone, int companyId) {
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "All fields must be filled.");
+            SwingUtil.showMessage("All fields must be filled", "Missing data", JOptionPane.ERROR_MESSAGE);
+
             return;
         }
 
         if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            JOptionPane.showMessageDialog(null, "Invalid email format.");
+            SwingUtil.showMessage("Invalid email format", "Incorrect Format", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!phone.matches("\\d{9}")) {
-            JOptionPane.showMessageDialog(null, "Invalid phone number format. It should be 9 digits.");
+            SwingUtil.showMessage("Invalid phone format should be 9 digits", "Incorrect Format", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -43,22 +55,29 @@ public class ManageContactMemberController {
         member.setCompany_id(companyId);
         
         model.addMember(member);
-        JOptionPane.showMessageDialog(null, "Member added successfully.");
+        SwingUtil.showMessage("Member added succesfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     public void updateMember(int memberId, String name, String email, String phone) {
+        if (memberId == -1) {
+            SwingUtil.showMessage("Select member to edit", "Member not selected", JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "All fields must be filled.");
+            SwingUtil.showMessage("All fields must be filled", "Missing data", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            JOptionPane.showMessageDialog(null, "Invalid email format.");
+            SwingUtil.showMessage("Invalid email format", "Incorrect Format", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!phone.matches("\\d{9}")) {
-            JOptionPane.showMessageDialog(null, "Invalid phone number format. It should be 9 digits.");
+            SwingUtil.showMessage("Invalid phone format should be 9 digits", "Incorrect Format", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -69,12 +88,18 @@ public class ManageContactMemberController {
         member.setMember_phone(phone);
         
         model.updateMember(member);
-        JOptionPane.showMessageDialog(null, "Member updated successfully.");
+        SwingUtil.showMessage("Member edited succesfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
     }
 
 
     public void deactivateMember(int memberId) {
+        if (memberId == -1) {
+            SwingUtil.showMessage("Select member to remove ", "Member not selected", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         model.deactivateMember(memberId);
+        SwingUtil.showMessage("Member removed succesfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public List<String> getCompanyNames() {

@@ -3,7 +3,7 @@ package giis.demo.view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import giis.demo.controller.ManageGBMemberController;  // Importa el controlador
+import giis.demo.controller.ManageGBMemberController;  
 import giis.demo.model.GBMemberDTO;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class ManageGBMemberView extends JFrame {
         setTitle("COIIPA Member Management");
         setSize(600, 400);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 

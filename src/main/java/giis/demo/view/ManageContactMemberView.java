@@ -60,7 +60,6 @@ public class ManageContactMemberView extends JPanel {
         JPanel formAndButtonPanel = new JPanel();
         formAndButtonPanel.setLayout(new BoxLayout(formAndButtonPanel, BoxLayout.Y_AXIS));
 
-        // 🔹 Panel del formulario
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 5, 5));
         nameField = new JTextField();
         emailField = new JTextField();
@@ -114,10 +113,7 @@ public class ManageContactMemberView extends JPanel {
             companyComboBox.addItem(name);
         }
 
-        if (!companyIds.isEmpty()) {
-            companyId = companyIds.get(0);
-            loadMembers();
-        }
+        controller.handleCompanySelection(companyIds);
     }
 
     private void loadMembers() {
@@ -145,11 +141,6 @@ public class ManageContactMemberView extends JPanel {
     }
 
     private void updateMember() {
-        if (selectedMemberId == -1) {
-            JOptionPane.showMessageDialog(this, "Select member to edit.");
-            return;
-        }
-
         controller.updateMember(
             selectedMemberId,
             nameField.getText(),
@@ -161,16 +152,11 @@ public class ManageContactMemberView extends JPanel {
     }
 
     private void removeMember() {
-        if (selectedMemberId == -1) {
-            JOptionPane.showMessageDialog(this, "Select member to desassociate from company.");
-            return;
-        }
-
         controller.deactivateMember(selectedMemberId);
         clearForm();
         loadMembers();
     }
-
+    
     private void clearForm() {
         nameField.setText("");
         emailField.setText("");

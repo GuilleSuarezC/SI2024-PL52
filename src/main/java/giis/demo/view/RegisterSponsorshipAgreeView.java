@@ -128,7 +128,6 @@ public class RegisterSponsorshipAgreeView {
         });
 
         
-        // Botón Add Level debajo de la etiqueta y al lado de la tabla
         btnAddLevel = new JButton("Add Level");
         frame.getContentPane().add(btnAddLevel, "cell 0 6,aligny center");
         
@@ -141,7 +140,6 @@ public class RegisterSponsorshipAgreeView {
         lbleuroFee = new JLabel("€");
         frame.getContentPane().add(lbleuroFee, "cell 0 2,alignx left,aligny center");
         
-                // Botones Register y Cancel debajo de la tabla
                 btnRegistrar = new JButton("Register");
                 frame.getContentPane().add(btnRegistrar, "flowx,cell 0 9,alignx right,aligny center");
                 btnCancelar = new JButton("Cancel");
@@ -156,7 +154,6 @@ public class RegisterSponsorshipAgreeView {
 		this.tFeventFee.setText(tFeventFee);
 	}
 
-	// Getters para acceso desde el controlador
     public JFrame getFrame() { return this.frame; }
     public JComboBox<Object> getListaCompany() { return this.lstCompany; }
     public JComboBox<Object> getListaEvent() { return this.lstEvent; }

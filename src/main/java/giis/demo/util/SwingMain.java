@@ -150,7 +150,7 @@ public class SwingMain {
 		
 
 		//Fixed conflicts
-		JButton btnSendInvoices = new JButton("Send Invoices");
+		JButton btnSendInvoices = new JButton("Generate Invoices");
 		btnSendInvoices.setBounds(20, 242, 238, 23);
 		btnSendInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

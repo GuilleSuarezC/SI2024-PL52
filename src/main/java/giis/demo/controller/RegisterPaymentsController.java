@@ -194,8 +194,9 @@ public class RegisterPaymentsController {
                         
             // Registrar el pago en la BD
             model.RegisterPayment(amountPaid, paymentDateStr, selectedPayment.getBalance_id());    
-            
-            model.UpdateBalance(selectedPayment.getBalance_id());                                
+            if (amountPaid + amountAlreadyPaid > amount) {            	         
+            	model.UpdateBalance(selectedPayment.getBalance_id());
+            }
             JOptionPane.showMessageDialog(view.getFrame(), "The payment had been registered correctly.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             // Refrescar la tabla y limpiar selección

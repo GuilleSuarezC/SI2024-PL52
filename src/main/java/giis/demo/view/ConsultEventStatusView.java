@@ -3,6 +3,7 @@ package giis.demo.view;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Vista de la pantalla para consultar el estado de las actividades.
@@ -215,7 +216,7 @@ public class ConsultEventStatusView {
 		return lblExpensesPaid;
 	}
 
-	public void setLblExpensesPaid(int num) {
+	public void setLblExpensesPaid(double num) {
 		this.lblExpensesPaid.setText("Paid Total: "+num+" €");
 	}
 
@@ -247,7 +248,7 @@ public class ConsultEventStatusView {
 		this.lblSponsorshipsEstimated.setText("Estimated Total: "+num + " €");
 	}
 	
-	public void setLblSponsorshipsPaid(int num) {
+	public void setLblSponsorshipsPaid(double num) {
 		this.lblSponsorshipsPaid.setText("Paid Total: "+num + " €");
 	}
 }

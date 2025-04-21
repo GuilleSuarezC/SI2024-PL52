@@ -8,6 +8,7 @@ public class OtherBalanceDTO {
     private String concept;      // Concepto (ej: "Rent a building")
     private int amount;          // Monto (positivo=ingreso, negativo=gasto)
     private String paymentStatus; // 'Paid'/'Unpaid'
+    private double amount_paid;
 
     // Constructor vacío
     public OtherBalanceDTO() {}
@@ -24,4 +25,7 @@ public class OtherBalanceDTO {
 
     public String getPaymentStatus() { return paymentStatus; }
     public void setPaymentStatus(String paymentStatus) { this.paymentStatus = paymentStatus; }
+    
+    public double getAmount_paid() { return amount_paid; }
+    public void setAmount_paid(double amount_paid) { this.amount_paid = amount_paid; }
 }

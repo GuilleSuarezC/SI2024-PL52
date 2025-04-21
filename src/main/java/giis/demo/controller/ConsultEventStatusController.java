@@ -3,6 +3,7 @@ package giis.demo.controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -15,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import giis.demo.model.*;
-import giis.demo.model.EventDTO;
 import giis.demo.util.SwingUtil;
 import giis.demo.util.SwingMain;
 import giis.demo.view.ConsultEventStatusView;
@@ -164,7 +164,7 @@ public class ConsultEventStatusController {
     
     public void showSponsors(int eventId) {
         int total = 0;
-        int paid = 0;
+        double paid = 0;
         if (eventId < 0) return;
 
         // Obtener Sponsors normales y LTAs
@@ -183,16 +183,18 @@ public class ConsultEventStatusController {
             }
             sponsorList.add(s);
             total += s.getagreed_quantity(); // Sumar todos los event_fee (positivos)
-            if ("Paid".equals(s.getpayment_status())) {
-                paid += s.getagreed_quantity();
-            }
+            System.out.print(s.getAmount_paid());
+            paid += s.getAmount_paid();
+            //if ("Paid".equals(s.getpayment_status())) {
+            //    paid += s.getagreed_quantity();
+            //}
         }
 
         // Actualizar la vista
         view.setLblSponsorshipsEstimated(total);
         view.setLblSponsorshipsPaid(paid);
         TableModel tableModel = SwingUtil.getTableModelFromPojos(allSponsors, 
-            new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status", "agreed_quantity"});
+            new String[] {"sponsorship_name", "sponsorship_agreementDate", "payment_status", "agreed_quantity", "amount_paid"});
         view.getTblSponsorships().setModel(tableModel);
         
         // Deshabilitar redimensionamiento de la columna sponsorship_name (columna 0)
@@ -227,9 +229,10 @@ public class ConsultEventStatusController {
         // Procesar Other Balances
         for (OtherBalanceDTO balance : otherBalances) {
             totalEstimatedBalance += balance.getAmount(); // Sumar al estimado
-            if ("Paid".equals(balance.getPaymentStatus())) {
-                totalPaidBalance += balance.getAmount(); // Sumar al pagado
-            }
+            totalPaidBalance += balance.getAmount_paid();
+            //if ("Paid".equals(balance.getPaymentStatus())) {
+            //    totalPaidBalance += balance.getAmount(); // Sumar al pagado
+            //}
         }
 
         // Actualizar la vista
@@ -241,7 +244,7 @@ public class ConsultEventStatusController {
         if (eventId < 0) return;
         int paidInc = 0;
         int totalInc = 0;
-        int paidExp = 0;
+        double paidExp = 0;
         int totalExp = 0;
         // Obtener balances de Otras Fuentes (NO Sponsorships)
         List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
@@ -255,6 +258,7 @@ public class ConsultEventStatusController {
             entry.setName(balance.getConcept());
             entry.setAmount(balance.getAmount());
             entry.setStatus(balance.getPaymentStatus());
+            entry.setAmount_paid(balance.getAmount_paid());
             
             if (balance.getAmount() > 0) {
                 incomeList.add(entry);
@@ -266,8 +270,11 @@ public class ConsultEventStatusController {
             } else {
                 expenseList.add(entry);
                 totalExp += balance.getAmount();
-                if("Paid".equals(balance.getPaymentStatus()))
-                	paidExp += balance.getAmount();
+                paidExp += balance.getAmount_paid();
+                //paidAmountlst = model.getPaidAmount(balance.getBalance_id());
+                //paidExp = balance.;
+                //if("Paid".equals(balance.getPaymentStatus()))
+                //	paidExp += balance.getAmount();
             }
         }
 
@@ -283,6 +290,8 @@ public class ConsultEventStatusController {
         SwingUtil.autoAdjustColumns(view.getTblIncome());
         SwingUtil.autoAdjustColumns(view.getTblExpenses());
     }
+    
+   
     
 //    private void calculateIncomeTotals(List<IncomeEntryDTO> incomeEntries) {
 //        double totalIncome = 0.0;

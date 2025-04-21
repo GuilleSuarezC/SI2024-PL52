@@ -8,15 +8,17 @@ public class SponsorshipInfoDTO {
     private String sponsorship_agreementDate;
     private String payment_status;
     private int agreed_quantity;
+    private double amount_paid;
 
     // Constructor, getters y setters
     public SponsorshipInfoDTO() {}
 
-    public SponsorshipInfoDTO(String sponsorship_name, String sponsorship_agreementDate, String payment_status, int agreed_quantity) {
+    public SponsorshipInfoDTO(String sponsorship_name, String sponsorship_agreementDate, String payment_status, int agreed_quantity, double amount_paid) {
         this.sponsorship_name = sponsorship_name;
         this.sponsorship_agreementDate = sponsorship_agreementDate;
         this.payment_status = payment_status;
         this.agreed_quantity = agreed_quantity;
+        this.amount_paid = amount_paid;
     }
 
     public String getsponsorship_name() {
@@ -49,5 +51,13 @@ public class SponsorshipInfoDTO {
 
     public void setagreed_quantity(int agreed_quantity) {
         this.agreed_quantity = agreed_quantity;
+    }
+    
+    public double getAmount_paid() {
+        return amount_paid;
+    }
+
+    public void setAmount_paid(double amount_paid) {
+        this.amount_paid = amount_paid;
     }
 }

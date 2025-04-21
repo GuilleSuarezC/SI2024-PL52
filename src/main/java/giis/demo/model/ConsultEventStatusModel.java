@@ -38,7 +38,8 @@ public class ConsultEventStatusModel {
     	    "       CASE " +
     	    "           WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' " +
     	    "           ELSE 'Estimated' " +
-    	    "       END AS status " +
+    	    "       END AS status, " +
+    	    "       IFNULL(SUM(m.movement_amount), 0) AS amount_paid " +
     	    "FROM Balance b " +
     	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
     	    "WHERE b.event_id = ? " +
@@ -84,7 +85,8 @@ public class ConsultEventStatusModel {
     	    "           WHEN (b.amount > 0 AND COALESCE(SUM(m.movement_amount), 0) >= b.amount) THEN 'Paid' " +
     	    "           WHEN (b.amount < 0 AND COALESCE(SUM(m.movement_amount), 0) <= b.amount) THEN 'Paid' " +
     	    "           ELSE 'Estimated' " +
-    	    "       END AS paymentStatus " +
+    	    "       END AS paymentStatus, " +
+    	    "       IFNULL(SUM(m.movement_amount), 0) AS amount_paid " +
     	    "FROM Balance b " +
     	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
     	    "WHERE b.event_id = ? " +
@@ -98,7 +100,8 @@ public class ConsultEventStatusModel {
     	    "SELECT s.sponsorship_name, " +
     	    	    "       s.sponsorship_agreementDate, " +
     	    	    "       CASE WHEN COALESCE(SUM(m.movement_amount), 0) >= b.amount THEN 'Paid' ELSE 'Estimated' END AS payment_status, " +
-    	    	    "       b.amount AS agreed_quantity " + 
+    	    	    "       b.amount AS agreed_quantity, " +
+    	    	    "       IFNULL(SUM(m.movement_amount), 0) AS amount_paid " +
     	    	    "FROM Sponsorship s " +
     	    	    "JOIN Balance b ON s.balance_id = b.balance_id " +
     	    	    "LEFT JOIN Movement m ON b.balance_id = m.balance_id " +
@@ -131,7 +134,7 @@ public class ConsultEventStatusModel {
             "WHERE le.event_id = ? " +
             "GROUP BY b.balance_id, b.amount";
     
-       public List<SponsorshipInfoDTO> getLTASponsorshipsByEventId(int eventId) {
+    public List<SponsorshipInfoDTO> getLTASponsorshipsByEventId(int eventId) {
         return db.executeQueryPojo(SponsorshipInfoDTO.class, SQL_GET_LTA_SPONSORSHIPS_BY_EVENT_ID, eventId);
     }
     
@@ -167,5 +170,6 @@ public class ConsultEventStatusModel {
     public List<ConsultEventDTO> getEvents() {
         return db.executeQueryPojo(ConsultEventDTO.class, SQL_GET_EVENTS);
     }
+    
 }
 

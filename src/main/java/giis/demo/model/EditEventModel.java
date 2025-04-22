@@ -16,7 +16,7 @@ public class EditEventModel {
 	private Database db = new Database();
     
 	//Consultas SQL
-	private static final String SQL_GET_EVENTS = "SELECT event_id, event_name, event_edition, event_date, event_endDate, event_status FROM Event WHERE event_date BETWEEN ? AND ?";
+	private static final String SQL_GET_EVENTS = "SELECT event_id, event_name, event_edition, event_date, event_endDate, event_status FROM Event WHERE event_status != 'Closed' AND event_date BETWEEN ? AND ?";
 	
 	private static final String SQL_GET_SPONSORSHIP_LEVEL = "SELECT level_id, level_name, level_price FROM SponsorshipLevel WHERE event_id = ?";
 	

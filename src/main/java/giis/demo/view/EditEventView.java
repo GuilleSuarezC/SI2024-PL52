@@ -38,7 +38,6 @@ public class EditEventView {
     private JLabel lblFilters;
     private JLabel lblStartDate;
     private JLabel lblEndDate;
-    private JComboBox typeCB;
     private JLabel lblEndDate_1;
     private JButton btnApplyFilter;
     private JButton btnClearFields;
@@ -58,6 +57,7 @@ public class EditEventView {
     private JComboBox<Object> StatusCB;
     private JButton btnRegisterNewSL;
     private JScrollPane sponsorshipLevelslPanel;
+    private JTable lstSponsorshipLevel;
 
     /**
      * Create the application.
@@ -104,21 +104,11 @@ public class EditEventView {
         endDateChooser = new JTextField();
         endDateChooser.setColumns(10);
         endDateChooser.setBounds(332, 14, 131, 19);
-        DetailsPanel.add(endDateChooser);
-        
-        String[] status = {"Sponsor Agreement", "Income", "Expense"};
-        typeCB = new JComboBox<>(status);
-        typeCB.setToolTipText("Status");
-        typeCB.setBounds(551, 12, 156, 21);
-        DetailsPanel.add(typeCB);
+        DetailsPanel.add(endDateChooser);        
         
         btnApplyFilter = new JButton("Apply Filter");
         btnApplyFilter.setBounds(10, 55, 117, 21);
         DetailsPanel.add(btnApplyFilter);
-        
-        JLabel lblType = new JLabel("Type:");
-        lblType.setBounds(512, 14, 103, 13);
-        DetailsPanel.add(lblType);
         
         lblEndDate_1 = new JLabel("End Date: ");
         lblEndDate_1.setBounds(274, 10, 86, 23);
@@ -185,7 +175,9 @@ public class EditEventView {
         EndDateField.setBounds(90, 132, 209, 19);
         SelectedPanel.add(EndDateField);
         
-        StatusCB = new JComboBox();
+        
+        String[] status = {"Planned", "Ongoing", "Completed", "Closed"};        
+        StatusCB = new JComboBox<>(status);
         StatusCB.setBounds(90, 163, 209, 21);
         SelectedPanel.add(StatusCB);
         
@@ -200,6 +192,9 @@ public class EditEventView {
         sponsorshipLevelslPanel = new JScrollPane();
         sponsorshipLevelslPanel.setBounds(431, 42, 216, 169);
         SelectedPanel.add(sponsorshipLevelslPanel);
+        
+        lstSponsorshipLevel = new JTable();
+        sponsorshipLevelslPanel.setViewportView(lstSponsorshipLevel);
     }
 
     // Getters para acceso desde el controlador
@@ -208,16 +203,22 @@ public class EditEventView {
     public JButton getBtnEditEvent() { return this.btnEditEvent; }
     public JButton getBtnRegisterNewSL() { return this.btnRegisterNewSL; }
     public JTable getLstActivities() {return this.lstActivities;}
+    public JTable getLstSponsorshipLevels() {return this.lstSponsorshipLevel;}
     public JFrame getFrame() { return this.frmEditEvent; }
     public String getStartDate() {return this.startDateChooser.getText();}
     public String getEndDate() {return this.endDateChooser.getText();}
     public void setStartDate(String dateStr) {this.startDateChooser.setText(dateStr);}
-    public void setEndDate(String dateStr) {this.endDateChooser.setText(dateStr);}
-    public JComboBox<Object> getType() { return this.typeCB; }
-    public void setName(String name) {this.lblName.setText("Sponsorship Name: "+name);}
-    public void setConcept(String concept) {this.lblName.setText("Concept: " +concept);}
-    public void setDate(String date) {this.lblEdititon.setText("Date: "+date);}
-    public void setAmount(double amount) {this.lblSDate.setText("Amount: " + amount+"€");}
-    public void setEvent(String event) {this.lblEDate.setText("Event Name: "+event);}
+    public void setEndDate(String dateStr) {this.endDateChooser.setText(dateStr);}     
+    
+    public void setName(String name) {this.NameField.setText(name);}
+    public void setEdition(String edition) {this.EditionField.setText(edition);}
+    public void setStartDateField(String date) {this.StartDateField.setText(date);}
+    public void setEndDateField(String date) {this.EndDateField.setText(date);}
+    public String getName() {return this.NameField.getText();}
+    public String getEdition() {return this.EditionField.getText();}
+    public String getStartDateField() {return this.StartDateField.getText();}
+    public String getEndDateField() {return this.EndDateField.getText();}
+    public JComboBox<Object> getStatus() { return this.StatusCB; }
+    public void setStatus(String status) { this.StatusCB.setSelectedItem(status); }
 }
 

@@ -2,21 +2,29 @@ package giis.demo.model;
 
 public class EditEventDTO {
     private int event_id;
+    private int level_id;
     private String event_name;
     private String event_date;
     private String event_endDate;
     private String event_edition;
+    private String event_status;
     private String level_name;
     private double level_price;
 
     
-    public EditEventDTO(int event_id, String event_name, String event_date, String event_endDate, String event_edition, String level_name, double level_price) {
+    public EditEventDTO(int event_id, String event_name, String event_edition, String event_date, String event_endDate, String event_status) {
         this.event_id = event_id;
         this.event_name = event_name;
+        this.event_edition = event_edition;
         this.event_date = event_date;
         this.event_endDate = event_endDate;
-        this.event_edition = event_edition;
-        this.level_name = level_name;
+        this.event_status = event_status;
+        
+    }
+    
+    public EditEventDTO(int level_id, String level_name, double level_price) {
+    	this.setLevel_id(level_id);
+    	this.level_name = level_name;
         this.level_price = level_price;
     }
     
@@ -81,6 +89,22 @@ public class EditEventDTO {
 
 	public void setLevel_price(double level_price) {
 		this.level_price = level_price;
+	}
+
+	public int getLevel_id() {
+		return level_id;
+	}
+
+	public void setLevel_id(int level_id) {
+		this.level_id = level_id;
+	}
+
+	public String getEvent_status() {
+		return event_status;
+	}
+
+	public void setEvent_status(String event_status) {
+		this.event_status = event_status;
 	}
 
 }

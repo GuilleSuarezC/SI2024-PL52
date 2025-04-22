@@ -16,29 +16,40 @@ public class EditEventModel {
 	private Database db = new Database();
     
 	//Consultas SQL
-	private static final String SQL_GET_PENDING_PAYMENTS = "SELECT e.event_name, e.event_date, e.event_endDate, e.event_edition FROM Event e";
+	private static final String SQL_GET_EVENTS = "SELECT event_id, event_name, event_edition, event_date, event_endDate, event_status FROM Event WHERE event_date BETWEEN ? AND ?";
 	
-	private static final String SQL_INSERT_PAYMENTS = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
+	private static final String SQL_GET_SPONSORSHIP_LEVEL = "SELECT level_id, level_name, level_price FROM SponsorshipLevel WHERE event_id = ?";
 	
-	private static final String SQL_UPDATE_PAYMENTS = "UPDATE Balance SET balance_status = 'Paid' WHERE balance_id = ?";
+	private static final String SQL_INSERT_SPONSORSHIP_LEVEL = "INSERT INTO SponsorshipLevel (level_name, level_price, event_id) VALUES (?, ?, ?)";
+	
+	private static final String SQL_UPDATE_EVENT = "UPDATE Event SET event_name = ?, event_edition = ?, event_date = ?, event_endDate = ?, event_status = ? WHERE event_id = ?";
 
 
-	public List<PendingPaymentDTO> getPendingPayments() {
-    	return db.executeQueryPojo(PendingPaymentDTO.class, SQL_GET_PENDING_PAYMENTS);
+	public List<EditEventDTO> getEvents(String startDate, String endDate) {
+    	return db.executeQueryPojo(EditEventDTO.class, SQL_GET_EVENTS, startDate, endDate);
     }
 	
-	public void RegisterPayment(double amount, String paymentDate, int sponsorshipID)
+	public List<EditEventDTO> getSponsorshipLevels(int eventId) {
+    	return db.executeQueryPojo(EditEventDTO.class, SQL_GET_SPONSORSHIP_LEVEL, eventId);
+    }
+	
+	public void RegisterSponsorshipLevel(String name, double amount, int eventID)
 	{
 		validateNotNull(amount, "The amount cannot be null");
-		validateNotNull(paymentDate, "The date of payment cannot be null");
+		validateNotNull(name, "The name cannot be null");
 		
-		db.executeUpdate(SQL_INSERT_PAYMENTS, amount, paymentDate, sponsorshipID);		
+		db.executeUpdate(SQL_INSERT_SPONSORSHIP_LEVEL, name, amount, eventID);		
 	}
 	
-	public void UpdateBalance(int balanceId)
+	public void UpdateEvent(String name, String edition, String date, String endDate, String status, int eventId)
 	{
-		validateNotNull(balanceId, "The balance id cannot be null");
-		db.executeUpdate(SQL_UPDATE_PAYMENTS, balanceId);		
+		validateNotNull(name, "The name cannot be null");
+		validateNotNull(edition, "The edition cannot be null");
+		validateNotNull(date, "The start date cannot be null");
+		validateNotNull(endDate, "The end date cannot be null");
+		validateNotNull(status, "The status cannot be null");
+		validateNotNull(eventId, "The event id cannot be null");
+		db.executeUpdate(SQL_UPDATE_EVENT, name, edition, date, endDate, status, eventId);		
 	}
 	
     private void validateNotNull(Object obj, String message) {

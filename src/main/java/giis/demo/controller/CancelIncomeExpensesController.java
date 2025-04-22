@@ -197,7 +197,7 @@ public class CancelIncomeExpensesController {
 	            loadMovements(selected.getBalance_id());
 	            
 	        } catch (Exception e) {
-	            System.out.println("Error al seleccionar el pago: " + e.getMessage());
+	            System.out.println("Error selecting the balance: " + e.getMessage());
 	        }
         }
         else if (type == "Income" || type == "Expense")
@@ -223,7 +223,7 @@ public class CancelIncomeExpensesController {
 	            loadMovements(selected.getBalance_id());
 	            
 	        } catch (Exception e) {
-	            System.out.println("Error al seleccionar el pago: " + e.getMessage());
+	            System.out.println("Error selecting the balance: " + e.getMessage());
 	        }
         }
     }

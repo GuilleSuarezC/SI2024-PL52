@@ -291,6 +291,18 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnCancelIncomeExpense);
+		
+		JButton btnEditEvent = new JButton("Edit Event");
+		btnEditEvent.setBounds(301, 341, 250, 23);
+		
+		btnEditEvent.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				String fecha = tfChangeDate.getText();
+				EditEventController controller=new EditEventController(new EditEventView(), new EditEventModel(), fecha);
+				controller.initController(SwingMain.this);
+			}
+		});		
+		frame.getContentPane().add(btnEditEvent);
 
 
 

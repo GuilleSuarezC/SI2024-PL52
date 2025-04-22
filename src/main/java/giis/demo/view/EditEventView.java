@@ -186,7 +186,7 @@ public class EditEventView {
         SelectedPanel.add(lblSponsorLevel);
         
         btnRegisterNewSL = new JButton("Register New Sponsorship Level");
-        btnRegisterNewSL.setBounds(443, 234, 196, 21);
+        btnRegisterNewSL.setBounds(414, 234, 244, 21);
         SelectedPanel.add(btnRegisterNewSL);
         
         sponsorshipLevelslPanel = new JScrollPane();

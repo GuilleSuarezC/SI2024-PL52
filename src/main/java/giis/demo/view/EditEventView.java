@@ -31,9 +31,9 @@ import java.awt.event.ActionEvent;
  * Se ha generado siguiendo el patrón MVC, eliminando manejadores de eventos
  * y asegurando que la UI se pueda manipular desde el controlador.
  */
-public class CancelIncomeExpensesView {
+public class EditEventView {
 
-    private JFrame frmCancelIncomeExpenses;
+    private JFrame frmEditEvent;
     private JTable lstActivities;
     private JLabel lblFilters;
     private JLabel lblStartDate;
@@ -42,25 +42,27 @@ public class CancelIncomeExpensesView {
     private JLabel lblEndDate_1;
     private JButton btnApplyFilter;
     private JButton btnClearFields;
-    private JButton btnCancelAgreement;
-    private JButton btnCancelRegister;
+    private JButton btnEditEvent;
     private JTextField startDateChooser, endDateChooser;
     private JPanel SelectedPanel;
     private JLabel lblNewLabel;
     private JLabel lblName;
-    private JLabel lblDate;
-    private JLabel lblAmount;
-    private JLabel lblEventName;
-    private JLabel lblCompensationMovement;
-    private JLabel lblCompensationAmount;
-    private JTextField CompAmountField;
-    private JTextField DateField;
-    private JTable lstMovements;
+    private JLabel lblEdititon;
+    private JLabel lblSDate;
+    private JLabel lblEDate;
+    private JLabel lblStatus;
+    private JTextField NameField;
+    private JTextField EditionField;
+    private JTextField StartDateField;
+    private JTextField EndDateField;
+    private JComboBox<Object> StatusCB;
+    private JButton btnRegisterNewSL;
+    private JScrollPane sponsorshipLevelslPanel;
 
     /**
      * Create the application.
      */
-    public CancelIncomeExpensesView() {
+    public EditEventView() {
         initialize();
     }
     
@@ -69,25 +71,25 @@ public class CancelIncomeExpensesView {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frmCancelIncomeExpenses = new JFrame();
-        frmCancelIncomeExpenses.setTitle("Cancel Income and Expenses");
-        frmCancelIncomeExpenses.setName("SponsorshipView");
-        frmCancelIncomeExpenses.setBounds(0, 0, 915, 697);
-        frmCancelIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[875.00px,grow]", "[21px][88.00px][15px][235.00px][223.00px,grow]"));
+        frmEditEvent = new JFrame();
+        frmEditEvent.setTitle("Edit Events");
+        frmEditEvent.setName("SponsorshipView");
+        frmEditEvent.setBounds(0, 0, 785, 789);
+        frmEditEvent.getContentPane().setLayout(new MigLayout("", "[744.00px,grow]", "[21px][88.00px][15px][235.00px][223.00px,grow]"));
         
         
-        JLabel lblList = new JLabel("List of Agreements/Income/Expenses");
+        JLabel lblList = new JLabel("List of Events");
         lblList.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        frmCancelIncomeExpenses.getContentPane().add(lblList, "cell 0 2,grow");
+        frmEditEvent.getContentPane().add(lblList, "cell 0 2,grow");
         
         JScrollPane ListPanel = new JScrollPane();
-        frmCancelIncomeExpenses.getContentPane().add(ListPanel, "cell 0 3,grow");
+        frmEditEvent.getContentPane().add(ListPanel, "cell 0 3,grow");
         
         lstActivities = new JTable();
         ListPanel.setViewportView(lstActivities);
         
         JPanel DetailsPanel = new JPanel();
-        frmCancelIncomeExpenses.getContentPane().add(DetailsPanel, "cell 0 1,grow");
+        frmEditEvent.getContentPane().add(DetailsPanel, "cell 0 1,grow");
         DetailsPanel.setLayout(null);
         
         startDateChooser = new JTextField();
@@ -124,89 +126,89 @@ public class CancelIncomeExpensesView {
         
         lblFilters = new JLabel("Filters");
         lblFilters.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        frmCancelIncomeExpenses.getContentPane().add(lblFilters, "cell 0 0,grow");
+        frmEditEvent.getContentPane().add(lblFilters, "cell 0 0,grow");
         
         SelectedPanel = new JPanel();
-        frmCancelIncomeExpenses.getContentPane().add(SelectedPanel, "cell 0 4,grow");
+        frmEditEvent.getContentPane().add(SelectedPanel, "cell 0 4,grow");
         SelectedPanel.setLayout(null);
         
-        lblNewLabel = new JLabel("Selected");
+        lblNewLabel = new JLabel("Actual");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         lblNewLabel.setBounds(10, 0, 125, 22);
         SelectedPanel.add(lblNewLabel);
         
-        lblName = new JLabel("Sponsorship Agreement: ");
+        lblName = new JLabel("Event Name: ");
         lblName.setBounds(10, 32, 267, 22);
         SelectedPanel.add(lblName);
         
-        lblDate = new JLabel("Date of the Agreement: ");
-        lblDate.setBounds(10, 66, 267, 22);
-        SelectedPanel.add(lblDate);
+        lblEdititon = new JLabel("Event edition: ");
+        lblEdititon.setBounds(10, 66, 267, 22);
+        SelectedPanel.add(lblEdititon);
         
-        lblAmount = new JLabel("Amount: ");
-        lblAmount.setBounds(10, 98, 267, 22);
-        SelectedPanel.add(lblAmount);
+        lblSDate = new JLabel("Start Date: ");
+        lblSDate.setBounds(10, 98, 267, 22);
+        SelectedPanel.add(lblSDate);
         
-        lblEventName = new JLabel("Event name: ");
-        lblEventName.setBounds(10, 130, 267, 22);
-        SelectedPanel.add(lblEventName);
-        
-        lblCompensationMovement = new JLabel("Compensation Movement");
-        lblCompensationMovement.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblCompensationMovement.setBounds(366, 0, 191, 22);
-        SelectedPanel.add(lblCompensationMovement);
-        
-        lblCompensationAmount = new JLabel("Compensation Amount: ");
-        lblCompensationAmount.setBounds(316, 32, 205, 22);
-        SelectedPanel.add(lblCompensationAmount);
-        
-        CompAmountField = new JTextField();
-        CompAmountField.setBounds(451, 34, 134, 19);
-        SelectedPanel.add(CompAmountField);
-        CompAmountField.setColumns(10);
-        
-        JLabel lblDateOfPaid = new JLabel("Date of Paid: ");
-        lblDateOfPaid.setBounds(373, 66, 151, 22);
-        SelectedPanel.add(lblDateOfPaid);
-        
-        DateField = new JTextField();
-        DateField.setColumns(10);
-        DateField.setBounds(451, 68, 134, 19);
-        SelectedPanel.add(DateField);
-        
-        JLabel lblMovements = new JLabel("Movements");
-        lblMovements.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblMovements.setBounds(711, 0, 125, 22);
-        SelectedPanel.add(lblMovements);
-        
-        JScrollPane MovementslPanel = new JScrollPane();
-        MovementslPanel.setBounds(632, 21, 216, 169);
-        SelectedPanel.add(MovementslPanel);
-        
-        lstMovements = new JTable();
-        MovementslPanel.setViewportView(lstMovements);
+        lblEDate = new JLabel("End Date: ");
+        lblEDate.setBounds(10, 130, 267, 22);
+        SelectedPanel.add(lblEDate);
         
         btnClearFields = new JButton("Clear Fields");
-        btnClearFields.setBounds(373, 213, 117, 21);
+        btnClearFields.setBounds(414, 304, 117, 21);
         SelectedPanel.add(btnClearFields);
         
-        btnCancelAgreement = new JButton("Cancel Agreement");
-        btnCancelAgreement.setBounds(500, 213, 117, 21);
-        SelectedPanel.add(btnCancelAgreement);
+        btnEditEvent = new JButton("Edit Event");
+        btnEditEvent.setBounds(541, 304, 117, 21);
+        SelectedPanel.add(btnEditEvent);
         
-        btnCancelRegister = new JButton("Cancel & Register Movement");
-        btnCancelRegister.setBounds(627, 213, 221, 21);
-        SelectedPanel.add(btnCancelRegister);
+        lblStatus = new JLabel("Status: ");
+        lblStatus.setBounds(10, 162, 267, 22);
+        SelectedPanel.add(lblStatus);
+        
+        NameField = new JTextField();
+        NameField.setBounds(90, 34, 209, 19);
+        SelectedPanel.add(NameField);
+        NameField.setColumns(10);
+        
+        EditionField = new JTextField();
+        EditionField.setColumns(10);
+        EditionField.setBounds(90, 68, 209, 19);
+        SelectedPanel.add(EditionField);
+        
+        StartDateField = new JTextField();
+        StartDateField.setColumns(10);
+        StartDateField.setBounds(90, 100, 209, 19);
+        SelectedPanel.add(StartDateField);
+        
+        EndDateField = new JTextField();
+        EndDateField.setColumns(10);
+        EndDateField.setBounds(90, 132, 209, 19);
+        SelectedPanel.add(EndDateField);
+        
+        StatusCB = new JComboBox();
+        StatusCB.setBounds(90, 163, 209, 21);
+        SelectedPanel.add(StatusCB);
+        
+        JLabel lblSponsorLevel = new JLabel("Sponsorship Levels: ");
+        lblSponsorLevel.setBounds(487, 10, 232, 22);
+        SelectedPanel.add(lblSponsorLevel);
+        
+        btnRegisterNewSL = new JButton("Register New Sponsorship Level");
+        btnRegisterNewSL.setBounds(443, 234, 196, 21);
+        SelectedPanel.add(btnRegisterNewSL);
+        
+        sponsorshipLevelslPanel = new JScrollPane();
+        sponsorshipLevelslPanel.setBounds(431, 42, 216, 169);
+        SelectedPanel.add(sponsorshipLevelslPanel);
     }
 
     // Getters para acceso desde el controlador
     public JButton getBtnApplyFilter() { return this.btnApplyFilter; }
     public JButton getBtnClearFields() { return this.btnClearFields; }
-    public JButton getBtnCancel() { return this.btnCancelAgreement; }
-    public JButton getBtnCancelRegister() { return this.btnCancelRegister; }
+    public JButton getBtnEditEvent() { return this.btnEditEvent; }
+    public JButton getBtnRegisterNewSL() { return this.btnRegisterNewSL; }
     public JTable getLstActivities() {return this.lstActivities;}
-    public JTable getLstMovements() {return this.lstMovements;}
-    public JFrame getFrame() { return this.frmCancelIncomeExpenses; }
+    public JFrame getFrame() { return this.frmEditEvent; }
     public String getStartDate() {return this.startDateChooser.getText();}
     public String getEndDate() {return this.endDateChooser.getText();}
     public void setStartDate(String dateStr) {this.startDateChooser.setText(dateStr);}
@@ -214,10 +216,8 @@ public class CancelIncomeExpensesView {
     public JComboBox<Object> getType() { return this.typeCB; }
     public void setName(String name) {this.lblName.setText("Sponsorship Name: "+name);}
     public void setConcept(String concept) {this.lblName.setText("Concept: " +concept);}
-    public void setDate(String date) {this.lblDate.setText("Date: "+date);}
-    public void setAmount(double amount) {this.lblAmount.setText("Amount: " + amount+"€");}
-    public void setEvent(String event) {this.lblEventName.setText("Event Name: "+event);}
-    public String getAmount() {return this.CompAmountField.getText();}
-    public String getDate() {return this.DateField.getText();}
+    public void setDate(String date) {this.lblEdititon.setText("Date: "+date);}
+    public void setAmount(double amount) {this.lblSDate.setText("Amount: " + amount+"€");}
+    public void setEvent(String event) {this.lblEDate.setText("Event Name: "+event);}
 }
 

@@ -29,6 +29,10 @@ public class ReOpenEventController {
         view.getTblClosedEvents().setModel(SwingUtil.getTableModelFromPojos(events, 
             new String[]{"event_id", "event_name", "event_edition", "event_date", "event_endDate", "event_status"}));
         SwingUtil.autoAdjustColumns(view.getTblClosedEvents());
+        
+        view.getTblClosedEvents().getColumnModel().getColumn(0).setMinWidth(0);
+        view.getTblClosedEvents().getColumnModel().getColumn(0).setMaxWidth(0);
+        view.getTblClosedEvents().getColumnModel().getColumn(0).setWidth(0);
     }
 
     private void reopenSelectedEvent() {

@@ -67,6 +67,10 @@ public class CloseEventController {
         view.getTblEvents().setModel(SwingUtil.getTableModelFromPojos(updatedEvents, 
             new String[]{"event_id", "event_name", "event_edition", "event_date", "event_endDate", "event_status"}));
         SwingUtil.autoAdjustColumns(view.getTblEvents());
+        
+        view.getTblEvents().getColumnModel().getColumn(0).setMinWidth(0);
+        view.getTblEvents().getColumnModel().getColumn(0).setMaxWidth(0);
+        view.getTblEvents().getColumnModel().getColumn(0).setWidth(0);
     }
 
     private String determineEventStatus(String currentDate, 

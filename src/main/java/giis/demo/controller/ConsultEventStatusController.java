@@ -182,8 +182,7 @@ public class ConsultEventStatusController {
                 s.setpayment_status("Estimated");
             }
             sponsorList.add(s);
-            total += s.getagreed_quantity(); // Sumar todos los event_fee (positivos)
-            System.out.print(s.getAmount_paid());
+            total += s.getagreed_quantity(); // Sumar todos los event_fee (positivos)            
             paid += s.getAmount_paid();
             //if ("Paid".equals(s.getpayment_status())) {
             //    paid += s.getagreed_quantity();
@@ -263,9 +262,9 @@ public class ConsultEventStatusController {
             if (balance.getAmount() > 0) {
                 incomeList.add(entry);
                 totalInc += balance.getAmount();
-                System.out.println(balance.getPaymentStatus());
-                if("Paid".equals(balance.getPaymentStatus()))
-                	paidInc += balance.getAmount();
+                paidInc += balance.getAmount_paid();                
+                //if("Paid".equals(balance.getPaymentStatus()))
+                	//paidInc += balance.getAmount();
                 
             } else {
                 expenseList.add(entry);
@@ -280,9 +279,9 @@ public class ConsultEventStatusController {
 
         // Asignar modelos a las tablas
         view.getTblIncome().setModel(SwingUtil.getTableModelFromPojos(incomeList, 
-            new String[]{"name", "amount", "status"}));
+            new String[]{"name", "amount", "status", "amount_paid"}));
         view.getTblExpenses().setModel(SwingUtil.getTableModelFromPojos(expenseList, 
-            new String[]{"name", "amount", "status"}));
+            new String[]{"name", "amount", "status", "amount_paid"}));
         view.setLblIncomeEstimated(totalInc);
         view.setLblIncomePaid(paidInc);
         view.setLblExpensesEstimated(totalExp);

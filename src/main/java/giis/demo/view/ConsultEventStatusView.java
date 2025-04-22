@@ -31,7 +31,7 @@ public class ConsultEventStatusView {
         frmConsultEventStatus = new JFrame();
         frmConsultEventStatus.setTitle("Consult Event Status");
         frmConsultEventStatus.setName("ConsultEventStatusView");
-        frmConsultEventStatus.setBounds(100, 100, 1025, 694);
+        frmConsultEventStatus.setBounds(100, 100, 1088, 694);
         frmConsultEventStatus.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frmConsultEventStatus.getContentPane().setLayout(null);
 
@@ -50,7 +50,7 @@ public class ConsultEventStatusView {
         frmConsultEventStatus.getContentPane().add(label_1);
         tblSponsorships = new JTable();
         JScrollPane spSponsorships = new JScrollPane(tblSponsorships);
-        spSponsorships.setBounds(531, 28, 471, 218);
+        spSponsorships.setBounds(531, 28, 533, 218);
         frmConsultEventStatus.getContentPane().add(spSponsorships);
         
         lblSponsorshipsEstimated = new JLabel("Estimated Total: ");
@@ -67,7 +67,7 @@ public class ConsultEventStatusView {
         frmConsultEventStatus.getContentPane().add(label_3);
         tblExpenses = new JTable();
         JScrollPane spExpenses = new JScrollPane(tblExpenses);
-        spExpenses.setBounds(531, 296, 471, 218);
+        spExpenses.setBounds(531, 296, 533, 218);
         frmConsultEventStatus.getContentPane().add(spExpenses);
         
         lblExpensesEstimated = new JLabel("Estimated Total: ");
@@ -122,7 +122,7 @@ public class ConsultEventStatusView {
         
         // Exit Button
         btnExit = new JButton("Exit");
-        btnExit.setBounds(880, 625, 116, 23);
+        btnExit.setBounds(948, 624, 116, 23);
         frmConsultEventStatus.getContentPane().add(btnExit);
         
         frmConsultEventStatus.setResizable(false);

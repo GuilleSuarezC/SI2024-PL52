@@ -305,16 +305,55 @@ public class LTAController {
                 // ===== VALIDACIÓN CONTRA FECHAS DE EVENTOS =====
                 LTAEventDTO selectedEvent = events.get(selectedEventRow);
                 Date eventStartDate = Util.isoStringToDate(selectedEvent.getEvent_date());
+                Date eventEndDate = Util.isoStringToDate(selectedEvent.getEvent_endDate());
 
-                // 4. Validar que el acuerdo empiece antes que el evento
-                if (startDate.after(eventStartDate)) {
-                    String errorMsg = String.format(
-                        "The agreement must start before the selected event (%s)",
-                        selectedEvent.getEvent_date()
+                // 4. Validar que el acuerdo empiece después de que el evento acabe
+                if (startDate.after(eventStartDate) && startDate.after(eventEndDate)) {
+                    String warningMsg = String.format(
+                        "The agreement is set to start *after* the selected event has ended (%s).\n" +
+                        "Do you still want to proceed?",
+                        selectedEvent.getEvent_endDate()
                     );
-                    JOptionPane.showMessageDialog(view.getFrmCloseEvent(), 
-                        errorMsg, "Error in dates ", JOptionPane.ERROR_MESSAGE);
-                    return;
+                    
+                    int option = JOptionPane.showConfirmDialog(view.getFrmCloseEvent(),
+                        warningMsg,
+                        "Agreement Date Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                    
+                    if (option != JOptionPane.YES_OPTION) {
+                        return; // Usuario eligió NO
+                    }
+                }
+                
+                // 5. Validar que el acuerdo empiece mientras el evento está dando lugar
+                if (startDate.after(eventStartDate) && startDate.before(eventEndDate)) {
+                    String warningMsg = String.format(
+                        "The agreement is set to start while the selected event is taking place.\n" +
+                        "Do you still want to proceed?"
+                    );
+                    
+                    int option = JOptionPane.showConfirmDialog(view.getFrmCloseEvent(),
+                        warningMsg,
+                        "Agreement Date Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                    
+                    if (option != JOptionPane.YES_OPTION) {
+                        return; // Usuario eligió NO
+                    }
+                }
+                
+                
+                // 6. Validar que el evento seleccionado empiece al menos dentro del rango de fechas del agreement
+                if(eventStartDate.after(endDate)) {
+                	String errorMsg = String.format(
+                            "The agreement must last at least until the starting date of the selected event (%s)",
+                            selectedEvent.getEvent_date()
+                        );
+                        JOptionPane.showMessageDialog(view.getFrmCloseEvent(), 
+                            errorMsg, "Error in dates ", JOptionPane.ERROR_MESSAGE);
+                        return;                
                 }
 
             } catch (ApplicationException e) { // Captura errores de formato de fecha

@@ -91,6 +91,12 @@ public class RegisterSponsorshipAgreeModel {
         String sql = SQL_INSERT_BALANCE + "; SELECT last_insert_rowid()"; // SQLite
         return db.executeUpdateAndGetKey(sql, eventId, concept, enteredFee, description);
     }
+    
+    public boolean isSponsorshipAlreadyRegistered(int companyId, int eventId) {
+        String sql = "SELECT COUNT(*) FROM Sponsorship WHERE company_id = ? AND event_id = ?";
+        List<Object[]> result = db.executeQueryArray(sql, companyId, eventId);
+        return result.size() > 0 && ((Number) result.get(0)[0]).intValue() > 0;
+    }
 
 
 

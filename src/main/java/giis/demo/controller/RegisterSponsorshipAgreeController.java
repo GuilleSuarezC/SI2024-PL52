@@ -139,6 +139,8 @@ public class RegisterSponsorshipAgreeController {
      * Registra un nuevo acuerdo de patrocinio.
      */
     private void registerSponsorship() {
+    	
+   
         int selectedCompanyIndex = view.getListaCompany().getSelectedIndex();
         if (selectedCompanyIndex < 0) {
             SwingUtil.showMessage("You need to select a company first.", "Select a Company", JOptionPane.ERROR_MESSAGE);
@@ -150,6 +152,16 @@ public class RegisterSponsorshipAgreeController {
             SwingUtil.showMessage("You need to select an event first.", "Select an Event", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        int companyId = listaGlobal.get(selectedCompanyIndex).getCompany_id();
+        int eventId = listaEvent.get(selectedEventIndex).getEvent_id();
+
+
+        if (model.isSponsorshipAlreadyRegistered(companyId, eventId)) {
+            SwingUtil.showMessage("This company is already sponsoring this event. You cannot register a duplicate sponsorship, even with a different level.", "Duplicate Sponsorship", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
 
         int selectedGBIndex = view.getListaMiembrosGB().getSelectedIndex();
         if (selectedGBIndex < 0) {
@@ -196,7 +208,7 @@ public class RegisterSponsorshipAgreeController {
             int balanceId = model.registerBalance(
             	    selectedEvent.getEvent_id(), 
             	    sponsorshipName,  // este es el concept
-            	    levelPrice,       // este es el amount
+            	    levelPrice,       
             	    sponsorshipLevelName // este es la descripción
             	);
 

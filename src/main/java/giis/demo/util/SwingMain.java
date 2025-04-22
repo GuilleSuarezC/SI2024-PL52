@@ -76,7 +76,8 @@ public class SwingMain {
 		frame.setBounds(0, 0, 575, 426);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setResizable(false);
+
 
 		JButton btnRegisterSponsorship = new JButton("Register Sponsorship Agreements");
 

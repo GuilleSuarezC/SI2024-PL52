@@ -20,9 +20,11 @@ public class ReOpenEventView {
         frmReopenEvent = new JFrame();
         frmReopenEvent.setTitle("Reopen Closed Events");
         frmReopenEvent.setName("ReopenEventView");
-        frmReopenEvent.setBounds(100, 100, 858, 327);
+        frmReopenEvent.setBounds(100, 100, 600, 350);
         frmReopenEvent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frmReopenEvent.getContentPane().setLayout(null);
+        frmReopenEvent.setResizable(false);
+
 
         JLabel lblEvents = new JLabel("List of Closed Events:");
         lblEvents.setBounds(7, 7, 457, 14);

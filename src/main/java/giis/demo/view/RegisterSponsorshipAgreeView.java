@@ -123,8 +123,8 @@ public class RegisterSponsorshipAgreeView {
         frame.getContentPane().add(btnAddLevel, "cell 0 6,aligny center");
                 
                         // Fee
-                        lblFee = new JLabel("Amount: ");
-                        frame.getContentPane().add(lblFee, "flowx,cell 0 7");
+                lblFee = new JLabel("Amount: ");
+                frame.getContentPane().add(lblFee, "flowx,cell 0 7");
         
                 btnRegistrar = new JButton("Register");
                 frame.getContentPane().add(btnRegistrar, "flowx,cell 0 9,alignx right,aligny center");

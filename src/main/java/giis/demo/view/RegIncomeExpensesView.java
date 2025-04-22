@@ -31,7 +31,9 @@ public class RegIncomeExpensesView {
     public RegIncomeExpensesView() {
         frame = new JFrame("Register Other Income/Expenses");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(1000, 700);
+        frame.setSize(1050, 750);
+        frame.setResizable(false);
+
 
         JPanel topPanel = new JPanel(new FlowLayout());
         topPanel.setBounds(0, 0, 986, 31);
@@ -236,7 +238,6 @@ public class RegIncomeExpensesView {
     public BalanceDTO getSelectedBalanceDetails() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow == -1) {
-            showMessage("Please select a balance to edit.", "Selection Error");
             return null;
         }
 
@@ -245,7 +246,7 @@ public class RegIncomeExpensesView {
         String description = (String) tableModel.getValueAt(selectedRow, 1);
         double amount = Double.parseDouble(tableModel.getValueAt(selectedRow, 2).toString());
         String balanceStatus = (String) tableModel.getValueAt(selectedRow, 3);
-        String dateOfPaid = (String) tableModel.getValueAt(selectedRow, 3); 
+        //String dateOfPaid = (String) tableModel.getValueAt(selectedRow, 3); 
 
         return new BalanceDTO(balanceId, concept, 0, amount, description, balanceStatus);
     }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import giis.demo.model.*;
+import giis.demo.util.SwingUtil;
 import giis.demo.util.Util;
 import giis.demo.view.RegIncomeExpensesView;
 
@@ -23,12 +24,13 @@ public class RegisterIncomeExpensesController {
 
 
         loadEvents();
-
+        
         
         view.addLoadBalancesListener(e -> loadBalances());
         view.addAddBalanceListener(e -> addBalance());
         view.addSaveChangesListener(e -> saveChanges());  
         view.addRegMovementListener(e -> registerMovement());
+        view.getClearFieldsButtonM().addActionListener(e -> SwingUtil.exceptionWrapper(() -> clearSelection()));
     }
 
 
@@ -53,7 +55,7 @@ public class RegisterIncomeExpensesController {
         String amountText = view.getAmountField();
         String dateOfPaid = view.getDateOfPaidField(); 
         String balanceStatus = (String) view.getBalanceStatusComboBox().getSelectedItem();
-
+        System.out.println(balanceStatus);
         double amount;
         try {
             amount = Double.parseDouble(amountText);
@@ -64,6 +66,11 @@ public class RegisterIncomeExpensesController {
 
         if ("Paid".equals(balanceStatus) && (dateOfPaid == null || dateOfPaid.isEmpty())) {
             view.showMessage("Please enter a valid date of payment.", "Input Error");
+            return;
+        }
+        
+        if ("Estimated".equals(balanceStatus) && !(dateOfPaid == null || dateOfPaid.isEmpty())) {
+            view.showMessage("Change status if it's paid", "Input Error");
             return;
         }
 
@@ -225,6 +232,12 @@ public class RegisterIncomeExpensesController {
         }
 
         return true;  
+    }
+    
+    private void clearSelection() {
+    	view.setAmountFieldM("");
+    	view.setDateM("");
+        
     }
 
 

@@ -63,7 +63,7 @@ public class RegisterPaymentsView {
         frmRegisterPaymentsView.setBounds(0, 0, 842, 547);
         frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[774.00px]", "[15px][193px][21px][183px][56px]"));
         
-        JLabel lblPendingPayments = new JLabel("Pending Payments");
+        JLabel lblPendingPayments = new JLabel("Payments");
         lblPendingPayments.setFont(new Font("Tahoma", Font.PLAIN, 12));
         frmRegisterPaymentsView.getContentPane().add(lblPendingPayments, "cell 0 0,grow");
         
@@ -78,49 +78,49 @@ public class RegisterPaymentsView {
         DetailsPanel.setLayout(null);
         
         lblEventName = new JLabel("Event Name: ");
-        lblEventName.setBounds(10, 85, 232, 23);
+        lblEventName.setBounds(10, 85, 400, 23);
         DetailsPanel.add(lblEventName);
         
         lblSponsorshipName = new JLabel("Sponsorship Name: ");
-        lblSponsorshipName.setBounds(10, 10, 232, 23);
+        lblSponsorshipName.setBounds(10, 10, 400, 23);
         DetailsPanel.add(lblSponsorshipName);
         
         lblAmount = new JLabel("Amount to pay: ");
-        lblAmount.setBounds(10, 35, 232, 23);
+        lblAmount.setBounds(10, 35, 368, 23);
         DetailsPanel.add(lblAmount);
         
         lblAgreementDate = new JLabel("Agreement Date:  ");
-        lblAgreementDate.setBounds(10, 60, 232, 23);
+        lblAgreementDate.setBounds(10, 60, 368, 23);
         DetailsPanel.add(lblAgreementDate);
         
         lblInvoiceIdentificator = new JLabel("Invoice Identificator:  ");
-        lblInvoiceIdentificator.setBounds(10, 110, 232, 23);
+        lblInvoiceIdentificator.setBounds(10, 110, 414, 23);
         DetailsPanel.add(lblInvoiceIdentificator);
         
         lblAmountPaid = new JLabel("Amount Paid: ");
-        lblAmountPaid.setBounds(343, 63, 86, 23);
+        lblAmountPaid.setBounds(528, 63, 86, 23);
         DetailsPanel.add(lblAmountPaid);
         
         lblPaymentDate = new JLabel("Payment Date: ");
-        lblPaymentDate.setBounds(343, 96, 86, 23);
+        lblPaymentDate.setBounds(528, 96, 86, 23);
         DetailsPanel.add(lblPaymentDate);
         
         AmountPaidField = new JTextField();
-        AmountPaidField.setBounds(428, 65, 131, 19);
+        AmountPaidField.setBounds(613, 65, 131, 19);
         DetailsPanel.add(AmountPaidField);
         AmountPaidField.setColumns(10);
         
         PaymentDateField = new JTextField();
         PaymentDateField.setColumns(10);
-        PaymentDateField.setBounds(428, 98, 131, 19);
+        PaymentDateField.setBounds(613, 98, 131, 19);
         DetailsPanel.add(PaymentDateField);
         
         lblInvoiceDate = new JLabel("Invoice Date:  ");
-        lblInvoiceDate.setBounds(10, 135, 232, 23);
+        lblInvoiceDate.setBounds(10, 135, 449, 23);
         DetailsPanel.add(lblInvoiceDate);
         
         lblAmountAlreadyPaid = new JLabel("Amount Already Paid: ");
-        lblAmountAlreadyPaid.setBounds(365, 35, 165, 23);
+        lblAmountAlreadyPaid.setBounds(550, 35, 165, 23);
         DetailsPanel.add(lblAmountAlreadyPaid);
         
         lblSelectedPayment = new JLabel("Selected Payment");
@@ -132,7 +132,7 @@ public class RegisterPaymentsView {
         Btnpanel.setLayout(null);
         
         btnSave = new JButton("Save");
-        btnSave.setBounds(491, 25, 85, 21);
+        btnSave.setBounds(679, 25, 85, 21);
         Btnpanel.add(btnSave);
         
         btnCancel = new JButton("Cancel");
@@ -140,7 +140,7 @@ public class RegisterPaymentsView {
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        btnCancel.setBounds(396, 25, 85, 21);
+        btnCancel.setBounds(584, 25, 85, 21);
         Btnpanel.add(btnCancel);
     }
 

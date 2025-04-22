@@ -26,6 +26,7 @@ public class RegIncomeExpensesView {
     private JButton clearFieldsButtonB;  
     private JTextField AmountFieldM;
     private JTextField DateFieldM;
+    private JButton clearFieldsButtonM;
 
     public RegIncomeExpensesView() {
         frame = new JFrame("Register Other Income/Expenses");
@@ -166,7 +167,7 @@ public class RegIncomeExpensesView {
         btnRegisterMovement.setBounds(590, 10, 166, 21);
         buttonPanel.add(btnRegisterMovement);
         
-        JButton clearFieldsButtonM = new JButton("Clear Fields");
+        clearFieldsButtonM = new JButton("Clear Fields");
         clearFieldsButtonM.setBounds(778, 10, 116, 21);
         buttonPanel.add(clearFieldsButtonM);
 
@@ -214,6 +215,14 @@ public class RegIncomeExpensesView {
     
     public String getDateM(){
     	return DateFieldM.getText();
+    }
+    
+    public void setAmountFieldM(String amount) {
+    	AmountFieldM.setText(amount);
+    }
+    
+    public void setDateM(String date){
+    	DateFieldM.setText(date);
     }
 
     public String getDateOfPaidField() {
@@ -276,13 +285,15 @@ public class RegIncomeExpensesView {
         dateOfPaidField.setText("");
         balanceStatusComboBox.setSelectedIndex(0);  
     }
+        
     
     public void clearFieldsM() {
         AmountFieldM.setText("");
         DateFieldM.setText(""); 
     }
-  
     
+    
+    public JButton getClearFieldsButtonM() { return this.clearFieldsButtonM; }
 
     public void setEventOptions(String[] events) {
         eventComboBox.setModel(new DefaultComboBoxModel<>(events));

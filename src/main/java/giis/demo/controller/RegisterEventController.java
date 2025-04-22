@@ -70,9 +70,7 @@ public class RegisterEventController {
     // Cerrar la ventana actual
     view.getRegisterEvent().addActionListener(e -> SwingUtil.exceptionWrapper(() -> onRegisterButtonClick()));
  
-    
-
-
+  
  }
 
  

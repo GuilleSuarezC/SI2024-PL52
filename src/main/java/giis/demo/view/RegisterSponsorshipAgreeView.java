@@ -76,24 +76,15 @@ public class RegisterSponsorshipAgreeView {
         frame.getContentPane().add(lblEvent, "cell 0 1,alignx left");
         lstEvent = new JComboBox<>();
         frame.getContentPane().add(lstEvent, "cell 0 1,growx");
-
-        // Fee
-        lblFee = new JLabel("Amount: ");
-        frame.getContentPane().add(lblFee, "flowx,cell 0 2");
         
 
         // Agreement Date
         JLabel lblAgreementDate = new JLabel("Agreement Date (ISO):");
-        frame.getContentPane().add(lblAgreementDate, "cell 0 3,alignx left");
-        txtAgreementDate = new JTextField();
-        txtAgreementDate.setName("txtAgreementDate");
-        frame.getContentPane().add(txtAgreementDate, "cell 0 3,growx");
-
-        // Governing Board Member
-        JLabel lblMiembroGB = new JLabel("Member of the Governing Board:");
-        frame.getContentPane().add(lblMiembroGB, "cell 0 4,alignx left");
-        lstMiembrosGB = new JComboBox<>();
-        frame.getContentPane().add(lstMiembrosGB, "cell 0 4,growx");
+        frame.getContentPane().add(lblAgreementDate, "flowx,cell 0 2,alignx left");
+        
+                // Governing Board Member
+                JLabel lblMiembroGB = new JLabel("Member of the Governing Board:");
+                frame.getContentPane().add(lblMiembroGB, "flowx,cell 0 3,alignx left");
 
      // Contacts Table
         JLabel lblContacts = new JLabel("Contacts:");
@@ -113,7 +104,7 @@ public class RegisterSponsorshipAgreeView {
         lstSponsorshipLevels = new JTable();
         lstSponsorshipLevels.setPreferredScrollableViewportSize(new Dimension(500, 60));
         levelsPanel.setViewportView(lstSponsorshipLevels);
-        frame.getContentPane().add(levelsPanel, "cell 0 6 1 2,growx,height 200px::100px");
+        frame.getContentPane().add(levelsPanel, "cell 0 6,growx,height 200px::100px");
         
         lstSponsorshipLevels.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -130,20 +121,29 @@ public class RegisterSponsorshipAgreeView {
         
         btnAddLevel = new JButton("Add Level");
         frame.getContentPane().add(btnAddLevel, "cell 0 6,aligny center");
-        
-        tFeventFee = new JTextField();
-        frame.getContentPane().add(tFeventFee, "cell 0 2");
-    	tFeventFee.setEditable(true);
-    	
-        tFeventFee.setColumns(10);
-        
-        lbleuroFee = new JLabel("€");
-        frame.getContentPane().add(lbleuroFee, "cell 0 2,alignx left,aligny center");
+                
+                        // Fee
+                        lblFee = new JLabel("Amount: ");
+                        frame.getContentPane().add(lblFee, "flowx,cell 0 7");
         
                 btnRegistrar = new JButton("Register");
                 frame.getContentPane().add(btnRegistrar, "flowx,cell 0 9,alignx right,aligny center");
                 btnCancelar = new JButton("Cancel");
                 frame.getContentPane().add(btnCancelar, "cell 0 9");
+                
+                tFeventFee = new JTextField();
+                frame.getContentPane().add(tFeventFee, "cell 0 7");
+                tFeventFee.setEditable(true);
+                
+        tFeventFee.setColumns(10);
+        
+        lbleuroFee = new JLabel("€");
+        frame.getContentPane().add(lbleuroFee, "cell 0 7,alignx left,aligny center");
+        txtAgreementDate = new JTextField();
+        txtAgreementDate.setName("txtAgreementDate");
+        frame.getContentPane().add(txtAgreementDate, "cell 0 2,growx");
+        lstMiembrosGB = new JComboBox<>();
+        frame.getContentPane().add(lstMiembrosGB, "cell 0 3,growx");
     }
 
     public String gettFeventFee() {

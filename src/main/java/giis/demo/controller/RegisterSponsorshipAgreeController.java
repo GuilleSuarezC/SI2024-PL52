@@ -201,7 +201,7 @@ public class RegisterSponsorshipAgreeController {
             // Obtener el precio del Sponsorship Level seleccionado
             TableModel levelModel = view.getListSponsorshipLevels().getModel();
             String levelName = levelModel.getValueAt(selectedLevelRow, 0).toString();
-            double levelPrice = Double.parseDouble(levelModel.getValueAt(selectedLevelRow, 1).toString());
+            double levelPrice = Double.parseDouble(view.gettFeventFee());
 
             String sponsorshipName = selectedCompany.getCompany_name() + " " + selectedEvent.getEvent_name() + " " + selectedEvent.getEvent_edition();
             String sponsorshipLevelName = view.getListSponsorshipLevels().getValueAt(selectedLevelRow, 0).toString() + " Sponsorship";

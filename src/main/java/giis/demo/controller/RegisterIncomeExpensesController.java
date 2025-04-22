@@ -68,6 +68,11 @@ public class RegisterIncomeExpensesController {
             view.showMessage("Please enter a valid date of payment.", "Input Error");
             return;
         }
+        
+        if ("Estimated".equals(balanceStatus) && !(dateOfPaid == null || dateOfPaid.isEmpty())) {
+            view.showMessage("Change status if it's paid", "Input Error");
+            return;
+        }
 
         if ("Paid".equals(balanceStatus) && !Util.isValidISODate(dateOfPaid)) {
             view.showMessage("Invalid date format. Use yyyy-MM-dd.", "Date Error");

@@ -148,7 +148,7 @@ public class EditEventController {
             System.out.println("Error selecting the event: " + e.getMessage());
         }
         
-        loadSponsorshipLevels(rowIndex);
+        loadSponsorshipLevels(selected.getEvent_id());
     }
     
     
@@ -160,7 +160,12 @@ public class EditEventController {
             return;
         }
         
-        try {
+        try {        	
+        	if (selected.getEvent_status().equals("Closed"))
+        	{
+        		SwingUtil.showMessage("Events that are already closed cannot be edited.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+        	}
         	
         	if(view.getName().isEmpty())
         	{
@@ -235,9 +240,9 @@ public class EditEventController {
         if (selected == null) {
             JOptionPane.showMessageDialog(view.getFrame(), "You must select an event to be able to register a sponsorship level.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }
+        }       
 
-        try {
+        try {        	
         	
             String levelName = JOptionPane.showInputDialog("Enter level name:");
             if (levelName == null || levelName.trim().isEmpty()) {

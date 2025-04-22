@@ -100,7 +100,8 @@ public class RegisterSponsorshipAgreeController {
         DefaultComboBoxModel<Object> comboModel = new DefaultComboBoxModel<>();
         for (EventDTO event : events) {
         	this.listaEvent.add(event);
-            comboModel.addElement(event.getEvent_name()); 
+        	String event_item = event.getEvent_name() + " " + event.getEvent_edition();
+            comboModel.addElement(event_item); 
         }
         view.getListaEvent().setModel(comboModel); 
     }

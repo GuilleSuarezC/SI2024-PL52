@@ -163,7 +163,7 @@ public class ConsultEventStatusController {
 
     
     public void showSponsors(int eventId) {
-        int total = 0;
+        double total = 0;
         double paid = 0;
         if (eventId < 0) return;
 
@@ -242,10 +242,10 @@ public class ConsultEventStatusController {
 
     public void showIncomeEntries(int eventId) {
         if (eventId < 0) return;
-        int paidInc = 0;
-        int totalInc = 0;
+        double paidInc = 0;
+        double totalInc = 0;
         double paidExp = 0;
-        int totalExp = 0;
+        double totalExp = 0;
         // Obtener balances de Otras Fuentes (NO Sponsorships)
         List<OtherBalanceDTO> otherBalances = model.getOtherBalances(eventId);
 

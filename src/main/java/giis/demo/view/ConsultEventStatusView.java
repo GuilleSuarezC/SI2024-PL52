@@ -184,16 +184,16 @@ public class ConsultEventStatusView {
 		return lblIncomeEstimated;
 	}
 
-	public void setLblIncomeEstimated(int num) {
-		this.lblIncomeEstimated.setText("Estimated Total: "+num+" €");
+	public void setLblIncomeEstimated(double totalInc) {
+		this.lblIncomeEstimated.setText("Estimated Total: "+totalInc+" €");
 	}
 
 	public JLabel getLblIncomePaid() {
 		return lblIncomePaid;
 	}
 
-	public void setLblIncomePaid(int num) {
-		this.lblIncomePaid.setText("Paid Total: "+num+" €");
+	public void setLblIncomePaid(double paidInc) {
+		this.lblIncomePaid.setText("Paid Total: "+paidInc+" €");
 	}
 
 	public JLabel getLblExpensesSummary() {
@@ -208,8 +208,8 @@ public class ConsultEventStatusView {
 		return lblExpensesEstimated;
 	}
 
-	public void setLblExpensesEstimated(int num) {
-		this.lblExpensesEstimated.setText("Estimated Total: "+num+" €");
+	public void setLblExpensesEstimated(double totalExp) {
+		this.lblExpensesEstimated.setText("Estimated Total: "+totalExp+" €");
 	}
 
 	public JLabel getLblExpensesPaid() {
@@ -244,8 +244,8 @@ public class ConsultEventStatusView {
 		this.lblBalancePaid = lblBalancePaid;
 	}
 	
-	public void setLblSponsorshipsEstimated(int num) {
-		this.lblSponsorshipsEstimated.setText("Estimated Total: "+num + " €");
+	public void setLblSponsorshipsEstimated(double total) {
+		this.lblSponsorshipsEstimated.setText("Estimated Total: "+total + " €");
 	}
 	
 	public void setLblSponsorshipsPaid(double num) {

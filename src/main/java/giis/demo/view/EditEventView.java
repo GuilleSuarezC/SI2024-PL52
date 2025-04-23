@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 /**
  * Vista de la pantalla para registrar acuerdos de patrocinio.
@@ -58,6 +59,8 @@ public class EditEventView {
     private JButton btnRegisterNewSL;
     private JScrollPane sponsorshipLevelslPanel;
     private JTable lstSponsorshipLevel;
+    private JLabel lblClosed;
+    private JCheckBox chckbxClosed;
 
     /**
      * Create the application.
@@ -114,6 +117,15 @@ public class EditEventView {
         lblEndDate_1.setBounds(274, 10, 86, 23);
         DetailsPanel.add(lblEndDate_1);
         
+        lblStatus = new JLabel("Status: ");
+        lblStatus.setBounds(508, 12, 198, 22);
+        DetailsPanel.add(lblStatus);
+        
+        String[] status = {"All","Planned", "Ongoing", "Completed"};
+        StatusCB = new JComboBox<>(status);
+        StatusCB.setBounds(564, 12, 158, 21);
+        DetailsPanel.add(StatusCB);
+        
         lblFilters = new JLabel("Filters");
         lblFilters.setFont(new Font("Tahoma", Font.PLAIN, 12));
         frmEditEvent.getContentPane().add(lblFilters, "cell 0 0,grow");
@@ -151,10 +163,6 @@ public class EditEventView {
         btnEditEvent.setBounds(541, 304, 117, 21);
         SelectedPanel.add(btnEditEvent);
         
-        lblStatus = new JLabel("Status: ");
-        lblStatus.setBounds(10, 162, 267, 22);
-        SelectedPanel.add(lblStatus);
-        
         NameField = new JTextField();
         NameField.setBounds(90, 34, 209, 19);
         SelectedPanel.add(NameField);
@@ -175,12 +183,6 @@ public class EditEventView {
         EndDateField.setBounds(90, 132, 209, 19);
         SelectedPanel.add(EndDateField);
         
-        
-        String[] status = {"Planned", "Ongoing", "Completed", "Closed"};        
-        StatusCB = new JComboBox<>(status);
-        StatusCB.setBounds(90, 163, 209, 21);
-        SelectedPanel.add(StatusCB);
-        
         JLabel lblSponsorLevel = new JLabel("Sponsorship Levels: ");
         lblSponsorLevel.setBounds(487, 10, 232, 22);
         SelectedPanel.add(lblSponsorLevel);
@@ -195,6 +197,14 @@ public class EditEventView {
         
         lstSponsorshipLevel = new JTable();
         sponsorshipLevelslPanel.setViewportView(lstSponsorshipLevel);
+        
+        lblClosed = new JLabel("Is it Closed?: ");
+        lblClosed.setBounds(10, 162, 141, 22);
+        SelectedPanel.add(lblClosed);
+        
+        chckbxClosed = new JCheckBox("");
+        chckbxClosed.setBounds(111, 163, 93, 21);
+        SelectedPanel.add(chckbxClosed);
     }
 
     // Getters para acceso desde el controlador
@@ -220,5 +230,9 @@ public class EditEventView {
     public String getEndDateField() {return this.EndDateField.getText();}
     public JComboBox<Object> getStatus() { return this.StatusCB; }
     public void setStatus(String status) { this.StatusCB.setSelectedItem(status); }
+	public JCheckBox getChckbxClosed() {return chckbxClosed;}
+	public void setChckbxClosed(JCheckBox chckbxClosed) {this.chckbxClosed = chckbxClosed;}
+    
+    
 }
 

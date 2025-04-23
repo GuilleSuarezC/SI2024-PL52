@@ -86,13 +86,14 @@ public class EditEventController {
     }
     
     public void initView(String startDate, String endDate) {
-        this.loadEvents(startDate, endDate);
+    	model.updateEventStatuses(fecha);
+        this.loadEvents(startDate, endDate, "All");
         view.getFrame().setVisible(true);
     }
 
-    private void loadEvents(String startDate, String endDate) {
+    private void loadEvents(String startDate, String endDate, String status) {
     	
-		List<EditEventDTO> events = model.getEvents(startDate, endDate);
+		List<EditEventDTO> events = model.getEvents(startDate, endDate, status);
         TableModel tableModel = SwingUtil.getTableModelFromPojos(events,
             new String[]{"event_id","event_name", "event_edition", "event_date", "event_endDate", "event_status"});
         
@@ -125,8 +126,7 @@ public class EditEventController {
     private void selectEventFromTable(int rowIndex) {
     	
         JTable table = view.getLstActivities();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");        
         try {
         	
             selected = new EditEventDTO(
@@ -141,8 +141,7 @@ public class EditEventController {
             view.setName(selected.getEvent_name());
             view.setEdition(selected.getEvent_edition());
             view.setStartDateField(selected.getEvent_date());
-            view.setEndDateField(selected.getEvent_endDate());
-            view.setStatus(selected.getEvent_status());
+            view.setEndDateField(selected.getEvent_endDate());            
             
         } catch (Exception e) {
             System.out.println("Error selecting the event: " + e.getMessage());
@@ -201,11 +200,9 @@ public class EditEventController {
                 return;
         	}
         	
-        	
-        	if(startDate.before(todayDate))
-        	{
+        	if (view.getChckbxClosed().isSelected()) {
         		int option = JOptionPane.showConfirmDialog(view.getFrame(),
-            			"You are going to change the date of the event to the past, are you sure?",
+            			"You are going to change the event status to Closed, so you will not be able to edit it again",
                         "Date Warning",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.WARNING_MESSAGE);
@@ -213,7 +210,38 @@ public class EditEventController {
                      if (option != JOptionPane.YES_OPTION) {
                          return; // Usuario eligió "Cancel"
                      }
-        	}else { 
+        	} else if(startDate.before(todayDate) && endDate.after(todayDate) && !selected.getEvent_status().equals("Ongoing")){
+        		int option = JOptionPane.showConfirmDialog(view.getFrame(),
+            			"You are going to change the start date of the event to the past but the end date is in the future, so the event status is changing from "+ selected.getEvent_status()+" to Ongoing",
+                        "Date Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                     if (option != JOptionPane.YES_OPTION) {
+                         return; // Usuario eligió "Cancel"
+                     }
+        	} else if(endDate.before(todayDate) && !selected.getEvent_status().equals("Completed")){
+        		int option = JOptionPane.showConfirmDialog(view.getFrame(),
+            			"You are going to change the start date and end date to the past, so the event status is changing from "+ selected.getEvent_status()+" to Completed",
+                        "Date Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                     if (option != JOptionPane.YES_OPTION) {
+                         return; // Usuario eligió "Cancel"
+                     }        
+        	} else if(startDate.after(todayDate) && !selected.getEvent_status().equals("Planned")){
+        		int option = JOptionPane.showConfirmDialog(view.getFrame(),
+            			"You are going to change the start date to the future, so the event status is changing from "+ selected.getEvent_status()+" to Planned",
+                        "Date Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                     if (option != JOptionPane.YES_OPTION) {
+                         return; // Usuario eligió "Cancel"
+                     }
+        	} 
+        	else { 
 	        	int option = JOptionPane.showConfirmDialog(view.getFrame(),
 	        			"You are going to edit the selected event, are you sure?",
 	                    "Selection Warning",
@@ -223,17 +251,26 @@ public class EditEventController {
 	                 if (option != JOptionPane.YES_OPTION) {
 	                     return; // Usuario eligió "Cancel"
 	                 }
-        	}    
-	         model.UpdateEvent(view.getName(), view.getEdition(), view.getStartDateField(), view.getEndDateField(), (String)view.getStatus().getSelectedItem(), selected.getEvent_id());                                
+        	}
+        	
+        	
+        	if(view.getChckbxClosed().isSelected())
+        	{
+        		model.UpdateEvent(view.getName(), view.getEdition(), view.getStartDateField(), view.getEndDateField(), "Closed", selected.getEvent_id());
+        	}else {
+        		model.UpdateEvent(view.getName(), view.getEdition(), view.getStartDateField(), view.getEndDateField(), fecha, selected.getEvent_id());
+        	}	                                        
 	         JOptionPane.showMessageDialog(view.getFrame(), "The event has been edited correctly.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	
 	         // Refrescar la tabla y limpiar selección
-	         loadEvents(view.getStartDate(), view.getEndDate());
+	         loadEvents(view.getStartDate(), view.getEndDate(), (String)view.getStatus().getSelectedItem());
 	         clearSelection();    
         }catch (Exception e) {
             JOptionPane.showMessageDialog(view.getFrame(), "Error editing the event: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    
     
     private void RegisterSponsorshipLevel() {
     	
@@ -311,8 +348,10 @@ public class EditEventController {
         }
         else {
  	       String startDate = view.getStartDate();
- 	       String endDate = view.getEndDate(); 	      
- 	       this.loadEvents(startDate, endDate);
+ 	       String endDate = view.getEndDate(); 	
+ 	       String status = (String)view.getStatus().getSelectedItem();
+ 	       this.loadEvents(startDate, endDate, status);
         }
      }
+    
 }

@@ -28,6 +28,8 @@ public class CancelIncomeExpenseModel {
 	
 	private static final String SQL_REGISTER_MOVEMENT = "INSERT INTO Movement (movement_amount, movement_date, balance_id) VALUES (?, ?, ?)";
 	
+	private static final String SQL_UPDATE_EVENT_STATUS = "UPDATE Event SET event_status = CASE WHEN event_date > ? THEN 'Planned' WHEN event_date <= ? AND event_endDate >= ? THEN 'Ongoing' WHEN event_endDate < ? THEN 'Completed' END WHERE event_date IS NOT NULL AND event_endDate IS NOT NULL AND event_status != 'Closed'";
+	
 
 	public List<AgreementIncomeExpenseDTO> getAgreements(String startDate, String endDate) {
     	return db.executeQueryPojo(AgreementIncomeExpenseDTO.class, SQL_GET_AGREEMENTS, startDate, endDate);
@@ -57,6 +59,11 @@ public class CancelIncomeExpenseModel {
 	{
 		validateNotNull(balanceId, "The balance id cannot be null");
 		db.executeUpdate(SQL_CANCEL, balanceId);		
+	}
+	
+	public void updateEventStatuses(String referenceDate) {
+		validateNotNull(referenceDate, "The date cannot be null");
+	    db.executeUpdate(SQL_UPDATE_EVENT_STATUS, referenceDate, referenceDate, referenceDate, referenceDate);
 	}
 	
     private void validateNotNull(Object obj, String message) {

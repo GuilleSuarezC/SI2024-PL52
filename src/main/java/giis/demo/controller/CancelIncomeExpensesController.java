@@ -36,8 +36,10 @@ public class CancelIncomeExpensesController {
     private CancelIncomeExpensesView view;
     private CancelIncomeExpenseModel model;
     private List<AgreementIncomeExpenseDTO> list;
+    private List<MovementDTO> movements;
     private AgreementIncomeExpenseDTO selected;
     private SwingMain main;
+    private String fecha;
 
     public CancelIncomeExpensesController(CancelIncomeExpensesView v, CancelIncomeExpenseModel m, String fecha) {
         this.view = v;
@@ -46,6 +48,7 @@ public class CancelIncomeExpensesController {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate storedDate = LocalDate.parse(fecha, formatter);
+        this.fecha = fecha;
         
         //Conseguir el primer dia del año y el del año siguiente
         LocalDate firstDayOfYear = storedDate.withDayOfYear(1);
@@ -81,6 +84,7 @@ public class CancelIncomeExpensesController {
     }
     
     public void initView(String startDate, String endDate) {
+    	model.updateEventStatuses(fecha);
         this.loadBalances(startDate, endDate, "Sponsor Agreement");
         view.getFrame().setVisible(true);
     }
@@ -154,7 +158,7 @@ public class CancelIncomeExpensesController {
     
     private void loadMovements(int balanceId)
     {
-    	List<MovementDTO> movements = model.getMovements(balanceId);
+    	movements = model.getMovements(balanceId);
         TableModel tableModel = SwingUtil.getTableModelFromPojos(movements,
             new String[]{"movement_id","movement_amount","movement_date"});
         
@@ -343,11 +347,15 @@ public class CancelIncomeExpensesController {
     private void clearSelection() {
         view.getLstActivities().clearSelection();
         view.getLstMovements().clearSelection();
+        loadMovements(0);
         selected = null;
-        view.setName(null);
-        view.setDate(null);
+        view.setName("");
+        view.setDate("");
         view.setAmount(0);
-        view.setEvent(null);;
+        view.setEvent("");
+        view.setCompAmountField("");
+        view.setDateField("");
+        
     }
     
     private void ApplyFilter() {

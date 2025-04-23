@@ -69,14 +69,14 @@ public class EditEventModel {
 				
 	}
 	
+	public void updateEventStatuses(String referenceDate) {
+		validateNotNull(referenceDate, "The date cannot be null");
+	    db.executeUpdate(SQL_UPDATE_EVENT_STATUS, referenceDate, referenceDate, referenceDate, referenceDate);
+	}
+	
     private void validateNotNull(Object obj, String message) {
     	if (obj== null || obj.toString().trim().isEmpty()) {
     		throw new ApplicationException(message);
     	}
     }
-    
-    public void updateEventStatuses(String referenceDate) {
-	    
-	    db.executeUpdate(SQL_UPDATE_EVENT_STATUS, referenceDate, referenceDate, referenceDate, referenceDate);
-	}
 }

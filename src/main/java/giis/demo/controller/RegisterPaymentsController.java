@@ -94,7 +94,7 @@ public class RegisterPaymentsController {
 
             view.setLblSponsorshipName(selectedPayment.getSponsorship_name());
             view.setLblAgreementDate(selectedPayment.getSponsorship_agreementDate());
-            view.setLblAmount((int) selectedPayment.getAmount());
+            view.setLblAmount(selectedPayment.getAmount());
             view.setLblEventName(selectedPayment.getEvent_name());
             view.setLblInvoiceDate(selectedPayment.getInvoice_date());
             view.setLblFiscalNumber(selectedPayment.getInvoice_number());            
@@ -214,9 +214,14 @@ public class RegisterPaymentsController {
     private void clearSelection() {
         view.getLstPayments().clearSelection();
         selectedPayment = null;
-        view.setLblSponsorshipName(null);
-        view.setLblAgreementDate(null);
+        view.setLblSponsorshipName("");
+        view.setLblAgreementDate("");
         view.setLblAmount(0);
-        view.setLblFiscalNumber(null);;
+        view.setLblFiscalNumber("");
+        view.setLblAmountAlreadyPaid(0);
+        view.setAmountPaidField("");
+        view.setPaymentDateField("");
+        view.setLblInvoiceDate("");
+        view.setLblEventName("");
     } 
 }

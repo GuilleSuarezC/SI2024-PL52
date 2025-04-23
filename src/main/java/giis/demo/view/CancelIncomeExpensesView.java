@@ -70,9 +70,10 @@ public class CancelIncomeExpensesView {
      */
     private void initialize() {
         frmCancelIncomeExpenses = new JFrame();
+        frmCancelIncomeExpenses.setResizable(false);
         frmCancelIncomeExpenses.setTitle("Cancel Income and Expenses");
         frmCancelIncomeExpenses.setName("SponsorshipView");
-        frmCancelIncomeExpenses.setBounds(0, 0, 915, 697);
+        frmCancelIncomeExpenses.setBounds(0, 0, 1010, 697);
         frmCancelIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[875.00px,grow]", "[21px][88.00px][15px][235.00px][223.00px,grow]"));
         
         
@@ -153,49 +154,49 @@ public class CancelIncomeExpensesView {
         
         lblCompensationMovement = new JLabel("Compensation Movement");
         lblCompensationMovement.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblCompensationMovement.setBounds(366, 0, 191, 22);
+        lblCompensationMovement.setBounds(447, 0, 191, 22);
         SelectedPanel.add(lblCompensationMovement);
         
         lblCompensationAmount = new JLabel("Compensation Amount: ");
-        lblCompensationAmount.setBounds(316, 32, 205, 22);
+        lblCompensationAmount.setBounds(397, 32, 205, 22);
         SelectedPanel.add(lblCompensationAmount);
         
         CompAmountField = new JTextField();
-        CompAmountField.setBounds(451, 34, 134, 19);
+        CompAmountField.setBounds(532, 34, 134, 19);
         SelectedPanel.add(CompAmountField);
         CompAmountField.setColumns(10);
         
         JLabel lblDateOfPaid = new JLabel("Date of Paid: ");
-        lblDateOfPaid.setBounds(373, 66, 151, 22);
+        lblDateOfPaid.setBounds(454, 66, 151, 22);
         SelectedPanel.add(lblDateOfPaid);
         
         DateField = new JTextField();
         DateField.setColumns(10);
-        DateField.setBounds(451, 68, 134, 19);
+        DateField.setBounds(532, 68, 134, 19);
         SelectedPanel.add(DateField);
         
         JLabel lblMovements = new JLabel("Movements");
         lblMovements.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblMovements.setBounds(711, 0, 125, 22);
+        lblMovements.setBounds(803, 0, 125, 22);
         SelectedPanel.add(lblMovements);
         
         JScrollPane MovementslPanel = new JScrollPane();
-        MovementslPanel.setBounds(632, 21, 216, 169);
+        MovementslPanel.setBounds(713, 21, 259, 169);
         SelectedPanel.add(MovementslPanel);
         
         lstMovements = new JTable();
         MovementslPanel.setViewportView(lstMovements);
         
         btnClearFields = new JButton("Clear Fields");
-        btnClearFields.setBounds(373, 213, 117, 21);
+        btnClearFields.setBounds(453, 214, 117, 21);
         SelectedPanel.add(btnClearFields);
         
         btnCancelAgreement = new JButton("Cancel Agreement");
-        btnCancelAgreement.setBounds(500, 213, 117, 21);
+        btnCancelAgreement.setBounds(580, 214, 161, 21);
         SelectedPanel.add(btnCancelAgreement);
         
         btnCancelRegister = new JButton("Cancel & Register Movement");
-        btnCancelRegister.setBounds(627, 213, 221, 21);
+        btnCancelRegister.setBounds(751, 214, 221, 21);
         SelectedPanel.add(btnCancelRegister);
     }
 
@@ -219,5 +220,8 @@ public class CancelIncomeExpensesView {
     public void setEvent(String event) {this.lblEventName.setText("Event Name: "+event);}
     public String getAmount() {return this.CompAmountField.getText();}
     public String getDate() {return this.DateField.getText();}
+	public void setCompAmountField(String compAmountField) {CompAmountField.setText(compAmountField);}
+	public void setDateField(String dateField) {DateField.setText(getAmount());}
+    
 }
 

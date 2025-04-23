@@ -58,10 +58,11 @@ public class RegisterPaymentsView {
      */
     private void initialize() {
         frmRegisterPaymentsView = new JFrame();
+        frmRegisterPaymentsView.setResizable(false);
         frmRegisterPaymentsView.setTitle("Register Payments ");
         frmRegisterPaymentsView.setName("SponsorshipView");
         frmRegisterPaymentsView.setBounds(0, 0, 842, 547);
-        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[774.00px]", "[15px][193px][21px][183px][56px]"));
+        frmRegisterPaymentsView.getContentPane().setLayout(new MigLayout("", "[813.00px]", "[15px][193px][21px][183px][56px]"));
         
         JLabel lblPendingPayments = new JLabel("Payments");
         lblPendingPayments.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -131,16 +132,16 @@ public class RegisterPaymentsView {
         frmRegisterPaymentsView.getContentPane().add(Btnpanel, "cell 0 4,grow");
         Btnpanel.setLayout(null);
         
-        btnSave = new JButton("Save");
-        btnSave.setBounds(679, 25, 85, 21);
+        btnSave = new JButton("Register");
+        btnSave.setBounds(664, 25, 100, 21);
         Btnpanel.add(btnSave);
         
-        btnCancel = new JButton("Cancel");
+        btnCancel = new JButton("Clear Fields");
         btnCancel.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        btnCancel.setBounds(584, 25, 85, 21);
+        btnCancel.setBounds(535, 25, 119, 21);
         Btnpanel.add(btnCancel);
     }
 
@@ -149,14 +150,17 @@ public class RegisterPaymentsView {
     public JFrame getFrame() { return this.frmRegisterPaymentsView; }
     public JButton getBtnRegistrar() { return this.btnSave; }
     public JButton getBtnCancelar() { return this.btnCancel; }
-    public void setLblAmount(int amount) {this.lblAmount.setText("Amount to pay: " + amount+"€");}
+    public void setLblAmount(double amount) {this.lblAmount.setText("Amount to pay: " + amount+"€");}
     public void setLblSponsorshipName(String sponsorshipName) {this.lblSponsorshipName.setText("Sponsorship Name: " + sponsorshipName);}
     public void setLblSponsorshipID(int sponsorshipId) {this.lblEventName.setText("Sponsorship Id: " + sponsorshipId);}
     public void setLblFiscalNumber(String invoiceIdentificator) {this.lblInvoiceIdentificator.setText("Invoice Identificator: " + invoiceIdentificator);}
     public void setLblAgreementDate(String date) {this.lblAgreementDate.setText("Agreement Date: " + date);}
     public void setLblEventName(String eventName) {this.lblEventName.setText("Event name: " + eventName);}
     public void setLblInvoiceDate(String invoiceDate) {this.lblInvoiceDate.setText("Invoice Date: " + invoiceDate);}
-    public void setLblAmountAlreadyPaid(double amountAlreadyPaid) {this.lblAmountAlreadyPaid.setText("Amount Already Paid: " + amountAlreadyPaid);}
+    public void setLblAmountAlreadyPaid(double amountAlreadyPaid) {this.lblAmountAlreadyPaid.setText("Amount Already Paid: " + amountAlreadyPaid+"€");}
     public String getAmountPaidField() {return this.AmountPaidField.getText();}
     public String getPaymentDate() {return this.PaymentDateField.getText();}
+	public void setPaymentDateField(String paymentDateField) {PaymentDateField.setText(paymentDateField);}
+	public void setAmountPaidField(String amountPaidField) {AmountPaidField.setText(amountPaidField);}
+    
 }

@@ -33,6 +33,7 @@ public class ReportIncomeExpensesController {
     private ReportIncomeExpensesModel model;
     private List<ReportDTO> ActivitiesList;
     private SwingMain main;
+    private String fecha;
 
     public ReportIncomeExpensesController(ReportIncomeExpensesView v, ReportIncomeExpensesModel m, String fecha) {
         this.view = v;
@@ -40,6 +41,7 @@ public class ReportIncomeExpensesController {
         ActivitiesList = new ArrayList<ReportDTO>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate storedDate = LocalDate.parse(fecha, formatter);
+        this.fecha = fecha;
         
         //Conseguir el primer dia del año y el del año siguiente
         LocalDate firstDayOfYear = storedDate.withDayOfYear(1);
@@ -73,6 +75,7 @@ public class ReportIncomeExpensesController {
     }
     
     public void initView(String startDate, String endDate) {
+    	model.updateEventStatuses(fecha);
         this.loadActivities(startDate, endDate, "All");
         view.getFrame().setVisible(true);
     }
@@ -80,7 +83,7 @@ public class ReportIncomeExpensesController {
     private void loadActivities(String startDate, String endDate, String eventStatus) {
         List<ReportDTO> activities = model.getActivities(startDate, endDate, eventStatus);
         TableModel tableModel = SwingUtil.getTableModelFromPojos(activities,
-            new String[]{"event_id","event_name", "event_date", "event_endDate", "event_status", "total_sponsorship_income","total_other_income", "sponsorship_income_paid", "other_income_paid", "total_expenses", "paid_expenses","estimated_balance", "paid_balance"});
+            new String[]{"event_id","event_name", "event_edition", "event_date", "event_endDate", "event_status", "total_sponsorship_income","total_other_income", "sponsorship_income_paid", "other_income_paid", "total_expenses", "paid_expenses","estimated_balance", "paid_balance"});
         
         view.getLstActivities().setModel(tableModel);
         view.getLstActivities().getColumnModel().getColumn(0).setMinWidth(0);

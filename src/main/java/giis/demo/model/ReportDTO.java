@@ -7,6 +7,7 @@ public class ReportDTO{
 	
 	private int event_id;
 	private String event_name;
+	private String event_edition;
 	private String event_date;
 	private String event_endDate;
 	private String event_status;
@@ -21,8 +22,9 @@ public class ReportDTO{
 	
 
     // Constructor
-    public ReportDTO(int event_id,String event_name, String event_date, String event_endDate, String event_status, double total_sponsorship_income, double total_other_income, double sponsorship_income_paid, double other_income_paid, double total_expenses, double paid_expenses, double estimated_balance, double paid_balance) {
+    public ReportDTO(int event_id,String event_name, String event_edition, String event_date, String event_endDate, String event_status, double total_sponsorship_income, double total_other_income, double sponsorship_income_paid, double other_income_paid, double total_expenses, double paid_expenses, double estimated_balance, double paid_balance) {
     	this.event_id = event_id;
+    	this.event_edition = event_edition;
     	this.event_name = event_name;
     	this.event_date = event_date;
     	this.event_endDate = event_endDate;
@@ -56,6 +58,14 @@ public class ReportDTO{
 
 	public void setEvent_name(String event_name) {
 		this.event_name = event_name;
+	}
+	
+	public String getEvent_edition() {
+		return event_edition;
+	}
+
+	public void setEvent_edition(String event_edition) {
+		this.event_edition = event_edition;
 	}
 
 	public String getEvent_date() {

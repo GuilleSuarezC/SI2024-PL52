@@ -56,17 +56,18 @@ public class ReportIncomeExpensesView {
      */
     private void initialize() {
         frmReportIncomeExpenses = new JFrame();
+        frmReportIncomeExpenses.setResizable(false);
         frmReportIncomeExpenses.setTitle("Report Income and Expenses");
         frmReportIncomeExpenses.setName("SponsorshipView");
-        frmReportIncomeExpenses.setBounds(0, 0, 1395, 537);
-        frmReportIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[1359.00px]", "[21px][88.00px][15px][319.00px][15.00px]"));
+        frmReportIncomeExpenses.setBounds(0, 0, 1462, 537);
+        frmReportIncomeExpenses.getContentPane().setLayout(new MigLayout("", "[1431px]", "[21px][88px][15px][319px]"));
         
      // Crear los selectores de fecha
         
         
         JLabel lblReport = new JLabel("Report of Activities");
         lblReport.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        frmReportIncomeExpenses.getContentPane().add(lblReport, "cell 0 2,grow");
+        frmReportIncomeExpenses.getContentPane().add(lblReport, "cell 0 2,growx,aligny top");
         
         JScrollPane ReportsPanel = new JScrollPane();
         frmReportIncomeExpenses.getContentPane().add(ReportsPanel, "cell 0 3,grow");

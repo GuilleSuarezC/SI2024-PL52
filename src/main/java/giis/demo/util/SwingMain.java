@@ -209,7 +209,8 @@ public class SwingMain {
 		frame.getContentPane().add(btnReportIncExp);
 		btnReportIncExp.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				String fecha = tfChangeDate.getText();
+				String fecha = getFechaISO();
+				//String fecha = tfChangeDate.getText();
 				ReportIncomeExpensesController controller=new ReportIncomeExpensesController(new ReportIncomeExpensesView(), new ReportIncomeExpensesModel(), fecha);
 				controller.initController(SwingMain.this);
 			}
@@ -298,7 +299,8 @@ public class SwingMain {
 		
 		btnEditEvent.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				String fecha = tfChangeDate.getText();
+				String fecha = getFechaISO();
+				//String fecha = tfChangeDate.getText();
 				EditEventController controller=new EditEventController(new EditEventView(), new EditEventModel(), fecha);
 				controller.initController(SwingMain.this);
 			}

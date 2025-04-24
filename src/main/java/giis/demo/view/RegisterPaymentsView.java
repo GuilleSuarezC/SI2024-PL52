@@ -121,7 +121,7 @@ public class RegisterPaymentsView {
         DetailsPanel.add(lblInvoiceDate);
         
         lblAmountAlreadyPaid = new JLabel("Amount Already Paid: ");
-        lblAmountAlreadyPaid.setBounds(550, 35, 165, 23);
+        lblAmountAlreadyPaid.setBounds(550, 35, 194, 23);
         DetailsPanel.add(lblAmountAlreadyPaid);
         
         lblSelectedPayment = new JLabel("Selected Payment");
